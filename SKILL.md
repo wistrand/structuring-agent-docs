@@ -1,6 +1,6 @@
 ---
 name: structuring-agent-docs
-description: Structures a software project's documentation so AI coding agents navigate it efficiently. Covers the README.md / CLAUDE.md / agent_docs/ split, a CLAUDE.md hub that links one level deep to topic-focused agent_docs files (progressive disclosure), naming conventions, gotchas/findings docs, load-bearing invariants, generated docs, and agent-facing writing style. Use when setting up or reorganizing CLAUDE.md, AGENTS.md, or agent_docs/ for a repository, when a CLAUDE.md has grown too large, or when the user asks how to document a codebase for coding agents.
+description: Structures a software project's documentation so AI coding agents navigate it efficiently. Covers the README.md / CLAUDE.md / agent_docs/ split, a CLAUDE.md hub that links one level deep to topic-focused agent_docs files (progressive disclosure), naming conventions, gotchas/findings docs, critical invariants, generated docs, and agent-facing writing style. Use when setting up or reorganizing CLAUDE.md, AGENTS.md, or agent_docs/ for a repository, when a CLAUDE.md has grown too large, or when the user asks how to document a codebase for coding agents.
 ---
 
 # Structuring agent docs
@@ -11,22 +11,13 @@ below is distilled from real projects that an agent works in daily.
 
 ## What belongs in a doc
 
-Prefer executable enforcement. If a rule can be a type, make it a type; if it can
-be a test, make it a test; if a doc can be generated from source, generate it. A
-doc that restates what a type or a test already guarantees is a smell: delete it
-and write the type or the test. Prose is only for the residue none of those can
-hold: the *why* behind a constraint, the approach that was tried and rejected,
-the platform trap that cost an hour to diagnose. If a finding could be a test,
-the fix is to add the test.
-
-That residue is worth writing because of what these docs are: an agent's memory
-for its future self. An agent has no memory between sessions, so the gotcha it
-diagnosed today is gone tomorrow unless it records it. The doc compensates for
-the agent's amnesia, not for the code's inadequacy, and that is the line between
-documentation as a code smell and documentation as a working note. "The why is in
-the commit" is true and unreachable: an agent editing one file does not blame
-every line and read each introducing commit. A findings doc is that why, curated
-and placed where the next agent reads first.
+Prefer executable enforcement: if a rule can be a type or a test, or a doc can be
+generated from source, do that instead of writing prose. Prose is only for the
+residue none of those can hold: the *why* behind a constraint, an approach tried
+and rejected, a platform trap that cost an hour to diagnose. Write that residue
+because these docs are the agent's memory for its future self — it has none
+between sessions, and "the why is in the commit" is true but unreachable to an
+agent editing one file.
 
 ## The layered model
 
@@ -39,7 +30,7 @@ Three tiers, split by audience and by how much an agent loads at once:
 | Deep dives | `agent_docs/*.md`                   | Agents   | One topic per file, self-contained, loaded only when that subsystem is touched.                         |
 
 Optional fourth tier: `docs/` for generated assets (screenshots, icons) and
-`notes/` for informal design journals that aren't load-bearing.
+`notes/` for informal design journals an agent doesn't rely on.
 
 Why split this way: the agent reads `CLAUDE.md` every session, so it stays the
 cheap routing layer. Heavy reference lives in `agent_docs/` and costs nothing
@@ -48,17 +39,12 @@ a skill's SKILL.md pointing to bundled files, scaled to a whole repo.
 
 ## Two shapes of CLAUDE.md
 
-Pick by project size:
-
-- **Thin index** (~80 lines): one-paragraph "what this is", layout table,
-  common commands, a handful of hard conventions, then a link list into
-  `agent_docs/`. Best when subsystems are cleanly separable.
-- **Thick hub** (a few hundred lines): the above plus design notes, a Gotchas
-  section, and invariants inline, but still links out for the deepest dives.
-  Best for a single dense codebase where most edits touch shared rules.
-
-When a CLAUDE.md crosses ~500 lines or starts carrying full subsystem detail,
-extract that detail into an `agent_docs/<topic>.md` and leave a link behind.
+A thin index (~80 lines, a pure dispatcher) suits cleanly separable subsystems; a
+thick hub (a few hundred lines, design notes and invariants inline) suits one
+dense codebase where most edits touch shared rules. Both still link out for the
+deepest dives. When a CLAUDE.md crosses ~500 lines or starts carrying full
+subsystem detail, extract that detail into an `agent_docs/<topic>.md` and leave a
+link behind. See [references/claude-md.md](references/claude-md.md).
 
 ## Setup workflow
 
@@ -70,7 +56,7 @@ Copy this checklist when creating or reorganizing a project's agent docs:
 - [ ] 3. Extract per-subsystem detail into agent_docs/<topic>.md (see references/agent-docs.md)
 - [ ] 4. Link every agent_docs file from CLAUDE.md, one level deep, markdown links
 - [ ] 5. Add a Gotchas/findings doc for non-obvious traps and decision history
-- [ ] 6. Add an Invariants section listing load-bearing rules
+- [ ] 6. Add an Invariants section listing the rules that must stay true
 - [ ] 7. Add a Documentation Style block (see references/writing-style.md)
 - [ ] 8. Generate any doc derivable from source (settings, CLI --help) via a build
         target instead of hand-writing — the step most often skipped, first to rot
@@ -81,17 +67,21 @@ Start from the templates in `templates/` and delete what doesn't apply.
 ## Core rules
 
 - **One level deep.** Every `agent_docs/` file links directly from `CLAUDE.md`.
-  Don't chain doc → doc → doc; an agent previews nested files with `head` and
-  misses content. (Cross-links *between* agent_docs are fine as extras.)
+  Don't chain doc → doc → doc; deeply nested docs get skimmed or missed.
+  (Cross-links *between* agent_docs are fine as extras.)
 - **Markdown links for navigable docs, not backticks, and never `@`-imports.**
-  Write `[agent_docs/architecture.md](agent_docs/architecture.md)` for every doc
-  an agent should be able to follow, so the doc set is a graph, not a pile of
-  filenames. Backticks are fine for source paths in a Layout table or inline
-  code (`src/cli.ts`) — the rule is about doc references you want followed, not
-  every filename. Do not turn deep-dive links into Claude Code `@path` imports:
-  those load eagerly at session start (the full file enters context, saving
-  nothing), which defeats the routing hub. Markdown links are read on demand;
-  that on-demand read is the whole point. See
+  Write `[agent_docs/x.md](agent_docs/x.md)` for every doc an agent should follow,
+  so the doc set is a graph. Backticks stay fine for source paths (`src/cli.ts`).
+  Don't use Claude Code `@path` imports for deep dives: they load eagerly at
+  session start and save nothing, defeating the hub. See
+  [references/claude-md.md](references/claude-md.md).
+- **Factor out only what's safe to miss.** Splitting trades a best case (the agent
+  follows the link, context stays lean) for a worst case (it skips the link and
+  works without a fact it needed, silently). So split by blast radius: anything
+  whose absence silently corrupts an edit (invariants, data-loss gotchas,
+  read-before-you-touch warnings) stays inline in `CLAUDE.md`, which is
+  loaded every session. Push only safely-skippable subsystem reference to
+  `agent_docs/`. When in doubt, keep it in the hub. See
   [references/claude-md.md](references/claude-md.md).
 - **One topic per file, self-contained.** An agent editing audio reads
   `architecture-audio.md` alone, without first reading five others.
@@ -104,7 +94,7 @@ Start from the templates in `templates/` and delete what doesn't apply.
   reasoning behind constraints, the things source code can't tell an agent. This
   is the residue from "What belongs in a doc": if the trap could be a test, add
   the test instead. Prose is for what can't be made executable.
-- **Flag load-bearing invariants** explicitly so an agent knows what must stay
+- **Flag critical invariants** explicitly so an agent knows what must stay
   true before it changes anything. Put global, cross-cutting rules in CLAUDE.md's
   `Invariants` section; keep an agent_docs `Invariants` section to subsystem-local
   rules only. Never state the same rule in both — the two copies drift. If a
@@ -122,27 +112,22 @@ Start from the templates in `templates/` and delete what doesn't apply.
 - **Alias for other tools.** Symlink `AGENTS.md → CLAUDE.md` so tools expecting
   a different entry filename find one source of truth, not a stale copy.
 
-## Scaling up
+## Beyond the base model
 
-A flat link index works to ~10-15 docs. Past that, or once docs are published,
-the hub needs more structure: an audience-categorized index, a quick-reference
-table, a reading-order onboarding path, role-split rules, a generated docs site
-with `llms.txt`, and a philosophy tier (MANIFESTO/FAQ). Adopt these when the pain
-appears, not before. See [references/scaling.md](references/scaling.md).
-
-When work spans several projects (a monorepo, sibling repos, or one product split
-across surfaces), the model nests: an umbrella hub above per-project hubs, with
-shared facts owned by exactly one doc that the others reference. See
-[references/multi-project.md](references/multi-project.md).
+The base model holds at any size. Two kinds of growth need more, adopted only when
+the pain appears: a single project that accumulates docs or gets published (an
+audience-categorized index, reading-order onboarding, a generated site with
+`llms.txt`), and work that spans several projects (a monorepo, sibling repos, or
+one product split across surfaces — the model nests, and shared facts get exactly
+one owner the others reference). Both are in
+[references/advanced.md](references/advanced.md).
 
 ## References
 
-- [references/structure.md](references/structure.md): full directory layout, the README vs CLAUDE.md vs agent_docs split, and what belongs where.
-- [references/claude-md.md](references/claude-md.md): section-by-section CLAUDE.md anatomy, thin-index vs thick-hub, and the link-index pattern.
+- [references/claude-md.md](references/claude-md.md): the full repo layout and what belongs where, CLAUDE.md anatomy, thin-index vs thick-hub, the link-index pattern, and what to factor out.
 - [references/agent-docs.md](references/agent-docs.md): naming prefixes, doc types, gotchas/findings, invariants, generated docs, and dated data artifacts/fixtures.
 - [references/writing-style.md](references/writing-style.md): agent-facing prose: no AI-isms, markdown links, aligned tables, no time-sensitive content.
-- [references/scaling.md](references/scaling.md): patterns for large/published doc sets: AGENTS.md alias, audience-categorized index, reading order, role-split rules, project-local skills, philosophy tier, generated site + llms.txt.
-- [references/multi-project.md](references/multi-project.md): docs across monorepos, sibling repos, and multi-surface products: the recursive model, depth reset, single-owner shared facts, the standalone umbrella (repo table + integration view) and cross-repo linking.
+- [references/advanced.md](references/advanced.md): beyond the base model — one project that grows large or published (audience index, onboarding, llms.txt) and work that spans projects (monorepos, siblings, surfaces: the nesting model, single-owner shared facts, umbrella mapping).
 
 ## Templates
 

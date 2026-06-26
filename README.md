@@ -12,19 +12,17 @@ only when a task needs them. Progressive disclosure applied to a whole repo.
 ```
 SKILL.md                       # the skill: model, workflow, core rules
 references/
-  structure.md                 # directory layout and what belongs where
-  claude-md.md                 # CLAUDE.md anatomy and the link-index pattern
+  claude-md.md                 # repo layout, CLAUDE.md anatomy, link-index pattern
   agent-docs.md                # naming, doc types, gotchas, invariants, generated docs
   writing-style.md             # agent-facing prose rules
-  scaling.md                   # large/published doc sets: AGENTS.md alias, categorized index, llms.txt
-  multi-project.md             # monorepos, sibling repos, multi-surface products
+  advanced.md                  # beyond the base model: one project that grows + work across projects
 templates/
   CLAUDE.md                    # starter agent hub
   agent_docs/architecture.md   # subsystem deep-dive skeleton
   agent_docs/gotchas.md        # traps-and-findings skeleton
   agent_docs/plan.md           # saved-planning skeleton (promoted to architecture when built)
   umbrella/                    # standalone-umbrella hub + integration-note templates
-MAINTAINING.md                 # trigger examples, duplicated-rule change-set
+CLAUDE.md                      # agent hub for editing this skill (AGENTS.md symlinks here)
 LICENSE                        # MIT
 ```
 
@@ -50,8 +48,8 @@ The agent loads it automatically when you ask how to set up or reorganize
 | Agent hub  | `CLAUDE.md`       | Agents   | Read first: layout, commands, conventions, invariants, link index. |
 | Deep dives | `agent_docs/*.md` | Agents   | One topic per file, loaded on demand.                              |
 
-See [MAINTAINING.md](MAINTAINING.md) for trigger examples and the
-duplicated-rule change-set.
+See [CLAUDE.md](CLAUDE.md) for how to work in this repo: the editing discipline,
+trigger examples, and deliberate non-goals.
 
 ## License
 

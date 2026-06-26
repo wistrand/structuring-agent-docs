@@ -22,7 +22,8 @@ Avoid:
 - "not just X, but Y" constructions.
 - Filler preamble: "In this section, we will explore…".
 - Hedging adjectives that add nothing: "very", "quite", "fairly".
-- Jargon-as-flair ("load-bearing", "footgun"): fine occasionally, not as decoration.
+- Jargon-as-flair ("load-bearing", "footgun", "blazing-fast"): say what you mean
+  plainly instead. "critical invariants", not "load-bearing invariants".
 - Em dashes as a tic: several per paragraph reads as AI. An occasional one is
   fine; overuse is the tell. No emojis in project copy.
 
@@ -37,33 +38,9 @@ enthusiastic one.
 
 ### Aligned tables
 
-Pad every cell so columns line up in the raw markdown. The rendered output is
-identical either way, but an agent reads and edits the source, where an aligned
-table is scannable and a ragged one is not. Pad the header separator too.
-
-Aligned:
-
-```markdown
-| Path          | Role                          |
-|---------------|-------------------------------|
-| `src/`        | core engine                   |
-| `agent_docs/` | per-subsystem deep dives      |
-| `docs/`       | generated assets              |
-```
-
-Ragged (avoid):
-
-```markdown
-| Path | Role |
-|---|---|
-| `src/` | core engine |
-| `agent_docs/` | per-subsystem deep dives |
-| `docs/` | generated assets |
-```
-
-Width the separator and cells to the longest entry in each column. When a cell
-would blow out the width, shorten the wording rather than letting one long cell
-unalign the column.
+Pad table cells so columns line up in the raw markdown — the agent reads the
+source, where an aligned table is scannable. If your editor or a formatter does
+this automatically, let it; it isn't worth hand-aligning by hand on every edit.
 
 ## Concise and assume competence
 

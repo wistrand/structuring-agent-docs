@@ -127,30 +127,14 @@ CLI help captured from `--help`.
 
 ## Generated data artifacts and fixtures
 
-When a project has a data pipeline or an LLM-synthesis step, `agent_docs/` can
-double as the staging area for its outputs: clustering reports, sampled data,
-ranking diffs, audit trails. These sit beside the prose docs and give an agent
-real fixtures to reason about, not just descriptions.
-
-Conventions that make this work:
-
-- **Date the filename**: `cluster-report.2026-05-25.md`,
-  `archetype-sample.2026-05-26.json`. The date makes each run immutable: a re-run
-  on a new day writes a new file instead of clobbering the old one, so dated
-  snapshots accumulate as a versioned history an agent can diff across runs. This
-  is the deliberate exception to "no dates in filenames" (which still holds for
-  hand-written docs).
-- **Keep a `-raw` variant** for unfiltered output kept for audit, paired with the
-  cleaned version: `archetype-sample-raw.2026-05-26.json` next to
-  `archetype-sample.2026-05-26.json`.
-- **Document the naming where the generator lives**, not on every artifact: a
-  comment in the producing script and a prose `food-pipeline.md` that explains
-  the phases. CLAUDE.md links the pipeline doc, not each dated file.
-- **Pruning is manual**: git-tracks the history; delete stale snapshots when the
-  audit value runs out. There's no automatic cleanup.
-
-Artifacts are inputs and outputs, not instructions. Don't index them one by one
-in CLAUDE.md; point at the pipeline doc that produces and consumes them.
+When a project has a data pipeline or LLM-synthesis step, `agent_docs/` can also
+stage its outputs (clustering reports, sampled data, audit trails) so an agent
+has real fixtures, not just descriptions. Date these filenames
+(`cluster-report.2026-05-25.md`) — the one deliberate exception to "no dates in
+filenames" — so each run is immutable and snapshots accumulate as diffable
+history. Document the naming where the generator lives and link the pipeline doc
+from CLAUDE.md, not each dated file; pruning is manual. These are inputs and
+outputs, not instructions.
 
 ## Self-containment and cross-links
 

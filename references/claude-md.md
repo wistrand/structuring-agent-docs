@@ -1,13 +1,52 @@
-# CLAUDE.md anatomy
+# CLAUDE.md and repo layout
 
 ## Contents
-- Purpose
+- The full layout
+- README, docs/, notes/: the other tiers
+- Purpose of CLAUDE.md
 - Thin index vs thick hub
 - Section-by-section
 - The link-index pattern
 - When to split out
+- Where does a fact go?
 
-## Purpose
+## The full layout
+
+```
+project/
+├── README.md              # humans: what, why, quick start, how to use
+├── CLAUDE.md              # agents: entry point + link index (or AGENTS.md)
+├── agent_docs/            # agents: one topic per file, loaded on demand
+│   ├── architecture.md        # or architecture-<subsystem>.md when large
+│   ├── gotchas.md             # traps; or findings.md for diagnosed bugs
+│   ├── design-<topic>.md      # spec + rationale for a format/feature
+│   ├── plan-<topic>.md        # future work, not yet implemented
+│   ├── research-<topic>.md    # investigations, citations, options weighed
+│   └── settings.md            # GENERATED from source
+├── docs/                  # generated assets: screenshots, icons, hero images
+└── notes/                 # optional: informal design journals, protocol dumps
+```
+
+Not every project needs every file. A small one may have only `README.md`,
+`CLAUDE.md`, and two or three `agent_docs/` files. See
+[agent-docs.md](agent-docs.md) for the naming prefixes and doc types.
+
+## README, docs/, notes/: the other tiers
+
+- **README.md** — audience: GitHub visitors, end users, new contributors;
+  narrative, explains the "why". Holds the feature list, screenshots, quick
+  start, how to use, supported platforms, the high-level architecture in prose,
+  human build commands, license. Does *not* hold agent rules, critical
+  invariants, code-style enforcement, or tooling constraints — those leak the
+  wrong audience's concerns into the wrong file. It may link to `agent_docs/` for
+  readers who want depth, but it is not the agent's entry point.
+- **docs/** — binary/generated assets (screenshots, store icons), usually from a
+  build target. Referenced from the README and `agent_docs/`, not hand-edited.
+- **notes/** — informal, exploratory writing (design history, "five ways we could
+  do X", raw protocol dumps). Not indexed in `CLAUDE.md` because an agent doesn't
+  rely on it; link to it from the relevant `agent_docs/` file when it helps.
+
+## Purpose of CLAUDE.md
 
 `CLAUDE.md` is the agent's entry point, read every session. It orients the agent
 and routes it to the right `agent_docs/` file. It is not the place for full
@@ -41,7 +80,7 @@ Layout
 Build & run
 Design notes        high-level per-subsystem, linking out for depth
 Gotchas             warnings that don't fit elsewhere
-Invariants          load-bearing rules that must stay true
+Invariants          the rules that must stay true
 Conventions         code style + Documentation Style block
 Tooling             git/gh constraints, what not to run
 ```
@@ -89,7 +128,7 @@ Keep links one level deep: every agent_docs file reachable directly from
 CLAUDE.md, not only via another doc. The one place depth resets is a project
 boundary: in a monorepo an umbrella hub links to each package's CLAUDE.md, and
 that package hub is a fresh one-level-deep root. See
-[multi-project.md](multi-project.md).
+[advanced.md](advanced.md).
 
 **Link, don't `@`-import.** Use plain markdown links (`[agent_docs/x.md](agent_docs/x.md)`)
 for deep dives, not Claude Code's `@path` import syntax. `@`-imports load
@@ -110,7 +149,7 @@ plan-to-architecture lifecycle.
 Past ~10-15 docs a flat list stops scaling. Group the index into tables by
 audience or function (app developers / contributors / plans), and add a
 quick-reference table and a reading-order path near the top. See
-[scaling.md](scaling.md).
+[advanced.md](advanced.md).
 
 ## When to split out
 
@@ -122,3 +161,43 @@ Move content from CLAUDE.md into a new `agent_docs/<topic>.md` when:
 - detail is only relevant to one subsystem an agent rarely touches.
 
 Leave a one-line link behind. The hub shrinks back to routing.
+
+### Split by blast radius, not just size
+
+Size and topic say what *can* move; blast radius says what *should*. Splitting is
+not free, and its cost is not the tokens — it is retrieval risk. The agent may not
+follow the link, and that failure is **silent and asymmetric**:
+
+- Keep a fact in the hub and it is never relevant: you wasted some tokens, but the
+  agent had the fact.
+- Move a fact to a deep dive and the agent skips the link: the agent now operates
+  *without* the fact and has no signal that it is missing. The edit proceeds on
+  incomplete context and looks fine until it isn't.
+
+The hub is the one tier exempt from this risk, because the harness loads CLAUDE.md
+every session — it is in context whether or not the agent chooses to read a link.
+So the rule is: **anything whose absence silently corrupts an edit stays in the
+hub.** Load-bearing invariants, data-loss gotchas, and read-before-you-touch
+warnings are kept inline (and *also* linked from the relevant deep dive as
+context), never relocated wholesale into a file the agent has to remember to open.
+What moves to `agent_docs/` is reference an agent pulls in deliberately when it
+works on that subsystem — material it can safely not load on an unrelated task.
+
+This bounds the token-savings argument honestly: factoring out optimizes the
+best case (perfect retrieval, minimal context) and pays for it with a worst case
+(silent information loss) that a single fat file does not have. Spend that trade
+only where the worst case is "the agent re-reads code it could have been told
+about," not "the agent breaks an invariant it never saw." When unsure which, the
+content stays in the hub.
+
+## Where does a fact go?
+
+- A user needs it to run or use the app → `README.md`
+- The agent needs it every session (a command, a hard rule, a layout) → `CLAUDE.md`
+- It's deep detail about one subsystem → `agent_docs/architecture-<sub>.md`
+- It's a non-obvious trap or "why is it like this" → `agent_docs/gotchas.md`
+- It's not built yet → `agent_docs/plan-<topic>.md`
+- It's derivable from source → generate it, don't write it
+- It's background colour, not needed to make changes → `notes/`
+- It's shared across projects → the one owning hub, referenced from the others
+  (see [advanced.md](advanced.md))

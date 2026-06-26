@@ -51,15 +51,20 @@ the hub or drops a mechanism, change a row here, not the model.
 
 | Concept (durable)                | Claude Code binding          |
 |----------------------------------|------------------------------|
-| Always-loaded agent hub          | `CLAUDE.md`                  |
+| Agent hub, read first            | `CLAUDE.md`                  |
+| The hub being loaded every turn  | the harness auto-loads it    |
 | Cross-tool alias for the hub     | `AGENTS.md` (symlink to it)  |
 | On-demand deep dives             | `agent_docs/*.md`            |
 | Eager whole-file import to avoid | Claude Code `@path` imports  |
 | How this skill itself ships      | `SKILL.md` + bundled files   |
 
-`agent_docs/` is already a plain directory name with no tool dependency; `CLAUDE.md`
-and the `@`-import warning are the most tool-bound and the first to revisit if the
-ecosystem shifts (e.g. toward `AGENTS.md` as the primary hub).
+`agent_docs/` is already a plain directory name with no tool dependency. One
+binding is a behavior, not a filename: the "cheap hub" economics assume the harness
+auto-loads the hub every turn, so the references' "read every session" phrasing is
+that Claude Code behavior, not a universal law — on a tool that doesn't auto-load,
+the always-on guarantee weakens and you lean harder on linking. `CLAUDE.md`, that
+auto-load assumption, and the `@`-import warning are the first things to revisit if
+the ecosystem shifts (e.g. toward `AGENTS.md` as the primary hub).
 
 ## Two shapes of CLAUDE.md
 

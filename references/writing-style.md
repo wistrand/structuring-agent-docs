@@ -32,9 +32,9 @@ enthusiastic one.
 
 ## Links and tables
 
-- Reference other docs with markdown links (`[agent_docs/x.md](agent_docs/x.md)`),
-  not bare backtick filenames. This makes the doc set a navigable graph.
-- Keep references one level deep from the file an agent starts in.
+- Reference other docs with markdown links, not bare backtick filenames, and keep
+  them one level deep. These are the "markdown links" and "one level deep" rules
+  owned by SKILL.md "Core rules"; named here, stated in full there.
 
 ### Aligned tables
 

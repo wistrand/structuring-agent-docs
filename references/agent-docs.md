@@ -117,9 +117,10 @@ suggestions. A filled `Invariants` section at the top of `architecture-render.md
 
 ## Generated docs
 
-Any doc derivable from source should be generated, never hand-maintained, so it
-can't drift. Typical: a settings reference generated from a settings schema, or
-CLI help captured from `--help`.
+The "Generate, don't drift" rule (SKILL.md "Core rules") applied to `agent_docs/`:
+any doc derivable from source is generated, never hand-maintained, so it can't
+drift. Typical: a settings reference generated from a settings schema, or CLI help
+captured from `--help`.
 
 - Drive it from a build target (`make settings-doc`).
 - Mark the file as generated at the top so no one edits it by hand.

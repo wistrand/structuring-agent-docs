@@ -124,11 +124,11 @@ explains it:
 The import graph must stay acyclic, see [agent_docs/architecture.md](agent_docs/architecture.md) "Module System".
 ```
 
-Keep links one level deep: every agent_docs file reachable directly from
-CLAUDE.md, not only via another doc. The one place depth resets is a project
-boundary: in a monorepo an umbrella hub links to each package's CLAUDE.md, and
-that package hub is a fresh one-level-deep root. See
-[advanced.md](advanced.md).
+Keep links one level deep (SKILL.md "Core rules") — the link index is where that
+rule binds: every agent_docs file reachable directly from CLAUDE.md, not only via
+another doc. The one place depth resets is a project boundary: in a monorepo an
+umbrella hub links to each package's CLAUDE.md, and that package hub is a fresh
+one-level-deep root. See [advanced.md](advanced.md).
 
 **Link, don't `@`-import.** Use plain markdown links (`[agent_docs/x.md](agent_docs/x.md)`)
 for deep dives, not Claude Code's `@path` import syntax. `@`-imports load

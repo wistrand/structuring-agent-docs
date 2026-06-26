@@ -6,7 +6,7 @@ is `SKILL.md` plus `references/` and `templates/`.
 ## Commits
 
 This project deliberately skips commit-message conventions. The history is the
-log and the diffs — they show what changed and why — so a short subject line is
+log and the diffs, which show what changed and why, so a short subject line is
 enough; no structured format, no body, no CHANGELOG. This is a chosen tradeoff,
 not an oversight: don't "fix" it by backfilling prose messages or imposing a
 convention.
@@ -27,12 +27,12 @@ inline code) — only the prose links must resolve.
 ### Why no link-checker script
 
 A script to automate this was considered and deliberately rejected. This skill
-is pure documentation — prose, references, templates — and shipping an
+is pure documentation (prose, references, templates), and shipping an
 executable validator would change what it is: an agent that loads it for advice
 on structuring docs should not also be made to run code from it. The checking it
 would do is also low-volume (a few dozen links) and easy to do by hand or with
-the grep above, so the cost — a runtime dependency, a maintained script, and the
-surprise of code in a docs skill — isn't worth it. Keep this skill script-free.
+the grep above, so the cost (a runtime dependency, a maintained script, the
+surprise of code in a docs skill) isn't worth it. Keep this skill script-free.
 If link rot ever becomes a real, recurring problem, revisit, but the bar is a
 demonstrated need, not theoretical tidiness.
 

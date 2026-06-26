@@ -23,7 +23,8 @@ Avoid:
 - Filler preamble: "In this section, we will explore…".
 - Hedging adjectives that add nothing: "very", "quite", "fairly".
 - Jargon-as-flair ("load-bearing", "footgun"): fine occasionally, not as decoration.
-- Em dashes and emojis in project copy.
+- Em dashes as a tic: several per paragraph reads as AI. An occasional one is
+  fine; overuse is the tell. No emojis in project copy.
 
 Write what is true and what to do. A flat declarative sentence beats an
 enthusiastic one.

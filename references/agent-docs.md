@@ -73,6 +73,19 @@ Two styles, use either or both:
   symptom → diagnosis → fix → takeaway. Preserves *why* a constraint exists so
   an agent doesn't undo it.
 
+A filled `findings.md` entry looks like this:
+
+```markdown
+## makeWebRequest silently truncates bodies over ~64 KB
+
+**Symptom:** the weather widget showed stale data every few hours, no error logged.
+**Diagnosis:** Connect IQ caps response bodies at ~64 KB and returns the
+truncated JSON with a 200, so the parse succeeded on a partial object.
+**Fix:** request the compact endpoint; drop the `hourly` block server-side.
+**Takeaway:** treat any `makeWebRequest` body as size-capped. A 200 does not
+mean a complete payload.
+```
+
 Reference these from `CLAUDE.md` with a "skim before touching X" hint.
 
 ## Invariants
@@ -86,7 +99,17 @@ a subsystem so it knows what a careless edit silently breaks. Examples:
 
 Put cross-cutting invariants in `CLAUDE.md`; put subsystem-specific ones at the
 top of that subsystem's `architecture-*.md`. State them as flat assertions, not
-suggestions.
+suggestions. A filled `Invariants` section at the top of `architecture-render.md`:
+
+```markdown
+## Invariants
+
+- Same input → same pixels, forever. The render is a pure function of the seed,
+  and URL hashing depends on it. Changing the output for an existing seed is a
+  breaking change, never a bugfix.
+- The import graph is acyclic. `deno task test:cycles` enforces it; an import
+  that closes a loop fails CI.
+```
 
 ## Generated docs
 

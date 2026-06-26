@@ -36,6 +36,23 @@ surprise of code in a docs skill) isn't worth it. Keep this skill script-free.
 If link rot ever becomes a real, recurring problem, revisit, but the bar is a
 demonstrated need, not theoretical tidiness.
 
+## No example project
+
+Don't add a full worked example project (a fake repo with a filled README,
+CLAUDE.md, and agent_docs/). It was considered and rejected. The templates
+already supply worked structure, and a fake codebase is the most drift-prone
+artifact possible: its docs must stay consistent both internally and with the
+skill's rules as they change, which is the exact failure the skill warns
+against. A single example also over-anchors, readers cargo-cult its specific
+choices as rules, and a toy small enough to maintain can't demonstrate the
+scaling and multi-project rules that most need it.
+
+The concreteness it would add is better delivered by inline filled excerpts next
+to the rule they illustrate (see the `findings.md` and `Invariants` examples in
+[references/agent-docs.md](references/agent-docs.md), and the link-index block in
+[references/claude-md.md](references/claude-md.md)). If a spot reads too
+abstract, add another small excerpt there, not a project.
+
 ## Trigger examples
 
 The `description` frontmatter in `SKILL.md` is the only thing deciding when the

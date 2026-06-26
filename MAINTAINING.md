@@ -16,6 +16,18 @@ grep -rn "(references/\|templates/" SKILL.md references
 Distinguish navigable links (in prose) from illustrative ones (in fenced or
 inline code) — only the prose links must resolve.
 
+### Why no link-checker script
+
+A script to automate this was considered and deliberately rejected. This skill
+is pure documentation — prose, references, templates — and shipping an
+executable validator would change what it is: an agent that loads it for advice
+on structuring docs should not also be made to run code from it. The checking it
+would do is also low-volume (a few dozen links) and easy to do by hand or with
+the grep above, so the cost — a runtime dependency, a maintained script, and the
+surprise of code in a docs skill — isn't worth it. Keep this skill script-free.
+If link rot ever becomes a real, recurring problem, revisit, but the bar is a
+demonstrated need, not theoretical tidiness.
+
 ## Trigger examples
 
 The `description` frontmatter in `SKILL.md` is the only thing deciding when the

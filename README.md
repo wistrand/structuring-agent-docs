@@ -24,6 +24,8 @@ templates/
   agent_docs/gotchas.md        # traps-and-findings skeleton
   agent_docs/plan.md           # saved-planning skeleton (promoted to architecture when built)
   umbrella/                    # standalone-umbrella hub + integration-note templates
+MAINTAINING.md                 # trigger examples, duplicated-rule change-set
+LICENSE                        # MIT
 ```
 
 ## Install
@@ -47,3 +49,10 @@ The agent loads it automatically when you ask how to set up or reorganize
 | User guide | `README.md`       | Humans   | What, why, quick start, how to use.                                |
 | Agent hub  | `CLAUDE.md`       | Agents   | Read first: layout, commands, conventions, invariants, link index. |
 | Deep dives | `agent_docs/*.md` | Agents   | One topic per file, loaded on demand.                              |
+
+See [MAINTAINING.md](MAINTAINING.md) for trigger examples and the
+duplicated-rule change-set.
+
+## License
+
+MIT — see [LICENSE](LICENSE).

@@ -91,6 +91,18 @@ boundary: in a monorepo an umbrella hub links to each package's CLAUDE.md, and
 that package hub is a fresh one-level-deep root. See
 [multi-project.md](multi-project.md).
 
+**Link, don't `@`-import.** Use plain markdown links (`[agent_docs/x.md](agent_docs/x.md)`)
+for deep dives, not Claude Code's `@path` import syntax. `@`-imports load
+**eagerly**: the imported file's full content is pulled into context at session
+start, so it costs the same as inlining and saves nothing. That defeats the whole
+point of a routing hub. A markdown link is just a pointer the agent follows only
+when a task needs it — that on-demand read is what makes the hub the cheap,
+always-loaded layer. Reserve `@`-imports for the rare file you genuinely want in
+context every session (and even then, prefer keeping it short and inline). The
+trap: someone "tidies up" the link index into `@agent_docs/...` imports thinking
+it is equivalent, and silently turns the whole `agent_docs/` tree into always-on
+context.
+
 Note moved docs so an agent doesn't hunt for them: "`plan-x.md` was promoted to
 `architecture-x.md` (implemented)." See [agent-docs.md](agent-docs.md) for the
 plan-to-architecture lifecycle.

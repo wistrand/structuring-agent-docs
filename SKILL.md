@@ -64,12 +64,16 @@ Start from the templates in `templates/` and delete what doesn't apply.
 - **One level deep.** Every `agent_docs/` file links directly from `CLAUDE.md`.
   Don't chain doc → doc → doc; an agent previews nested files with `head` and
   misses content. (Cross-links *between* agent_docs are fine as extras.)
-- **Markdown links for navigable docs, not backticks.** Write
-  `[agent_docs/architecture.md](agent_docs/architecture.md)` for every doc an
-  agent should be able to follow, so the doc set is a graph, not a pile of
+- **Markdown links for navigable docs, not backticks, and never `@`-imports.**
+  Write `[agent_docs/architecture.md](agent_docs/architecture.md)` for every doc
+  an agent should be able to follow, so the doc set is a graph, not a pile of
   filenames. Backticks are fine for source paths in a Layout table or inline
   code (`src/cli.ts`) — the rule is about doc references you want followed, not
-  every filename.
+  every filename. Do not turn deep-dive links into Claude Code `@path` imports:
+  those load eagerly at session start (the full file enters context, saving
+  nothing), which defeats the routing hub. Markdown links are read on demand;
+  that on-demand read is the whole point. See
+  [references/claude-md.md](references/claude-md.md).
 - **One topic per file, self-contained.** An agent editing audio reads
   `architecture-audio.md` alone, without first reading five others.
 - **Name by type with a prefix.** `architecture-*`, `design-*`, `plan-*`,

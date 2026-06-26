@@ -4,8 +4,8 @@ An agent skill that teaches how to structure a software project's documentation
 so AI coding agents can navigate it efficiently.
 
 It packages a repeatable model: a human-facing `README.md`, an agent-facing
-`CLAUDE.md` hub, and a set of topic-focused `agent_docs/` deep dives that load
-only when a task needs them. Progressive disclosure applied to a whole repo.
+`CLAUDE.md` hub, and a set of topic-focused `agent_docs/` deep dives loaded on
+demand. Progressive disclosure applied to a whole repo.
 
 ## What's here
 

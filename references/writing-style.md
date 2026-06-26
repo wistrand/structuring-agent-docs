@@ -40,7 +40,7 @@ enthusiastic one.
 
 Pad table cells so columns line up in the raw markdown — the agent reads the
 source, where an aligned table is scannable. If your editor or a formatter does
-this automatically, let it; it isn't worth hand-aligning by hand on every edit.
+this automatically, let it; it isn't worth hand-aligning on every edit.
 
 ## Concise and assume competence
 

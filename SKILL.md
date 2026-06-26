@@ -5,9 +5,10 @@ description: Structures a software project's documentation so AI coding agents n
 
 # Structuring agent docs
 
-Lay out a repository's documentation so an agent picks up only the context a
-task needs, instead of reading the whole codebase or one giant file. The model
-below is distilled from real projects that an agent works in daily.
+Lay out a repository's documentation so an agent can pull in the context a task
+needs without reading the whole codebase or one giant file. The model below is a
+starting point, not a mandate — take the parts that fit a given project and skip
+the rest.
 
 ## What belongs in a doc
 
@@ -32,10 +33,33 @@ Three tiers, split by audience and by how much an agent loads at once:
 Optional fourth tier: `docs/` for generated assets (screenshots, icons) and
 `notes/` for informal design journals an agent doesn't rely on.
 
-Why split this way: the agent reads `CLAUDE.md` every session, so it stays the
-cheap routing layer. Heavy reference lives in `agent_docs/` and costs nothing
-until the agent follows a link. This is the same progressive-disclosure idea as
-a skill's SKILL.md pointing to bundled files, scaled to a whole repo.
+Why split this way: the agent reads `CLAUDE.md` every session, so keep it the
+small routing layer; reference in `agent_docs/` isn't loaded until the agent
+follows a link. That trims the always-on context — but only to the extent the
+agent follows the right links, which is the tradeoff under "Factor out only
+what's safe to miss". It's the progressive-disclosure idea behind a skill's
+SKILL.md, scaled to a whole repo.
+
+## Portable model, named bindings
+
+The structure above — the audience split, progressive disclosure, one-level-deep
+linking, single-owner facts, capture-the-why — is tool-independent. The specific
+names below are this skill's Claude Code bindings of those concepts; on another
+toolchain, remap them. The model is the durable part; the filenames and the
+import-mechanic warning are what's exposed to tooling churn, so when a tool renames
+the hub or drops a mechanism, change a row here, not the model.
+
+| Concept (durable)                | Claude Code binding          |
+|----------------------------------|------------------------------|
+| Always-loaded agent hub          | `CLAUDE.md`                  |
+| Cross-tool alias for the hub     | `AGENTS.md` (symlink to it)  |
+| On-demand deep dives             | `agent_docs/*.md`            |
+| Eager whole-file import to avoid | Claude Code `@path` imports  |
+| How this skill itself ships      | `SKILL.md` + bundled files   |
+
+`agent_docs/` is already a plain directory name with no tool dependency; `CLAUDE.md`
+and the `@`-import warning are the most tool-bound and the first to revisit if the
+ecosystem shifts (e.g. toward `AGENTS.md` as the primary hub).
 
 ## Two shapes of CLAUDE.md
 
@@ -69,11 +93,13 @@ Start from the templates in `templates/` and delete what doesn't apply.
 - **One level deep.** Every `agent_docs/` file links directly from `CLAUDE.md`.
   Don't chain doc → doc → doc; deeply nested docs get skimmed or missed.
   (Cross-links *between* agent_docs are fine as extras.)
-- **Markdown links for navigable docs, not backticks, and never `@`-imports.**
+- **Link deep dives; don't eager-import them or bury them in backticks.**
   Write `[agent_docs/x.md](agent_docs/x.md)` for every doc an agent should follow,
-  so the doc set is a graph. Backticks stay fine for source paths (`src/cli.ts`).
-  Don't use Claude Code `@path` imports for deep dives: they load eagerly at
-  session start and save nothing, defeating the hub. See
+  so the set is a navigable graph read on demand. Backticks stay fine for source
+  paths (`src/cli.ts`), not for docs you want followed. Don't reference a deep dive
+  with a mechanism that loads the whole file up front — in Claude Code that's
+  `@path` imports, which enter context at session start and save nothing,
+  defeating the hub. See
   [references/claude-md.md](references/claude-md.md).
 - **Factor out only what's safe to miss.** Splitting trades a best case (the agent
   follows the link, context stays lean) for a worst case (it skips the link and

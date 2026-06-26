@@ -113,6 +113,49 @@ universe that drifts from the code by construction.
       these projects give. I still think you're one model generation away from
       the agent just reading the commit, but I'll take the concession.
 
+        ▲ **ewistrand (OP)** 1 hour ago [−]
+
+        Coming back to this thread because the critique stuck — pushed a new
+        "What belongs in a doc" section to address it head-on. The rule now leads
+        with *prefer executable enforcement*: if it can be a type, make it a type;
+        a test, a test; generated, generate it. A doc that restates what a type
+        or test already guarantees is a smell — delete it and write the test. So
+        your "invariants want to be types, gotchas want to be tests" point is now
+        rule #1, not a rebuttal.
+
+        Where I think you're wrong is the "one generation from reading the commit"
+        bet, and it's not about model strength. The doc isn't compensating for the
+        *code's* inadequacy — it's compensating for the *agent's amnesia*. An agent
+        has no memory between sessions: the platform trap it diagnosed today is
+        gone tomorrow unless it writes it down. "The why is in the commit" is true
+        and unreachable — an agent editing one file doesn't blame every line and
+        read each introducing commit. A findings doc is that why, curated and put
+        where the next agent reads first. That's the line: documentation as a code
+        smell vs. documentation as a working note for a reader with no long-term
+        memory.
+
+          ▲ **jasode** 50 minutes ago [−]
+
+          The amnesia framing is the first version of this argument I can't
+          wave away. "Compensating for the reader's lack of memory, not the
+          code's inadequacy" is a real distinction and it's the right axis. I'd
+          still push: a curated findings doc *is* a cache, and caches go stale —
+          the moment the trap stops being true, the note is now actively lying to
+          the next session, with more authority than a commit because it sits
+          where the agent reads first. You've moved the failure mode, not removed
+          it. But "moved to a place where a human can cheaply prune it" is a
+          better place than I gave you credit for. Concede the frame, keep the
+          stale-cache worry.
+
+            ▲ **pclmulqdq** 35 minutes ago [−]
+
+            Worth flagging the agent_docs ref grew a matching line — the
+            payload-cap finding now says it earns prose *because there's no cheap
+            test to assert it*, and explicitly tells you to add the test when one
+            exists. That's the rule policing its own examples, which is the part
+            that makes me believe the section isn't just a rhetorical patch over
+            this thread.
+
 ▲ **swyx** 6 hours ago [−]
 
 Meta-observation: this is a skill that teaches an AI how to write docs so that
@@ -287,7 +330,12 @@ The strongest, most-upvoted critiques, distilled — these are the real review:
    mode is the honest boundary.
 4. **Docs-for-agents may be a smell (jasode).** Invariants want to be types,
    gotchas want to be tests; what's left is decision history, justified only if
-   "cheaper than commit archaeology" holds.
+   "cheaper than commit archaeology" holds. *Answered in a later commit:* the new
+   "What belongs in a doc" section makes executable enforcement rule #1 and
+   reframes prose as compensating for the *agent's amnesia* (no memory between
+   sessions), not the code's inadequacy. The residual worry the thread keeps: a
+   findings doc is a cache, and a stale cache lies with more authority than a
+   commit because it sits where the agent reads first.
 5. **Internal tension: manual duplication (wsxcde).** The duplicated-rules
    change-set is hand-managed drift control in a project that preaches single-
    owner facts. Defensible (prose reinforcement ≠ code-derived copy) but it isn't

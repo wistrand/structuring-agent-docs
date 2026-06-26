@@ -3,6 +3,14 @@
 Maintainer-facing notes. Not loaded by the agent at runtime — the skill itself
 is `SKILL.md` plus `references/` and `templates/`.
 
+## Commits
+
+This project deliberately skips commit-message conventions. The history is the
+log and the diffs — they show what changed and why — so a short subject line is
+enough; no structured format, no body, no CHANGELOG. This is a chosen tradeoff,
+not an oversight: don't "fix" it by backfilling prose messages or imposing a
+convention.
+
 ## Cross-file links
 
 The skill's main rot risk is cross-file markdown links going stale. When you

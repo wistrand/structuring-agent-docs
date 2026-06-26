@@ -9,6 +9,25 @@ Lay out a repository's documentation so an agent picks up only the context a
 task needs, instead of reading the whole codebase or one giant file. The model
 below is distilled from real projects that an agent works in daily.
 
+## What belongs in a doc
+
+Prefer executable enforcement. If a rule can be a type, make it a type; if it can
+be a test, make it a test; if a doc can be generated from source, generate it. A
+doc that restates what a type or a test already guarantees is a smell: delete it
+and write the type or the test. Prose is only for the residue none of those can
+hold: the *why* behind a constraint, the approach that was tried and rejected,
+the platform trap that cost an hour to diagnose. If a finding could be a test,
+the fix is to add the test.
+
+That residue is worth writing because of what these docs are: an agent's memory
+for its future self. An agent has no memory between sessions, so the gotcha it
+diagnosed today is gone tomorrow unless it records it. The doc compensates for
+the agent's amnesia, not for the code's inadequacy, and that is the line between
+documentation as a code smell and documentation as a working note. "The why is in
+the commit" is true and unreachable: an agent editing one file does not blame
+every line and read each introducing commit. A findings doc is that why, curated
+and placed where the next agent reads first.
+
 ## The layered model
 
 Three tiers, split by audience and by how much an agent loads at once:
@@ -82,7 +101,9 @@ Start from the templates in `templates/` and delete what doesn't apply.
   switch to prefixes (`architecture-audio.md`, `architecture-net.md`) once a
   second one appears.
 - **Capture the why.** A gotchas/findings doc holds non-obvious traps and the
-  reasoning behind constraints, the things source code can't tell an agent.
+  reasoning behind constraints, the things source code can't tell an agent. This
+  is the residue from "What belongs in a doc": if the trap could be a test, add
+  the test instead. Prose is for what can't be made executable.
 - **Flag load-bearing invariants** explicitly so an agent knows what must stay
   true before it changes anything. Put global, cross-cutting rules in CLAUDE.md's
   `Invariants` section; keep an agent_docs `Invariants` section to subsystem-local

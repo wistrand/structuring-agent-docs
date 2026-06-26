@@ -86,6 +86,10 @@ truncated JSON with a 200, so the parse succeeded on a partial object.
 mean a complete payload.
 ```
 
+This earns its place as prose because the cap is a platform quirk with no cheap
+test to assert it. That is the bar from SKILL.md's "What belongs in a doc": if a
+finding could be a test, add the test; write it up only when it can't.
+
 Reference these from `CLAUDE.md` with a "skim before touching X" hint.
 
 ## Invariants

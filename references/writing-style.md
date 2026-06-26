@@ -71,6 +71,15 @@ names, rules, constraints, and the reasoning behind them. Cut explanations of
 general concepts the agent already knows. Every paragraph should justify its
 cost. If it restates something obvious, delete it.
 
+## Don't copy specific values out of code
+
+Constants — sizes, caps, timeouts, ports, version numbers — drift the moment the
+code changes, and a confidently wrong number is worse than none. Name the
+constant and where it lives ("the per-call cap in `entropy.ts`"), or state the
+property qualitatively ("fill in chunks; a single oversized call throws"). Quote
+a literal value only when it's a fixed external contract (an RFC field width, a
+wire-format magic byte) that won't change, and say why it's fixed.
+
 ## No time-sensitive content
 
 Don't write "before August use the old API; after, the new one." It goes stale

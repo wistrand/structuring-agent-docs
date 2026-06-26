@@ -53,7 +53,8 @@ Copy this checklist when creating or reorganizing a project's agent docs:
 - [ ] 5. Add a Gotchas/findings doc for non-obvious traps and decision history
 - [ ] 6. Add an Invariants section listing load-bearing rules
 - [ ] 7. Add a Documentation Style block (see references/writing-style.md)
-- [ ] 8. Generate any doc derivable from source (e.g. settings) instead of hand-writing
+- [ ] 8. Generate any doc derivable from source (settings, CLI --help) via a build
+        target instead of hand-writing — the step most often skipped, first to rot
 ```
 
 Start from the templates in `templates/` and delete what doesn't apply.
@@ -63,18 +64,36 @@ Start from the templates in `templates/` and delete what doesn't apply.
 - **One level deep.** Every `agent_docs/` file links directly from `CLAUDE.md`.
   Don't chain doc → doc → doc; an agent previews nested files with `head` and
   misses content. (Cross-links *between* agent_docs are fine as extras.)
-- **Markdown links, not backticks.** Write `[agent_docs/architecture.md](agent_docs/architecture.md)`
-  so the doc set is a navigable graph, not a pile of filenames.
+- **Markdown links for navigable docs, not backticks.** Write
+  `[agent_docs/architecture.md](agent_docs/architecture.md)` for every doc an
+  agent should be able to follow, so the doc set is a graph, not a pile of
+  filenames. Backticks are fine for source paths in a Layout table or inline
+  code (`src/cli.ts`) — the rule is about doc references you want followed, not
+  every filename.
 - **One topic per file, self-contained.** An agent editing audio reads
   `architecture-audio.md` alone, without first reading five others.
 - **Name by type with a prefix.** `architecture-*`, `design-*`, `plan-*`,
   `research-*`, plus `gotchas`/`findings`. Kebab-case, descriptive, no numbers.
+  Use the bare type name (`architecture.md`) while there is one doc of that type;
+  switch to prefixes (`architecture-audio.md`, `architecture-net.md`) once a
+  second one appears.
 - **Capture the why.** A gotchas/findings doc holds non-obvious traps and the
   reasoning behind constraints, the things source code can't tell an agent.
 - **Flag load-bearing invariants** explicitly so an agent knows what must stay
-  true before it changes anything.
-- **Generate, don't drift.** Any doc derivable from code (settings, CLI help)
-  should be produced by a build target, not maintained by hand.
+  true before it changes anything. Put global, cross-cutting rules in CLAUDE.md's
+  `Invariants` section; keep an agent_docs `Invariants` section to subsystem-local
+  rules only. Never state the same rule in both — the two copies drift. If a
+  subsystem doc needs a global invariant for context, link to CLAUDE.md instead
+  of restating it.
+- **Generate, don't drift.** Any doc derivable from code (settings, CLI `--help`,
+  an API schema) should be produced by a build target, not maintained by hand. If
+  the CLI prints its own help, add a task that captures it into a doc
+  (`deno task gen-docs > docs/cli.md`) rather than hand-listing options in the
+  README, where they silently fall out of sync. This step is the easiest to skip
+  and the first to rot — wire it up when the project is small. The same hazard
+  applies to lone constants (sizes, caps, timeouts, versions) pasted into prose:
+  name the constant and its home, don't copy the value (see
+  [references/writing-style.md](references/writing-style.md)).
 - **Alias for other tools.** Symlink `AGENTS.md → CLAUDE.md` so tools expecting
   a different entry filename find one source of truth, not a stale copy.
 

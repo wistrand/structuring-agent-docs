@@ -18,7 +18,8 @@ the top-level model if needed: [architecture.md](architecture.md).>
 
 ## Invariants
 
-Subsystem-specific rules that must stay true.
+Subsystem-specific rules that must stay true. Global rules that span the whole
+repo live in CLAUDE.md; link to them rather than restating them here.
 
 - <e.g. "the pool is fixed-size; never reallocate mid-frame">
 

@@ -47,8 +47,9 @@ Three rules cover all three shapes:
   shared rules live once instead of being copied (and drifting) into each project.
 - **Shared facts get exactly one owner.** A wire format, a status scale, an auth
   flow lives in one doc, in the project that owns it; everyone else links to it and
-  nobody restates it. This is the highest-value rule, especially for a contract
-  binding a client and server that must agree. A short labeled pointer
+  nobody restates it. It matters most for a contract binding a client and server
+  that must agree, where two copies drift the moment one side changes. A short
+  labeled pointer
   ("authoritative source is X") is fine; an unlabeled second copy is the drift.
 
 When siblings live in separate repos with no common root, the umbrella is itself a

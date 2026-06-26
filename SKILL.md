@@ -12,13 +12,14 @@ the rest.
 
 ## What belongs in a doc
 
-Prefer executable enforcement: if a rule can be a type or a test, or a doc can be
-generated from source, do that instead of writing prose. Prose is only for the
-residue none of those can hold: the *why* behind a constraint, an approach tried
-and rejected, a platform trap that cost an hour to diagnose. Write that residue
-because these docs are the agent's memory for its future self — it has none
-between sessions, and "the why is in the commit" is true but unreachable to an
-agent editing one file.
+When you document a codebase, let code carry what code can: if a rule can be a
+type or a test, or a doc can be generated from source, do that — a prose doc that
+restates what a type or test already guarantees only drifts out of sync. The
+residue none of those can hold is the point of these docs, not a leftover: the
+*why* behind a constraint, an approach tried and rejected, a platform trap that
+cost an hour to diagnose. Write it because these docs are the agent's memory for
+its future self — it has none between sessions, and "the why is in the commit" is
+true but unreachable to an agent editing one file.
 
 ## The layered model
 
@@ -123,8 +124,8 @@ Start from the templates in `templates/` and delete what doesn't apply.
   second one appears.
 - **Capture the why.** A gotchas/findings doc holds non-obvious traps and the
   reasoning behind constraints, the things source code can't tell an agent. This
-  is the residue from "What belongs in a doc": if the trap could be a test, add
-  the test instead. Prose is for what can't be made executable.
+  is the residue from "What belongs in a doc": if a trap could be a test, add the
+  test; what stays in prose is what no test can hold.
 - **Flag critical invariants** explicitly so an agent knows what must stay
   true before it changes anything. Put global, cross-cutting rules in CLAUDE.md's
   `Invariants` section; keep an agent_docs `Invariants` section to subsystem-local

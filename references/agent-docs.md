@@ -62,8 +62,8 @@ carry forward into the architecture doc; they aren't thrown away.
 
 ## Gotchas and findings
 
-The highest-value doc for an agent, because it holds what source code cannot
-show: non-obvious traps and the reasoning behind constraints.
+This doc holds what source code cannot show: non-obvious traps and the reasoning
+behind constraints.
 
 Two styles, use either or both:
 

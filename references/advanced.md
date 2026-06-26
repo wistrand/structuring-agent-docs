@@ -4,7 +4,7 @@ The README / CLAUDE.md / `agent_docs/` model holds at any size. Two kinds of gro
 need a bit more, adopted only when the pain appears: one project that accumulates
 docs or gets published, and work that spans several projects.
 
-The alias that lets other agent tools find the hub (`ln -s CLAUDE.md AGENTS.md`) is
+The alias that lets other agent tools find the entry point (`ln -s CLAUDE.md AGENTS.md`) is
 a base-model rule, not a scaling one; see SKILL.md "Core rules".
 
 ## When one project grows
@@ -15,9 +15,9 @@ A flat link index stops scaling around 10-15 docs. Past that:
   app developers vs contributors, current state vs future plans. An agent then
   isn't routed into a plan doc when it wanted current behavior.
 - **Add a quick-reference table** (`What | Where` for the few things looked up
-  constantly: entry point, run command) and a **reading-order path** (a numbered
-  onboarding sequence, not a table of contents) near the top of the hub.
-- **Keep "why and when" out of the hub.** A MANIFESTO or FAQ for stance and
+  constantly: the main module, run command) and a **reading-order path** (a numbered
+  onboarding sequence, not a table of contents) near the top of the entry point.
+- **Keep "why and when" out of the entry point.** A MANIFESTO or FAQ for stance and
   tradeoffs targets decision-makers, not an agent mid-edit; link it from the
   README rather than loading it every session.
 - **If docs are published as a site, generate it from the source markdown** so the
@@ -37,12 +37,13 @@ A flat link index stops scaling around 10-15 docs. Past that:
 
 Three rules cover all three shapes:
 
-- **The model nests, and depth resets at each boundary.** An umbrella hub (shared
-  conventions, a package map, repo-wide invariants) links to each project's
-  CLAUDE.md; that hub is itself a fresh one-level-deep root over its own
-  `agent_docs/`. Nesting umbrella → project hub → deep dive is correct, not a
-  violation of "one level deep".
-- **Each child hub inherits, then documents only deltas.** A package hub opens
+- **The model nests, and depth resets at each boundary.** An umbrella entry point
+  (shared conventions, a package map, repo-wide invariants) links to each project's
+  CLAUDE.md; that entry point is itself a fresh one-level-deep root over its own
+  `agent_docs/`. Nesting umbrella → project entry point → deep dive is correct, not
+  a violation of "one level deep".
+- **Each child entry point inherits, then documents only deltas.** A package entry
+  point opens
   with "Inherits the root conventions; package-specific deltas below," so the
   shared rules live once instead of being copied (and drifting) into each project.
 - **Shared facts get exactly one owner.** A wire format, a status scale, an auth

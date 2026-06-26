@@ -94,7 +94,7 @@ Reference these from `CLAUDE.md` with a "skim before touching X" hint.
 
 ## Invariants
 
-Load-bearing properties that must stay true. An agent reads them before changing
+Critical properties that must stay true. An agent reads them before changing
 a subsystem so it knows what a careless edit silently breaks. Examples:
 
 - "Same input → same pixels forever" (determinism for URL hashing)

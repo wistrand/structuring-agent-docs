@@ -1,7 +1,7 @@
 # Working in this repo
 
 Read this first when editing the skill. The deliverable is `SKILL.md` plus
-`references/` and `templates/`; this file is the hub for an agent maintaining
+`references/` and `templates/`; this file is the entry point for an agent maintaining
 them, auto-loaded each session. `AGENTS.md` symlinks here. `README.md` is the
 human-facing overview (what the skill is, how to install) and holds the file tree.
 
@@ -34,7 +34,7 @@ the product.
 Should fire:
 
 - "Help me set up a CLAUDE.md for this repo." — core case.
-- "My CLAUDE.md is 900 lines and unwieldy; how do I split it?" — too-large-hub.
+- "My CLAUDE.md is 900 lines and unwieldy; how do I split it?" — too-large entry point.
 - "How should I organize agent_docs / AGENTS.md so Claude navigates the repo?" —
   agent-navigation framing.
 - "We have a monorepo — how do we document it for coding agents?" — multi-project,

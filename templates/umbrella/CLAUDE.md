@@ -1,4 +1,4 @@
-<!-- Umbrella hub for a set of sibling repos. It stands alone: it maps the repos and
+<!-- Umbrella entry point for a set of sibling repos. It stands alone: it maps the repos and
      owns the cross-repo layer, and it links to each sibling's own CLAUDE.md rather
      than re-summarizing it. Refer to siblings by the logical name in the Repos
      table, never by a local path. -->

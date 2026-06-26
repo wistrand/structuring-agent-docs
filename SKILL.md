@@ -1,6 +1,6 @@
 ---
 name: structuring-agent-docs
-description: Structures a software project's documentation so AI coding agents navigate it efficiently. Covers the README.md / CLAUDE.md / agent_docs/ split, a CLAUDE.md hub that links one level deep to topic-focused agent_docs files (progressive disclosure), naming conventions, gotchas/findings docs, critical invariants, generated docs, and agent-facing writing style. Use when setting up or reorganizing CLAUDE.md, AGENTS.md, or agent_docs/ for a repository, when a CLAUDE.md has grown too large, or when the user asks how to document a codebase for coding agents.
+description: Structures a software project's documentation so AI coding agents navigate it efficiently. Covers the README.md / CLAUDE.md / agent_docs/ split, a CLAUDE.md entry point that links one level deep to topic-focused agent_docs files (progressive disclosure), naming conventions, gotchas/findings docs, critical invariants, generated docs, and agent-facing writing style. Use when setting up or reorganizing CLAUDE.md, AGENTS.md, or agent_docs/ for a repository, when a CLAUDE.md has grown too large, or when the user asks how to document a codebase for coding agents.
 ---
 
 # Structuring agent docs
@@ -25,17 +25,17 @@ true but unreachable to an agent editing one file.
 
 Three tiers, split by audience and by how much an agent loads at once:
 
-| Tier       | File(s)                             | Audience | Role                                                                                                    |
-|------------|-------------------------------------|----------|---------------------------------------------------------------------------------------------------------|
-| User guide | `README.md`                         | Humans   | What it is, why, quick start, how to use. Narrative.                                                    |
-| Agent hub  | `CLAUDE.md` (+ `AGENTS.md` symlink) | Agents   | "Read first." Layout, build/run, conventions, invariants, gotchas, and a link index into `agent_docs/`. |
-| Deep dives | `agent_docs/*.md`                   | Agents   | One topic per file, self-contained, loaded only when that subsystem is touched.                         |
+| Tier        | File(s)                             | Audience | Role                                                                                                    |
+|-------------|-------------------------------------|----------|---------------------------------------------------------------------------------------------------------|
+| User guide  | `README.md`                         | Humans   | What it is, why, quick start, how to use. Narrative.                                                    |
+| Entry point | `CLAUDE.md` (+ `AGENTS.md` symlink) | Agents   | "Read first." Layout, build/run, conventions, invariants, gotchas, and a link index into `agent_docs/`. |
+| Deep dives  | `agent_docs/*.md`                   | Agents   | One topic per file, self-contained, loaded only when that subsystem is touched.                         |
 
 Optional fourth tier: `docs/` for generated assets (screenshots, icons) and
 `notes/` for informal design journals an agent doesn't rely on.
 
 Why split this way: the agent reads `CLAUDE.md` every session, so keep it the
-small routing layer; reference in `agent_docs/` isn't loaded until the agent
+small routing entry point; reference in `agent_docs/` isn't loaded until the agent
 follows a link. That trims the always-on context — but only to the extent the
 agent follows the right links, which is the tradeoff under "Factor out only
 what's safe to miss". It's the progressive-disclosure idea behind a skill's
@@ -48,29 +48,30 @@ linking, single-owner facts, capture-the-why — is tool-independent. The specif
 names below are this skill's Claude Code bindings of those concepts; on another
 toolchain, remap them. The model is the durable part; the filenames and the
 import-mechanic warning are what's exposed to tooling churn, so when a tool renames
-the hub or drops a mechanism, change a row here, not the model.
+the entry point or drops a mechanism, change a row here, not the model.
 
 | Concept (durable)                | Claude Code binding          |
 |----------------------------------|------------------------------|
-| Agent hub, read first            | `CLAUDE.md`                  |
-| The hub being loaded every turn  | the harness auto-loads it    |
-| Cross-tool alias for the hub     | `AGENTS.md` (symlink to it)  |
+| Entry point, read first          | `CLAUDE.md`                  |
+| Entry point always in context    | the harness auto-loads it    |
+| Cross-tool alias for it          | `AGENTS.md` (symlink to it)  |
 | On-demand deep dives             | `agent_docs/*.md`            |
 | Eager whole-file import to avoid | Claude Code `@path` imports  |
 | How this skill itself ships      | `SKILL.md` + bundled files   |
 
 `agent_docs/` is already a plain directory name with no tool dependency. One
-binding is a behavior, not a filename: the "cheap hub" economics assume the harness
-auto-loads the hub every turn, so the references' "read every session" phrasing is
-that Claude Code behavior, not a universal law — on a tool that doesn't auto-load,
-the always-on guarantee weakens and you lean harder on linking. `CLAUDE.md`, that
-auto-load assumption, and the `@`-import warning are the first things to revisit if
-the ecosystem shifts (e.g. toward `AGENTS.md` as the primary hub).
+binding is a behavior, not a filename: the "cheap entry point" economics assume the
+harness auto-loads the entry point every turn, so the references' "read every
+session" phrasing is that Claude Code behavior, not a universal law — on a tool that
+doesn't auto-load, the always-on guarantee weakens and you lean harder on linking.
+`CLAUDE.md`, that auto-load assumption, and the `@`-import warning are the first
+things to revisit if the ecosystem shifts (e.g. toward `AGENTS.md` as the primary
+entry point).
 
 ## Two shapes of CLAUDE.md
 
-A thin index (~80 lines, a pure dispatcher) suits cleanly separable subsystems; a
-thick hub (a few hundred lines, design notes and invariants inline) suits one
+A thin entry point (~80 lines, pure routing) suits cleanly separable subsystems; a
+thick entry point (a few hundred lines, design notes and invariants inline) suits one
 dense codebase where most edits touch shared rules. Both still link out for the
 deepest dives. When a CLAUDE.md crosses ~500 lines or starts carrying full
 subsystem detail, extract that detail into an `agent_docs/<topic>.md` and leave a
@@ -105,7 +106,7 @@ Start from the templates in `templates/` and delete what doesn't apply.
   paths (`src/cli.ts`), not for docs you want followed. Don't reference a deep dive
   with a mechanism that loads the whole file up front — in Claude Code that's
   `@path` imports, which enter context at session start and save nothing,
-  defeating the hub. See
+  defeating the entry point. See
   [references/claude-md.md](references/claude-md.md).
 - **Factor out only what's safe to miss.** Splitting trades a best case (the agent
   follows the link, context stays lean) for a worst case (it skips the link and
@@ -113,7 +114,7 @@ Start from the templates in `templates/` and delete what doesn't apply.
   whose absence silently corrupts an edit (invariants, data-loss gotchas,
   read-before-you-touch warnings) stays inline in `CLAUDE.md`, which is
   loaded every session. Push only safely-skippable subsystem reference to
-  `agent_docs/`. When in doubt, keep it in the hub. See
+  `agent_docs/`. When in doubt, keep it in the entry point. See
   [references/claude-md.md](references/claude-md.md).
 - **One topic per file, self-contained.** An agent editing audio reads
   `architecture-audio.md` alone, without first reading five others.
@@ -156,16 +157,16 @@ one owner the others reference). Both are in
 
 ## References
 
-- [references/claude-md.md](references/claude-md.md): the full repo layout and what belongs where, CLAUDE.md anatomy, thin-index vs thick-hub, the link-index pattern, and what to factor out.
+- [references/claude-md.md](references/claude-md.md): the full repo layout and what belongs where, CLAUDE.md anatomy, thin vs thick entry point, the link-index pattern, and what to factor out.
 - [references/agent-docs.md](references/agent-docs.md): naming prefixes, doc types, gotchas/findings, invariants, generated docs, and dated data artifacts/fixtures.
 - [references/writing-style.md](references/writing-style.md): agent-facing prose: no AI-isms, markdown links, aligned tables, no time-sensitive content.
 - [references/advanced.md](references/advanced.md): beyond the base model — one project that grows large or published (audience index, onboarding, llms.txt) and work that spans projects (monorepos, siblings, surfaces: the nesting model, single-owner shared facts, umbrella mapping).
 
 ## Templates
 
-- [templates/CLAUDE.md](templates/CLAUDE.md): starter agent hub.
+- [templates/CLAUDE.md](templates/CLAUDE.md): starter entry point.
 - [templates/agent_docs/architecture.md](templates/agent_docs/architecture.md): subsystem deep-dive skeleton.
 - [templates/agent_docs/gotchas.md](templates/agent_docs/gotchas.md): traps-and-findings skeleton.
 - [templates/agent_docs/plan.md](templates/agent_docs/plan.md): saved-planning skeleton, promoted to architecture when built.
-- [templates/umbrella/CLAUDE.md](templates/umbrella/CLAUDE.md): standalone-umbrella hub (repo table, shared contracts, integration view).
+- [templates/umbrella/CLAUDE.md](templates/umbrella/CLAUDE.md): standalone-umbrella entry point (repo table, shared contracts, integration view).
 - [templates/umbrella/agent_docs/integration-note.md](templates/umbrella/agent_docs/integration-note.md): optional per-repo integration note.

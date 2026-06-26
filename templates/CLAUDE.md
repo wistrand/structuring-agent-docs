@@ -1,5 +1,5 @@
-<!-- Starter agent hub. Delete sections that don't apply; keep it the cheap,
-     always-loaded routing layer. Move deep detail into agent_docs/ and link. -->
+<!-- Starter entry point. Delete sections that don't apply; keep it the cheap,
+     always-loaded routing entry point. Move deep detail into agent_docs/ and link. -->
 
 Guidance for agents working in this repo. Read this first, then the relevant
 file in `agent_docs/`.
@@ -53,4 +53,4 @@ file instead — don't state the same rule in both places, the copies drift.
   Backticks are fine for source paths in tables and inline code. Align table columns.
 - No AI-isms (no "powerful", "seamlessly", "leverage", rule-of-three, "not just
   X but Y"). No em dashes or emojis in project copy. State the point directly.
-- Keep this file the routing layer; move subsystem detail into agent_docs/.
+- Keep this file the routing entry point; move subsystem detail into agent_docs/.

@@ -4,7 +4,7 @@
 - The full layout
 - README, docs/, notes/: the other tiers
 - Purpose of CLAUDE.md
-- Thin index vs thick hub
+- Thin vs thick entry point
 - Section-by-section
 - The link-index pattern
 - When to split out
@@ -50,17 +50,17 @@ Not every project needs every file. A small one may have only `README.md`,
 
 `CLAUDE.md` is the agent's entry point, read every session. It orients the agent
 and routes it to the right `agent_docs/` file. It is not the place for full
-subsystem detail; keep it the cheap, always-loaded routing layer.
+subsystem detail; keep it the cheap, always-loaded routing entry point.
 
 Open with one line that sets the contract, e.g.:
 
 > Guidance for agents working in this repo. Read this first, then the relevant
 > file in `agent_docs/`.
 
-## Thin index vs thick hub
+## Thin vs thick entry point
 
-**Thin index** (~80 lines). Subsystems are cleanly separable, so the hub stays
-a dispatcher:
+**Thin entry point** (~80 lines). Subsystems are cleanly separable, so it stays
+pure routing:
 
 ```
 What this is        one paragraph + a small diagram
@@ -70,7 +70,7 @@ Docs                link list into agent_docs/, one line each
 Conventions         the handful of non-negotiable rules
 ```
 
-**Thick hub** (a few hundred lines). One dense codebase where most edits touch
+**Thick entry point** (a few hundred lines). One dense codebase where most edits touch
 shared rules, so design notes and invariants live inline but deepest detail
 still links out:
 
@@ -127,16 +127,16 @@ The import graph must stay acyclic, see [agent_docs/architecture.md](agent_docs/
 Keep links one level deep (SKILL.md "Core rules") — the link index is where that
 rule binds: every agent_docs file reachable directly from CLAUDE.md, not only via
 another doc. The one place depth resets is a project boundary: in a monorepo an
-umbrella hub links to each package's CLAUDE.md, and that package hub is a fresh
-one-level-deep root. See [advanced.md](advanced.md).
+umbrella entry point links to each package's CLAUDE.md, and that package entry
+point is a fresh one-level-deep root. See [advanced.md](advanced.md).
 
 **Link, don't `@`-import.** Use plain markdown links (`[agent_docs/x.md](agent_docs/x.md)`)
 for deep dives, not Claude Code's `@path` import syntax. `@`-imports load
 **eagerly**: the imported file's full content is pulled into context at session
 start, so it costs the same as inlining and saves nothing. That defeats the whole
-point of a routing hub. A markdown link is just a pointer the agent follows only
-when a task needs it — that on-demand read is what makes the hub the cheap,
-always-loaded layer. Reserve `@`-imports for the rare file you genuinely want in
+point of a routing entry point. A markdown link is just a pointer the agent follows
+only when a task needs it — that on-demand read is what makes the entry point the
+cheap, always-loaded layer. Reserve `@`-imports for the rare file you genuinely want in
 context every session (and even then, prefer keeping it short and inline). The
 trap: someone "tidies up" the link index into `@agent_docs/...` imports thinking
 it is equivalent, and silently turns the whole `agent_docs/` tree into always-on
@@ -160,7 +160,7 @@ Move content from CLAUDE.md into a new `agent_docs/<topic>.md` when:
   algorithm derivations), or
 - detail is only relevant to one subsystem an agent rarely touches.
 
-Leave a one-line link behind. The hub shrinks back to routing.
+Leave a one-line link behind. The entry point shrinks back to routing.
 
 ### Split by blast radius, not just size
 
@@ -168,16 +168,16 @@ Size and topic say what *can* move; blast radius says what *should*. Splitting i
 not free, and its cost is not the tokens — it is retrieval risk. The agent may not
 follow the link, and that failure is **silent and asymmetric**:
 
-- Keep a fact in the hub and it is never relevant: you wasted some tokens, but the
+- Keep a fact in the entry point and it is never relevant: you wasted some tokens, but the
   agent had the fact.
 - Move a fact to a deep dive and the agent skips the link: the agent now operates
   *without* the fact and has no signal that it is missing. The edit proceeds on
   incomplete context and looks fine until it isn't.
 
-The hub is the one tier exempt from this risk, because the harness loads CLAUDE.md
-every session — it is in context whether or not the agent chooses to read a link.
-So the rule is: **anything whose absence silently corrupts an edit stays in the
-hub.** Load-bearing invariants, data-loss gotchas, and read-before-you-touch
+The entry point is the one tier exempt from this risk, because the harness loads
+CLAUDE.md every session — it is in context whether or not the agent chooses to read
+a link. So the rule is: **anything whose absence silently corrupts an edit stays in
+the entry point.** Critical invariants, data-loss gotchas, and read-before-you-touch
 warnings are kept inline (and *also* linked from the relevant deep dive as
 context), never relocated wholesale into a file the agent has to remember to open.
 What moves to `agent_docs/` is reference an agent pulls in deliberately when it
@@ -188,7 +188,7 @@ best case (perfect retrieval, minimal context) and pays for it with a worst case
 (silent information loss) that a single fat file does not have. Spend that trade
 only where the worst case is "the agent re-reads code it could have been told
 about," not "the agent breaks an invariant it never saw." When unsure which, the
-content stays in the hub.
+content stays in the entry point.
 
 ## Where does a fact go?
 
@@ -199,5 +199,5 @@ content stays in the hub.
 - It's not built yet → `agent_docs/plan-<topic>.md`
 - It's derivable from source → generate it, don't write it
 - It's background colour, not needed to make changes → `notes/`
-- It's shared across projects → the one owning hub, referenced from the others
+- It's shared across projects → the one owning entry point, referenced from the others
   (see [advanced.md](advanced.md))

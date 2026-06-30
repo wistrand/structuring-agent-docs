@@ -3,6 +3,7 @@
 ## Contents
 - Naming by prefix
 - Doc types
+- Point into the source
 - Gotchas and findings
 - Invariants
 - Generated docs
@@ -34,7 +35,9 @@ gets unwieldy or the subsystems are independently editable.
 
 - **architecture-\***: reference. Module responsibilities, data flow, the
   mental model, concrete invariants for that subsystem. Dense; assumes the agent
-  knows the language and domain. This is what replaces reading the source.
+  knows the language and domain. This is what replaces reading the source — so it
+  points *into* the source: each piece names the file (and key symbol) that
+  implements it (see "Point into the source" below).
 - **design-\***: a spec with rationale: a JSON schema, a file format, the math
   behind an algorithm, and why it's shaped that way.
 - **plan-\***: saved planning for work not built yet, or only partly. Goal, gap,
@@ -59,6 +62,39 @@ carry forward into the architecture doc; they aren't thrown away.
   `architecture-*` as they ship.
 - Note the move in CLAUDE.md so an agent doesn't hunt for the old plan: "`plan-x`
   was promoted to `architecture-x` (implemented)."
+
+## Point into the source
+
+A doc that says what a subsystem does should also say where each piece lives in the
+code: the file path, plus the key symbol when it helps (`getTier()` in
+`src/detect.ts`, not just `src/detect.ts`). This is the source-file target type of
+the link-index pattern ([claude-md.md](claude-md.md)): the doc becomes an index into
+the source, so the agent reads the prose and jumps straight to the right file and
+function instead of grepping. It is what makes "replaces reading the source" real:
+the prose is the map, the path-plus-symbol is the coordinate.
+
+"Source" here is whatever holds the real thing, not only code: a file and symbol in
+a codebase, but a chapter or scene in a book, a clause in a contract, a table or
+column in a dataset. Point at that authoritative artifact in whatever form
+addresses it — the rest of this skill's code examples are just the most common case.
+
+This lives in the CLAUDE.md **Layout** table (top-level paths → roles), an
+architecture doc's **Components** table or a short **Key files** list (each unit →
+its file and responsibility), and inline wherever you name where a behavior is
+implemented. Use plain backtick paths, not markdown links — they point at code the
+agent opens directly, not docs to follow. Name the symbol too: it stays greppable
+when a file moves, which softens the one cost here — a renamed file leaving a stale
+path.
+
+Index authoritative source only; skip what's derived, vendored, or `.gitignore`d.
+A gitignore hit is a useful first-pass filter — it catches build output,
+dependencies, caches, and secrets — but treat it as "probably derived or
+dependency, so reason about *why* it's ignored," not an automatic omit. Two
+catches: a *committed* generated file is still derived, so mark it generated and
+point at its producer, not at the output; and a gitignored config/secret file
+(`.env.local`) is a signal to document its *requirement* as a gotcha — "needs
+`API_KEY`, `DB_URL`; uncommitted" — never to quote its contents, which both drift
+and leak if the docs are ever published.
 
 ## Gotchas and findings
 

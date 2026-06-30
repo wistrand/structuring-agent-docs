@@ -10,6 +10,10 @@ needs without reading the whole codebase or one giant file. The model below is a
 starting point, not a mandate — take the parts that fit a given project and skip
 the rest.
 
+The examples are from software projects, but the model fits any project whose work
+lives in text artifacts — a book's chapters, a contract's clauses, a dataset's
+tables. Read "source" as "the authoritative artifact," whatever that is for you.
+
 ## What belongs in a doc
 
 When you document a codebase, let code carry what code can: if a rule can be a

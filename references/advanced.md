@@ -53,9 +53,12 @@ Three rules cover all three shapes:
   labeled pointer
   ("authoritative source is X") is fine; an unlabeled second copy is the drift.
 
-When siblings live in separate repos with no common root, the umbrella is itself a
-repo: a table mapping each repo to its source and its CLAUDE.md, plus the
-integration view (who provides and consumes which contract) that no single repo's
-docs cover. It references each repo's own CLAUDE.md as the summary; it must not
-keep a second hand-written copy. Relative markdown links break across repos, so
-refer to siblings by name, or by published URL if they ship an `llms.txt`.
+When siblings live in separate repos with no common root, the umbrella is itself an
+entry point one level up: a table mapping each repo to its source and its CLAUDE.md,
+plus the integration view (who provides and consumes which contract) that no single
+repo's doc set covers. So the umbrella is just the link-index pattern with cross-repo
+targets — each row points at another repo's entry point, which the generalized model
+in [claude-md.md](claude-md.md) calls the third target type. It references each
+repo's own CLAUDE.md as the summary, never a second hand-written copy; and since
+relative paths don't resolve across repos, that reference is by logical name, or by
+published URL if the sibling ships an `llms.txt`.

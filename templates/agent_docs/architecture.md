@@ -16,6 +16,9 @@
 <What this subsystem does and where it sits in the whole. One paragraph. Link to
 the top-level model if needed: [architecture.md](architecture.md).>
 
+**Key files**: `src/<entry>.ts` (`<mainSymbol>`), `src/<helper>.ts` — the source to
+open first. Name the symbol, not just the path, so the doc indexes the code.
+
 ## Invariants
 
 Subsystem-specific rules that must stay true. Global rules that span the whole

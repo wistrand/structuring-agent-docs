@@ -107,6 +107,23 @@ before linking.
 
 ## The link-index pattern
 
+An entry point is an index of references, and the form of each reference follows
+what it points at:
+
+- **A local doc** — a deep dive in `agent_docs/`. A markdown link, kept one level
+  deep (SKILL.md "Core rules"), followed on demand to read. The common case, and
+  the rest of this section.
+- **A source artifact** — the file (or chapter, clause, dataset) that holds the
+  real thing: a backtick path, ideally naming the key symbol (`getTier()` in
+  `src/detect.ts`); the agent opens it directly, not as a doc to follow. See
+  [agent-docs.md](agent-docs.md) "Point into the source".
+- **Another repo's entry point** — across a project boundary, addressed by logical
+  name or URL, since relative paths don't resolve across repos. See
+  [advanced.md](advanced.md).
+
+Same index pattern, three target types; what differs is only how the target is
+addressed. For the local-doc case:
+
 List every `agent_docs/` file with a markdown link and a one-line purpose. Add a
 "read before you touch X" hint where it matters:
 

@@ -32,6 +32,9 @@
   }
   .links a.primary { background: #2563eb; color: #fff; border-color: #2563eb; }
   footer { margin-top: 3rem; font-size: .85rem; opacity: .7; }
+  dl { margin: .5rem 0 0; }
+  dt { font-weight: 600; margin-top: .6rem; }
+  dd { margin: .15rem 0 0 1.25rem; }
   a { color: #2563eb; }
   .diagram { width: 100%; height: auto; margin: 1rem 0 .5rem; }
 </style>
@@ -67,14 +70,17 @@ trap that cost an hour, the approach already tried and rejected.</p>
 
 <h2>The model</h2>
 <p>Three tiers, split by audience and by how much loads at once:</p>
-<ul>
-  <li><strong><code>README.md</code></strong> &mdash; for humans: what it is, why, quick start.</li>
-  <li><strong><code>CLAUDE.md</code></strong> &mdash; the agent's "read first" entry point:
-    layout, conventions, invariants, gotchas, and a link index. Aliased to
-    <code>AGENTS.md</code> so other tools find it too.</li>
-  <li><strong><code>agent_docs/*.md</code></strong> &mdash; one topic per file, self-contained,
-    loaded only when that subsystem is touched.</li>
-</ul>
+<dl>
+  <dt><code>README.md</code></dt>
+  <dd>For humans: what it is, why, quick start.</dd>
+  <dt><code>CLAUDE.md</code></dt>
+  <dd>The agent's "read first" entry point: layout, conventions, invariants,
+    gotchas, and a link index. Aliased to <code>AGENTS.md</code> so other tools
+    find it too.</dd>
+  <dt><code>agent_docs/*.md</code></dt>
+  <dd>One topic per file, self-contained, loaded only when that subsystem is
+    touched.</dd>
+</dl>
 <p>Progressive disclosure applied to a whole repo. The skill carries the rules that
 make it hold (one level deep, name by type, capture the why, point into the source
 and let code win on conflict, generate docs that can be generated), plus deep dives

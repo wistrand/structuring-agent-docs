@@ -22,7 +22,7 @@ A flat link index stops scaling around 10-15 docs. Past that:
   README rather than loading it every session.
 - **If docs are published as a site, the published output is a build artifact, not
   a source.** However it's generated, the source of truth stays in the repo's
-  markdown — an agent edits that and republishes, never the deployed copy. Mark the
+  markdown. An agent edits that and republishes, never the deployed copy. Mark the
   published tree as generated so nobody hand-edits it.
 
 ## When work spans projects
@@ -57,7 +57,7 @@ When siblings live in separate repos with no common root, the umbrella is itself
 entry point one level up: a table mapping each repo to its source and its CLAUDE.md,
 plus the integration view (who provides and consumes which contract) that no single
 repo's doc set covers. So the umbrella is just the link-index pattern with cross-repo
-targets — each row points at another repo's entry point, which the generalized model
+targets: each row points at another repo's entry point, which the generalized model
 in [claude-md.md](claude-md.md) calls the third target type. It references each
 repo's own CLAUDE.md as the summary, never a second hand-written copy; and since
 relative paths don't resolve across repos, that reference is by logical name, or by

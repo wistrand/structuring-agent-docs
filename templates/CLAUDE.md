@@ -36,7 +36,7 @@ diagram earns its space; save rationale prose for the README.>
 
 Global, cross-cutting rules that hold across the whole repo. Read before changing
 the relevant subsystem. Keep subsystem-local rules in that subsystem's agent_docs
-file instead — don't state the same rule in both places, the copies drift.
+file instead. Don't state the same rule in both places, or the copies drift.
 
 - <property that must stay true, e.g. "same input → same output, forever">
 - <another>
@@ -53,4 +53,6 @@ file instead — don't state the same rule in both places, the copies drift.
   Backticks are fine for source paths in tables and inline code. Align table columns.
 - No AI-isms (no "powerful", "seamlessly", "leverage", rule-of-three, "not just
   X but Y"). No em dashes or emojis in project copy. State the point directly.
+- Concise; assume the agent is competent. Add only what it can't infer (project
+  names, rules, constraints, and the why). Cut explanations of general concepts.
 - Keep this file the routing entry point; move subsystem detail into agent_docs/.

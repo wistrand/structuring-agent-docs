@@ -28,15 +28,15 @@ before reading. Kebab-case, descriptive, no version numbers or dates in the name
 | `gotchas` / `findings` | traps and diagnosed bugs                   | append as found                      |
 | `settings`             | reference derived from source              | GENERATED                            |
 
-The table is the common set, not a closed list — add a domain-specific prefix when
+The table is the common set, not a closed list. Add a domain-specific prefix when
 a project needs one (`store-listing` for release copy, `runbook-*` for ops).
 
 For a single small subsystem one `architecture.md` is enough. Split into
 `architecture-audio.md`, `architecture-webgl.md`, etc. when the combined file
 gets unwieldy or the subsystems are independently editable.
 
-A concern that cuts *across* subsystems — auth, i18n, logging, theming, error
-handling — doesn't fit any one `architecture-<sub>` file. Give it its own
+A concern that cuts *across* subsystems (auth, i18n, logging, theming, error
+handling) doesn't fit any one `architecture-<sub>` file. Give it its own
 `architecture-<concern>.md` (or `design-<concern>.md`) as the single owner, and
 have the subsystem docs link to it rather than each re-describing it. The prefix
 names a subsystem or a cross-cutting concern; both are valid axes.
@@ -45,7 +45,7 @@ names a subsystem or a cross-cutting concern; both are valid axes.
 
 - **architecture-\***: reference. Module responsibilities, data flow, the
   mental model, concrete invariants for that subsystem. Dense; assumes the agent
-  knows the language and domain. This is what replaces reading the source — so it
+  knows the language and domain. This is what replaces reading the source, so it
   points *into* the source: each piece names the file (and key symbol) that
   implements it (see "Point into the source" below).
 - **design-\***: a spec with rationale: a JSON schema, a file format, the math
@@ -80,20 +80,20 @@ code: the file path, plus the key symbol when it helps (`getTier()` in
 `src/detect.ts`, not just `src/detect.ts`). This is the source-file target type of
 the link-index pattern ([claude-md.md](claude-md.md)): the doc becomes an index into
 the source, so the agent reads the prose and jumps straight to the right file and
-function instead of grepping. It is what makes "replaces reading the source" real:
-the prose is the map, the path-plus-symbol is the coordinate.
+function instead of grepping. The prose is the map; the path-plus-symbol is the
+coordinate that makes "replaces reading the source" real.
 
 "Source" here is whatever holds the real thing, not only code: a file and symbol in
-a codebase, but a chapter or scene in a book, a clause in a contract, a table or
-column in a dataset. Point at that authoritative artifact in whatever form
-addresses it — the rest of this skill's code examples are just the most common case.
+a codebase, but a chapter in a book, a clause in a contract, a column in a dataset.
+Point at that authoritative artifact in whatever form addresses it; the code
+examples here are just the most common case.
 
 This lives in the CLAUDE.md **Layout** table (top-level paths → roles), an
 architecture doc's **Components** table or a short **Key files** list (each unit →
 its file and responsibility), and inline wherever you name where a behavior is
-implemented. Use plain backtick paths, not markdown links — they point at code the
+implemented. Use plain backtick paths, not markdown links. They point at code the
 agent opens directly, not docs to follow. Name the symbol too: it stays greppable
-when a file moves, which softens the one cost here — a renamed file leaving a stale
+when a file moves, which softens the one cost here: a renamed file leaving a stale
 path.
 
 Index authoritative source only; skip what's derived, vendored, or `.gitignore`d.
@@ -108,7 +108,7 @@ if the docs are published.
 
 Docs drift; the code is what runs. Split authority: the code is authoritative for
 *what the system does now*, the doc for *why* it's that way and what's intended. On
-a conflict about current behavior, trust the code and fix the doc — never reshape
+a conflict about current behavior, trust the code and fix the doc. Never reshape
 working code to match a stale doc. This is the fine print on "replaces reading the
 source": it holds only while the doc is current, which is why the durable docs are
 the *why* (rarely changes) and the generated ones, not blow-by-blow narration of
@@ -116,22 +116,22 @@ code that does.
 
 ## Keeping docs current
 
-Structure is worthless if the docs drift, and the skill can't enforce upkeep — so
+Structure is worthless if the docs drift, and the skill can't enforce upkeep, so
 make it a ritual, cheapest moment first:
 
 - **Update as you change code.** A doc that points at `src/x.ts` is the doc to
-  revisit when you touch `src/x.ts` — the index runs in reverse. Fixing it in the
+  revisit when you touch `src/x.ts`. The index runs in reverse. Fixing it in the
   same change is the cheapest correction and the least drift; the agent should do
   this without being asked.
-- **Sweep on demand.** When inline updates lag — after a big or cross-cutting
-  change — "update the docs" (or "update all docs") triggers a deliberate pass.
+- **Sweep on demand.** When inline updates lag, after a big or cross-cutting
+  change, "update the docs" (or "update all docs") triggers a deliberate pass.
   Make it a reconciliation, not a rewrite:
   - check each doc against the current code; the code wins on conflict (never
     reshape working code to match a stale doc);
   - regenerate generated docs instead of hand-editing them;
-  - fix the cheap structural things — links resolve, moved files noted, a landed
+  - fix the cheap structural things: links resolve, moved files noted, a landed
     `plan-*` promoted to `architecture-*`, invariants still true;
-  - leave the *why* unless the reason itself changed — it's the most durable
+  - leave the *why* unless the reason itself changed. It's the most durable
     content and the easiest to wreck with a careless rewrite.
 
 Prefer small corrections to confident rewrites. If the project wants this reliable,
@@ -209,8 +209,8 @@ captured from `--help`.
 When a project has a data pipeline or LLM-synthesis step, `agent_docs/` can also
 stage its outputs (clustering reports, sampled data, audit trails) so an agent
 has real fixtures, not just descriptions. Date these filenames
-(`cluster-report.2026-05-25.md`) — the one deliberate exception to "no dates in
-filenames" — so each run is immutable and snapshots accumulate as diffable
+(`cluster-report.2026-05-25.md`), the one deliberate exception to "no dates in
+filenames", so each run is immutable and snapshots accumulate as diffable
 history. Document the naming where the generator lives and link the pipeline doc
 from CLAUDE.md, not each dated file; pruning is manual. These are inputs and
 outputs, not instructions.
@@ -223,4 +223,4 @@ without first reading four others. Some shared context (a pointer to
 
 Cross-links between agent_docs are useful extras, but every file must also be
 reachable directly from `CLAUDE.md`; don't bury a file so it's only findable by
-following a chain — deeply nested files get skimmed or missed.
+following a chain. Deeply nested files get skimmed or missed.

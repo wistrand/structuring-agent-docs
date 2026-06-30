@@ -33,16 +33,16 @@ Not every project needs every file. A small one may have only `README.md`,
 
 ## README, docs/, notes/: the other tiers
 
-- **README.md** — audience: GitHub visitors, end users, new contributors;
-  narrative, explains the "why". Holds the feature list, screenshots, quick
-  start, how to use, supported platforms, the high-level architecture in prose,
-  human build commands, license. Does *not* hold agent rules, critical
-  invariants, code-style enforcement, or tooling constraints — those leak the
-  wrong audience's concerns into the wrong file. It may link to `agent_docs/` for
-  readers who want depth, but it is not the agent's entry point.
-- **docs/** — binary/generated assets (screenshots, icons, diagrams), usually from a
+- **README.md**: for GitHub visitors, end users, and new contributors. Narrative,
+  explains the "why". Holds the feature list, screenshots, quick start, how to use,
+  supported platforms, the high-level architecture in prose, human build commands,
+  license. Does *not* hold agent rules, critical invariants, code-style enforcement,
+  or tooling constraints; those leak the wrong audience's concerns into the wrong
+  file. It may link to `agent_docs/` for readers who want depth, but it is not the
+  agent's entry point.
+- **docs/**: binary/generated assets (screenshots, icons, diagrams), usually from a
   build target. Referenced from the README and `agent_docs/`, not hand-edited.
-- **notes/** — informal, exploratory writing (design history, "five ways we could
+- **notes/**: informal, exploratory writing (design history, "five ways we could
   do X", raw protocol dumps). Not indexed in `CLAUDE.md` because an agent doesn't
   rely on it; link to it from the relevant `agent_docs/` file when it helps.
 
@@ -110,14 +110,14 @@ before linking.
 An entry point is an index of references, and the form of each reference follows
 what it points at:
 
-- **A local doc** — a deep dive in `agent_docs/`. A markdown link, kept one level
+- **A local doc**: a deep dive in `agent_docs/`. A markdown link, kept one level
   deep (SKILL.md "Core rules"), followed on demand to read. The common case, and
   the rest of this section.
-- **A source artifact** — the file (or chapter, clause, dataset) that holds the
-  real thing: a backtick path, ideally naming the key symbol (`getTier()` in
-  `src/detect.ts`); the agent opens it directly, not as a doc to follow. See
+- **A source artifact**: the file (or chapter, clause, dataset) that holds the
+  real thing, as a backtick path ideally naming the key symbol (`getTier()` in
+  `src/detect.ts`); the agent opens it directly, not a doc to follow. See
   [agent-docs.md](agent-docs.md) "Point into the source".
-- **Another repo's entry point** — across a project boundary, addressed by logical
+- **Another repo's entry point**: across a project boundary, addressed by logical
   name or URL, since relative paths don't resolve across repos. See
   [advanced.md](advanced.md).
 
@@ -141,22 +141,20 @@ explains it:
 The import graph must stay acyclic, see [agent_docs/architecture.md](agent_docs/architecture.md) "Module System".
 ```
 
-Keep links one level deep (SKILL.md "Core rules") — the link index is where that
+Keep links one level deep (SKILL.md "Core rules"). The link index is where that
 rule binds: every agent_docs file reachable directly from CLAUDE.md, not only via
 another doc. The one place depth resets is a project boundary: in a monorepo an
 umbrella entry point links to each package's CLAUDE.md, and that package entry
 point is a fresh one-level-deep root. See [advanced.md](advanced.md).
 
 **Link, don't `@`-import.** Use plain markdown links (`[agent_docs/x.md](agent_docs/x.md)`)
-for deep dives, not Claude Code's `@path` import syntax. `@`-imports load
-**eagerly**: the imported file's full content is pulled into context at session
-start, so it costs the same as inlining and saves nothing. That defeats the whole
-point of a routing entry point. A markdown link is just a pointer the agent follows
-only when a task needs it. Reserve `@`-imports for the rare file you genuinely want
-in context every session (and even then, prefer keeping it short and inline). The
-trap: someone "tidies up" the link index into `@agent_docs/...` imports thinking
-it is equivalent, and silently turns the whole `agent_docs/` tree into always-on
-context.
+for deep dives, not Claude Code's `@path` imports. `@`-imports load **eagerly**: the
+file's full content enters context at session start, costing the same as inlining and
+saving nothing, which defeats a routing entry point. A markdown link is a pointer the
+agent follows only when a task needs it. Reserve `@`-imports for the rare file you
+want in context every session (and keep it short). The trap: someone "tidies up" the
+link index into `@agent_docs/...` imports thinking it's equivalent, silently turning
+the whole `agent_docs/` tree into always-on context.
 
 Note moved docs so an agent doesn't hunt for them: "`plan-x.md` was promoted to
 `architecture-x.md` (implemented)." See [agent-docs.md](agent-docs.md) for the
@@ -181,7 +179,7 @@ Leave a one-line link behind. The entry point shrinks back to routing.
 ### Split by blast radius, not just size
 
 Size and topic say what *can* move; blast radius says what *should*. Splitting is
-not free, and its cost is not the tokens — it is retrieval risk. The agent may not
+not free, and its cost is not the tokens but retrieval risk. The agent may not
 follow the link, and that failure is **silent and asymmetric**:
 
 - Keep a fact in the entry point and it is never relevant: you wasted some tokens, but the
@@ -193,19 +191,18 @@ follow the link, and that failure is **silent and asymmetric**:
 The entry point is the one tier exempt from this risk, because Claude Code
 auto-loads it every session, so it is in context whether or not the agent chooses to
 read a link. (That auto-load is a binding, not a law; on a tool without it the
-exemption weakens — see SKILL.md "Portable model, named bindings".) So the rule is: **anything whose absence silently corrupts an edit stays in
+exemption weakens, see SKILL.md "Portable model, named bindings".) So the rule is: **anything whose absence silently corrupts an edit stays in
 the entry point.** Critical invariants, data-loss gotchas, and read-before-you-touch
 warnings are kept inline (and *also* linked from the relevant deep dive as
 context), never relocated wholesale into a file the agent has to remember to open.
 What moves to `agent_docs/` is reference an agent pulls in deliberately when it
-works on that subsystem — material it can safely not load on an unrelated task.
+works on that subsystem: material it can safely not load on an unrelated task.
 
 This bounds the token-savings argument honestly: factoring out optimizes the
 best case (perfect retrieval, minimal context) and pays for it with a worst case
 (silent information loss) that a single fat file does not have. Spend that trade
 only where the worst case is "the agent re-reads code it could have been told
-about," not "the agent breaks an invariant it never saw." When unsure which, the
-content stays in the entry point.
+about," not "the agent breaks an invariant it never saw."
 
 ## Where does a fact go?
 

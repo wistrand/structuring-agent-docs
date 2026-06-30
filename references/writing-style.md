@@ -25,8 +25,9 @@ Avoid:
 - Hedging adjectives that add nothing: "very", "quite", "fairly".
 - Jargon-as-flair ("load-bearing", "footgun", "blazing-fast"): say what you mean
   plainly instead. "critical invariants", not "load-bearing invariants".
-- Em dashes as a tic: several per paragraph reads as AI. An occasional one is
-  fine; overuse is the tell. No emojis in project copy.
+- Em dashes: don't use them; they read as AI. Recast the sentence instead. A
+  period, colon, comma, or parentheses almost always reads better. No emojis
+  in project copy.
 
 Write what is true and what to do. A flat declarative sentence beats an
 enthusiastic one.
@@ -39,7 +40,7 @@ enthusiastic one.
 
 ### Aligned tables
 
-Pad table cells so columns line up in the raw markdown — the agent reads the
+Pad table cells so columns line up in the raw markdown. The agent reads the
 source, where an aligned table is scannable. If your editor or a formatter does
 this automatically, let it; it isn't worth hand-aligning on every edit.
 
@@ -52,7 +53,7 @@ cost. If it restates something obvious, delete it.
 
 ## Don't copy specific values out of code
 
-Constants — sizes, caps, timeouts, ports, version numbers — drift the moment the
+Constants (sizes, caps, timeouts, ports, version numbers) drift the moment the
 code changes, and a confidently wrong number is worse than none. Name the
 constant and where it lives ("the per-call cap in `entropy.ts`"), or state the
 property qualitatively ("fill in chunks; a single oversized call throws"). Quote

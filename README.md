@@ -56,4 +56,4 @@ trigger examples, and deliberate non-goals.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).

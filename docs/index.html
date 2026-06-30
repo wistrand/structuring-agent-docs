@@ -86,6 +86,8 @@ projects. <a href="https://github.com/wistrand/structuring-agent-docs/blob/main/
 <p>Download and unzip into a Claude Code skills directory:</p>
 <pre>curl -L -o structuring-agent-docs.zip \
   https://wistrand.github.io/structuring-agent-docs/structuring-agent-docs.zip
+# the zip wraps everything in a structuring-agent-docs/ directory,
+# so this creates ~/.claude/skills/structuring-agent-docs/SKILL.md
 unzip structuring-agent-docs.zip -d ~/.claude/skills/</pre>
 <p>Or clone and symlink:</p>
 <pre>git clone https://github.com/wistrand/structuring-agent-docs
@@ -94,9 +96,10 @@ ln -s "$PWD/structuring-agent-docs" ~/.claude/skills/structuring-agent-docs</pre
 <code>AGENTS.md</code>, or <code>agent_docs/</code> for a repository.</p>
 
 <footer>
-  MIT licensed. The download is the skill payload only
-  (<code>SKILL.md</code>, <code>references/</code>, <code>templates/</code>):
-  Markdown and templates, no scripts or executable code, safe to read end to end.
+  MIT licensed. The download wraps the skill payload only
+  (a <code>structuring-agent-docs/</code> directory holding <code>SKILL.md</code>,
+  <code>references/</code>, and <code>templates/</code>): Markdown and templates,
+  no scripts or executable code, safe to read end to end.
   Built from <a href="https://github.com/wistrand/structuring-agent-docs">the repo</a> by GitHub Actions.
 </footer>
 

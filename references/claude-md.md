@@ -210,11 +210,11 @@ context), never relocated wholesale into a file the agent has to remember to ope
 What moves to `agent_docs/` is reference an agent pulls in deliberately when it
 works on that subsystem: material it can safely not load on an unrelated task.
 
-This bounds the token-savings argument honestly: factoring out optimizes the
-best case (perfect retrieval, minimal context) and pays for it with a worst case
-(silent information loss) that a single fat file does not have. Spend that trade
-only where the worst case is "the agent re-reads code it could have been told
-about," not "the agent breaks an invariant it never saw."
+This bounds the token-savings argument honestly. Factoring out optimizes the best
+case: perfect retrieval, minimal context. It pays for that with a worst case a single
+fat file never has, which is silent information loss. Spend that trade only where the
+worst case is "the agent re-reads code it could have been told about," not "the agent
+breaks an invariant it never saw."
 
 ### Telling when a split is wrong
 

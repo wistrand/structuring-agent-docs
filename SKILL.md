@@ -16,14 +16,14 @@ artifacts; read "source" as "the authoritative artifact," whatever that is for y
 ## What belongs in a doc
 
 Let code carry what code can, and let tooling find what tooling can. A rule that can
-be a type or test belongs in code; a doc derivable from source should be generated
-from it; and code an agent can locate on demand (grep, an LSP, a subagent sweep, a
-code-search MCP) needs no hand-maintained, exhaustive file-by-file or
-function-by-function index. Each only drifts. What no tool recovers is the *why*: the
-reason behind a constraint, an approach tried and rejected, a platform trap that cost
-an hour to diagnose. Navigation is recoverable on demand; the why is not, so the why
-is what these docs hold. They are the agent's memory for its future self; it has none
-between sessions, and "the why is in the commit" is true but unreachable to an agent
+be a type or test belongs in code. A doc you can derive from source should be
+generated, not hand-written. And code an agent can locate on demand (grep, an LSP, a
+subagent sweep, a code-search MCP) needs no exhaustive file-by-file or
+function-by-function index. Each of those only drifts. What no tool recovers is the
+*why*: the reason behind a constraint, an approach tried and rejected, a platform trap
+that cost an hour to diagnose. Navigation is recoverable on demand; the why is not. So
+the why is what these docs hold: the agent's memory for its future self, which has
+none between sessions. "The why is in the commit" is true, but unreachable to an agent
 editing one file.
 
 ## The layered model

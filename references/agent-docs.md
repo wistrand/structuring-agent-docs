@@ -117,7 +117,7 @@ code that does.
 ## Keeping docs current
 
 Structure is worthless if the docs drift, and the skill can't enforce upkeep, so
-make it a ritual, cheapest moment first:
+make it a habit, cheapest moment first:
 
 - **Update as you change code.** A doc that points at `src/x.ts` is the doc to
   revisit when you touch `src/x.ts`. The index runs in reverse. Fixing it in the

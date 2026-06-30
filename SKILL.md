@@ -91,7 +91,7 @@ Copy this checklist when creating or reorganizing a project's agent docs:
 - [ ] 7. Add a Documentation Style block (see references/writing-style.md)
 - [ ] 8. Generate any doc derivable from source (settings, CLI --help) via a build
         target instead of hand-writing. The most-skipped step, and the first to rot
-- [ ] 9. Set the update ritual: docs change with the code they point at; "update
+- [ ] 9. Set the update habit: docs change with the code they point at; "update
         the docs" sweeps after big changes (see references/agent-docs.md "Keeping docs current")
 ```
 

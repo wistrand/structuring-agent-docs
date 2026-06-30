@@ -97,11 +97,11 @@ when a file moves, which softens the one cost here — a renamed file leaving a 
 path.
 
 Index authoritative source only; skip what's derived, vendored, or `.gitignore`d.
-Treat a gitignore hit as "probably derived or dependency — reason about *why* it's
+Treat a gitignore hit as "probably derived or dependency: reason about *why* it's
 ignored," not an automatic omit. Two catches: a *committed* generated file is still
 derived (mark it generated, point at its producer, not the output); and a gitignored
-config/secret (`.env.local`) is a signal to document its *requirement* as a gotcha —
-"needs `API_KEY`, `DB_URL`; uncommitted" — never its contents, which drift and leak
+config/secret (`.env.local`) is a signal to document its *requirement* as a gotcha
+("needs `API_KEY`, `DB_URL`; uncommitted"), never its contents, which drift and leak
 if the docs are published.
 
 ## When a doc and the code disagree

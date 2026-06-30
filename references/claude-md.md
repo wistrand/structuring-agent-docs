@@ -191,7 +191,7 @@ follow the link, and that failure is **silent and asymmetric**:
   incomplete context and looks fine until it isn't.
 
 The entry point is the one tier exempt from this risk, because Claude Code
-auto-loads it every session — it is in context whether or not the agent chooses to
+auto-loads it every session, so it is in context whether or not the agent chooses to
 read a link. (That auto-load is a binding, not a law; on a tool without it the
 exemption weakens — see SKILL.md "Portable model, named bindings".) So the rule is: **anything whose absence silently corrupts an edit stays in
 the entry point.** Critical invariants, data-loss gotchas, and read-before-you-touch

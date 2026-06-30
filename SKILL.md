@@ -17,7 +17,7 @@ tables. Read "source" as "the authoritative artifact," whatever that is for you.
 ## What belongs in a doc
 
 When you document a codebase, let code carry what code can: if a rule can be a
-type or a test, or a doc can be generated from source, do that — a prose doc that
+type or a test, or a doc can be generated from source, do that: a prose doc that
 restates what a type or test already guarantees only drifts out of sync. The
 residue none of those can hold is the point of these docs, not a leftover: the
 *why* behind a constraint, an approach tried and rejected, a platform trap that

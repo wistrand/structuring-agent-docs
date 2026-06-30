@@ -154,7 +154,9 @@ Start from the templates in `templates/` and delete what doesn't apply.
   standard at once. The trick works only for tools that read a plain-markdown root
   file; ones with structured rule formats (Cursor, Copilot) read their own files
   with their own activation rules — generate or maintain those separately, don't
-  symlink.
+  symlink. On Windows, symlink creation needs Developer Mode or admin rights;
+  where that's a blocker, make the alias a one-line stub that imports the
+  canonical file instead.
 
 ## Beyond the base model
 

@@ -40,16 +40,41 @@
 <h1>structuring-agent-docs</h1>
 <p class="tag">Structure a repository's documentation so AI coding agents navigate it efficiently.</p>
 
-<p>A repeatable model: a human-facing <code>README.md</code>, an agent-facing
-<code>CLAUDE.md</code> entry point, and topic-focused <code>agent_docs/</code> deep
-dives loaded on demand. Progressive disclosure applied to a whole repo &mdash;
-<a href="https://github.com/wistrand/structuring-agent-docs/blob/main/SKILL.md">read the model</a>.</p>
+<p>A Claude Code skill that lays out a repo's docs so an agent pulls in exactly the
+context a task needs &mdash; without rereading the whole codebase or one sprawling
+instructions file. It's the model and the discipline, not a generator: advice an
+agent loads when it's setting up or untangling a project's docs.</p>
 
 <div class="links">
   <a class="primary" href="./structuring-agent-docs.zip">Download the skill (.zip)</a>
   <a href="https://github.com/wistrand/structuring-agent-docs/blob/main/SKILL.md">Read the skill</a>
   <a href="https://github.com/wistrand/structuring-agent-docs">Browse the repo</a>
 </div>
+
+<h2>The problem</h2>
+<p>Agent docs fail in two directions. One giant <code>CLAUDE.md</code> burns context
+on every turn and still buries the rule that mattered; scattering everything into
+linked files saves context only when the agent follows the link, so the critical
+warning goes silently missing. The fix is to split by what's safe to miss, and to
+write down only what code can't carry &mdash; the <em>why</em> behind a constraint, the
+trap that cost an hour, the approach already tried and rejected.</p>
+
+<h2>The model</h2>
+<p>Three tiers, split by audience and by how much loads at once:</p>
+<ul>
+  <li><strong><code>README.md</code></strong> &mdash; for humans: what it is, why, quick start.</li>
+  <li><strong><code>CLAUDE.md</code></strong> &mdash; the agent's "read first" entry point:
+    layout, conventions, invariants, gotchas, and a link index. Aliased to
+    <code>AGENTS.md</code> so other tools find it too.</li>
+  <li><strong><code>agent_docs/*.md</code></strong> &mdash; one topic per file, self-contained,
+    loaded only when that subsystem is touched.</li>
+</ul>
+<p>Progressive disclosure applied to a whole repo. The skill carries the rules that
+make it hold &mdash; one level deep, name by type, capture the why, point into the
+source and let code win on conflict, generate docs that can be generated &mdash; plus
+deep dives on each, an agent-facing writing style, and templates to start from. It
+scales the same way from a single repo up to a monorepo or a family of sibling
+projects. <a href="https://github.com/wistrand/structuring-agent-docs/blob/main/SKILL.md">Read the full model</a>.</p>
 
 <h2>Install</h2>
 <p>Download and unzip into a Claude Code skills directory:</p>
@@ -63,9 +88,10 @@ ln -s "$PWD/structuring-agent-docs" ~/.claude/skills/structuring-agent-docs</pre
 <code>AGENTS.md</code>, or <code>agent_docs/</code> for a repository.</p>
 
 <footer>
-  MIT licensed. The download contains the skill payload only
-  (<code>SKILL.md</code>, <code>references/</code>, <code>templates/</code>),
-  built from <a href="https://github.com/wistrand/structuring-agent-docs">the repo</a> by GitHub Actions.
+  MIT licensed. The download is the skill payload only
+  (<code>SKILL.md</code>, <code>references/</code>, <code>templates/</code>) &mdash;
+  Markdown and templates, no scripts or executable code, safe to read end to end.
+  Built from <a href="https://github.com/wistrand/structuring-agent-docs">the repo</a> by GitHub Actions.
 </footer>
 
 </body>

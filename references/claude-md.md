@@ -23,7 +23,7 @@ project/
 │   ├── plan-<topic>.md        # future work, not yet implemented
 │   ├── research-<topic>.md    # investigations, citations, options weighed
 │   └── settings.md            # GENERATED from source
-├── docs/                  # generated assets: screenshots, icons, hero images
+├── docs/                  # generated assets: screenshots, icons, diagrams
 └── notes/                 # optional: informal design journals, protocol dumps
 ```
 
@@ -40,7 +40,7 @@ Not every project needs every file. A small one may have only `README.md`,
   invariants, code-style enforcement, or tooling constraints — those leak the
   wrong audience's concerns into the wrong file. It may link to `agent_docs/` for
   readers who want depth, but it is not the agent's entry point.
-- **docs/** — binary/generated assets (screenshots, store icons), usually from a
+- **docs/** — binary/generated assets (screenshots, icons, diagrams), usually from a
   build target. Referenced from the README and `agent_docs/`, not hand-edited.
 - **notes/** — informal, exploratory writing (design history, "five ways we could
   do X", raw protocol dumps). Not indexed in `CLAUDE.md` because an agent doesn't

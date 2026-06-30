@@ -27,7 +27,9 @@ before reading. Kebab-case, descriptive, no version numbers or dates in the name
 | `research-<topic>`     | investigations, citations, options weighed | mostly static                        |
 | `gotchas` / `findings` | traps and diagnosed bugs                   | append as found                      |
 | `settings`             | reference derived from source              | GENERATED                            |
-| `store-listing`        | user-facing release copy                   | sync with release                    |
+
+The table is the common set, not a closed list — add a domain-specific prefix when
+a project needs one (`store-listing` for release copy, `runbook-*` for ops).
 
 For a single small subsystem one `architecture.md` is enough. Split into
 `architecture-audio.md`, `architecture-webgl.md`, etc. when the combined file

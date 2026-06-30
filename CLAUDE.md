@@ -1,20 +1,25 @@
 # Working in this repo
 
-Read this first when editing the skill. The deliverable is `SKILL.md` plus
-`references/` and `templates/`; this file is the entry point for an agent maintaining
-them, auto-loaded each session. `AGENTS.md` symlinks here. `README.md` is the
-human-facing overview (what the skill is, how to install) and holds the file tree.
-`docs/` and `.github/workflows/` are publishing infrastructure — they build the
-GitHub Pages site and a payload-only skill zip. The "no CI" rule is narrow: **the
-docs skill provides no code** — not to an agent using it, not as advice to a
-project. It says nothing about *this* repo's build/publish CI (allowed, like any
-project's) or about a project that uses the skill (free to run whatever CI it
-wants). The zip ships `SKILL.md` + `references/` + `templates/` and nothing
-executable; that's the whole rule.
+Read this first when editing the skill — this file is the agent's entry point for
+maintaining it, auto-loaded each session (`AGENTS.md` symlinks here).
 
-This repo is itself an instance of the model the skill teaches: `README.md` for
-humans, this `CLAUDE.md` for the agent working here, `SKILL.md` + `references/` as
-the product.
+## Layout
+
+- `SKILL.md` — the skill itself: model, core rules, and the index into `references/`.
+- `references/` — the skill's deep dives: `claude-md`, `agent-docs`, `writing-style`, `advanced`.
+- `templates/` — starter files an adopter copies into their own repo.
+- `README.md` — human-facing overview and install; not loaded as the skill.
+- `docs/` + `.github/workflows/` — publishing: build the Pages site and a
+  payload-only skill zip. Build output, not part of the skill.
+
+The repo dogfoods the model it teaches: `README.md` for humans, this `CLAUDE.md`
+for the agent working here, `SKILL.md` + `references/` as the product.
+
+**The "no CI" rule is narrow: the docs skill provides no code** — not to an agent
+using it, not as advice to a project. It says nothing about this repo's
+build/publish CI (allowed, like any project's) or a project that uses the skill
+(free to run whatever CI it wants). The zip ships `SKILL.md` + `references/` +
+`templates/` and nothing executable; that's the whole rule.
 
 ## Discipline when editing
 

@@ -25,8 +25,6 @@
     background: rgba(127,127,127,.12); padding: .85rem 1rem; border-radius: 8px;
     overflow-x: auto; font-size: .9rem;
   }
-  table { border-collapse: collapse; width: 100%; margin: .5rem 0; font-size: .95rem; }
-  th, td { border: 1px solid rgba(127,127,127,.3); padding: .4rem .6rem; text-align: left; }
   .links { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1.25rem 0 0; }
   .links a {
     display: inline-block; padding: .5rem .9rem; border-radius: 8px;
@@ -44,14 +42,8 @@
 
 <p>A repeatable model: a human-facing <code>README.md</code>, an agent-facing
 <code>CLAUDE.md</code> entry point, and topic-focused <code>agent_docs/</code> deep
-dives loaded on demand. Progressive disclosure applied to a whole repo.</p>
-
-<table>
-  <tr><th>Tier</th><th>File(s)</th><th>Audience</th><th>Role</th></tr>
-  <tr><td>User guide</td><td><code>README.md</code></td><td>Humans</td><td>What, why, quick start.</td></tr>
-  <tr><td>Entry point</td><td><code>CLAUDE.md</code></td><td>Agents</td><td>Read first: layout, commands, conventions, link index.</td></tr>
-  <tr><td>Deep dives</td><td><code>agent_docs/*.md</code></td><td>Agents</td><td>One topic per file, loaded on demand.</td></tr>
-</table>
+dives loaded on demand. Progressive disclosure applied to a whole repo &mdash;
+<a href="https://github.com/wistrand/skill-agent-docs/blob/main/SKILL.md">read the model</a>.</p>
 
 <div class="links">
   <a class="primary" href="./structuring-agent-docs.zip">Download the skill (.zip)</a>

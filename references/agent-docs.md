@@ -133,6 +133,15 @@ make it a ritual, cheapest moment first:
     `plan-*` promoted to `architecture-*`, invariants still true;
   - leave the *why* unless the reason itself changed. It's the most durable
     content and the easiest to wreck with a careless rewrite.
+- **Capture corrections as they happen.** When the agent makes a mistake or hits a
+  trap that wasn't written down, distill the fix into one durable rule so it isn't
+  repeated: a recurring, non-obvious gotcha goes in `gotchas`/`findings`, a
+  cross-cutting rule in CLAUDE.md, stated as a flat always/never. This is how the
+  gotchas/findings doc fills (SKILL.md "Capture the why"). Same bar applies: if a
+  test, type, or lint can enforce it, add that instead of a doc line, and never add a
+  second copy of a rule that already has an owner. Prune a rule once code enforces it
+  or it goes stale. Some toolchains automate the capture: Claude Code can fold the
+  correction into CLAUDE.md from a PR comment.
 
 Prefer small corrections to confident rewrites. If the project wants this reliable,
 document the trigger in its entry point ("to refresh docs after a big change, ask

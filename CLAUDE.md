@@ -90,3 +90,16 @@ Considered and left out on purpose; don't "fix" these without a demonstrated nee
   [references/agent-docs.md](references/agent-docs.md), the link-index block in
   [references/claude-md.md](references/claude-md.md)) carry the concreteness
   without the maintenance burden.
+
+## Considering (not yet acted on)
+
+A decision queue, not a wishlist: each item lands in the skill or moves to
+"Deliberate non-goals" once decided. Promote to its own `agent_docs/` file only if
+the list outgrows this entry point.
+
+- **Personal vs team-shared agent docs.** A one-line note on `CLAUDE.local.md`, the
+  Claude Code binding for gitignored personal rules. Act if adopters ask where
+  personal rules go.
+- **Path-gated rules.** Fold `rules/*.md` (auto-loaded by a path glob) into the
+  blast-radius discussion as the option that defeats silent retrieval failure for
+  path-local rules. Act if the omission causes confusion.

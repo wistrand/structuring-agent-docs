@@ -1,7 +1,7 @@
 <!-- Umbrella entry point for a set of sibling repos. It stands alone: it maps the repos and
      owns the cross-repo layer, and it links to each sibling's own CLAUDE.md rather
-     than re-summarizing it. Refer to siblings by the logical name in the Repos
-     table, never by a local path. -->
+     than re-summarizing it. Reference each sibling by its logical name and repo URL,
+     never a relative path; relative paths don't resolve across repo boundaries. -->
 
 Guidance for agents working across these repos. Read this first. Each repo has its
 own CLAUDE.md; this file maps how they fit together and owns the shared contracts.
@@ -12,11 +12,14 @@ own CLAUDE.md; this file maps how they fit together and owns the shared contract
 
 ## Repos
 
-| Repo       | Source                | Docs                            | Role       |
-|------------|-----------------------|---------------------------------|------------|
-| <repo-key> | github.com/you/<repo> | [CLAUDE.md](...), [docs](...)   | <one line> |
+| Repo       | Source                | Entry point                                                   | Role       |
+|------------|-----------------------|---------------------------------------------------------------|------------|
+| <repo-key> | github.com/you/<repo> | [CLAUDE.md](https://github.com/you/<repo>/blob/main/CLAUDE.md) | <one line> |
 
-The link to each repo's CLAUDE.md is its summary. Don't restate it here.
+Link each entry point by its repo URL, never a relative `../<repo>/CLAUDE.md` path.
+This umbrella spans repo boundaries, so a relative path breaks once a repo is cloned
+on its own, moved, or viewed on the web. Address siblings only by logical name or URL.
+The link to each repo's CLAUDE.md is its summary; don't restate it here.
 
 ## Shared contracts
 
@@ -34,4 +37,7 @@ Who provides and consumes what.
 ## Conventions
 
 - Refer to a sibling by its Repos-table name (`<repo-key>: <topic>`), not a path.
+- If you keep all repos checked out side by side, note that layout once here (e.g.
+  `siblings live as ../<repo>`), so an agent can open them locally without putting a
+  relative path in every row.
 - <shared conventions; or "follow the <domain> skill" if there is one>

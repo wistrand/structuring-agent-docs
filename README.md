@@ -21,7 +21,7 @@ templates/
   agent_docs/architecture.md   # subsystem deep-dive skeleton
   agent_docs/gotchas.md        # traps-and-findings skeleton
   agent_docs/plan.md           # saved-planning skeleton (promoted to architecture when built)
-  umbrella/                    # standalone-umbrella entry point + integration-note templates
+  umbrella/                    # umbrella entry point, README, and integration-note templates
 CLAUDE.md                      # entry point for editing this skill (AGENTS.md symlinks here)
 LICENSE                        # MIT
 ```

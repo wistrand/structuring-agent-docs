@@ -5,7 +5,7 @@
 
 # <repo-key> integration
 
-> Repo summary lives in the repo's own CLAUDE.md: <git url> (and `llms.txt`).
+> Repo summary lives in the repo's own CLAUDE.md: <git url> (and its published docs, if any).
 > This note covers only how it connects to the rest of the ecosystem.
 
 ## Provides

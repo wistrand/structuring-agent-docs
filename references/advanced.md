@@ -20,10 +20,10 @@ A flat link index stops scaling around 10-15 docs. Past that:
 - **Keep "why and when" out of the entry point.** A MANIFESTO or FAQ for stance and
   tradeoffs targets decision-makers, not an agent mid-edit; link it from the
   README rather than loading it every session.
-- **If docs are published as a site, generate it from the source markdown** so the
-  two never diverge, and emit an `llms.txt` (a flat list of doc titles and URLs)
-  for LLM consumption. Mark the generated copy so an agent edits the source, not
-  the build output.
+- **If docs are published as a site, the published output is a build artifact, not
+  a source.** However it's generated, the source of truth stays in the repo's
+  markdown — an agent edits that and republishes, never the deployed copy. Mark the
+  published tree as generated so nobody hand-edits it.
 
 ## When work spans projects
 
@@ -61,4 +61,4 @@ targets — each row points at another repo's entry point, which the generalized
 in [claude-md.md](claude-md.md) calls the third target type. It references each
 repo's own CLAUDE.md as the summary, never a second hand-written copy; and since
 relative paths don't resolve across repos, that reference is by logical name, or by
-published URL if the sibling ships an `llms.txt`.
+the URL of the sibling's published docs.

@@ -12,9 +12,9 @@ own CLAUDE.md; this file maps how they fit together and owns the shared contract
 
 ## Repos
 
-| Repo       | Source                | Docs                              | Role       |
-|------------|-----------------------|-----------------------------------|------------|
-| <repo-key> | github.com/you/<repo> | [CLAUDE.md](...), [llms.txt](...) | <one line> |
+| Repo       | Source                | Docs                            | Role       |
+|------------|-----------------------|---------------------------------|------------|
+| <repo-key> | github.com/you/<repo> | [CLAUDE.md](...), [docs](...)   | <one line> |
 
 The link to each repo's CLAUDE.md is its summary. Don't restate it here.
 

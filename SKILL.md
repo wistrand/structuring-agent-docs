@@ -160,8 +160,8 @@ Start from the templates in `templates/` and delete what doesn't apply.
 
 The base model holds at any size. Two kinds of growth need more, adopted only when
 the pain appears: a single project that accumulates docs or gets published (an
-audience-categorized index, reading-order onboarding, a generated site with
-`llms.txt`), and work that spans several projects (a monorepo, sibling repos, or
+audience-categorized index, reading-order onboarding, a published site), and work
+that spans several projects (a monorepo, sibling repos, or
 one product split across surfaces — the model nests, and shared facts get exactly
 one owner the others reference). Both are in
 [references/advanced.md](references/advanced.md).
@@ -171,7 +171,7 @@ one owner the others reference). Both are in
 - [references/claude-md.md](references/claude-md.md): the full repo layout and what belongs where, CLAUDE.md anatomy, thin vs thick entry point, the link-index pattern, and what to factor out.
 - [references/agent-docs.md](references/agent-docs.md): naming prefixes, doc types, gotchas/findings, invariants, generated docs, and dated data artifacts/fixtures.
 - [references/writing-style.md](references/writing-style.md): agent-facing prose: no AI-isms, markdown links, aligned tables, no time-sensitive content.
-- [references/advanced.md](references/advanced.md): beyond the base model — one project that grows large or published (audience index, onboarding, llms.txt) and work that spans projects (monorepos, siblings, surfaces: the nesting model, single-owner shared facts, umbrella mapping).
+- [references/advanced.md](references/advanced.md): beyond the base model — one project that grows large or published (audience index, onboarding, a published site) and work that spans projects (monorepos, siblings, surfaces: the nesting model, single-owner shared facts, umbrella mapping).
 
 ## Templates
 

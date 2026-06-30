@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 372" role="img"
+     aria-labelledby="brTitle brDesc">
+  <title id="brTitle">Split by blast radius</title>
+  <desc id="brDesc">A three-stage arc: decide what can move by size and topic, what
+    should move by blast radius, and tell if the split is wrong from signals. The
+    middle stage rests on an asymmetric cost. A fact kept inline but never needed only
+    wastes some tokens, and the agent still had it. A fact factored out that the agent
+    skips is silently gone, with no signal it is missing. Takeaway: keep anything whose
+    absence would silently corrupt an edit inline.</desc>
+  <style>
+    svg { color: #1c1c1c; }
+    @media (prefers-color-scheme: dark) { svg { color: #e8e8e8; } }
+    .stage  { fill: currentColor; fill-opacity: .04; stroke: #2563eb; stroke-opacity: .55; stroke-width: 2; }
+    .stage2 { fill: #2563eb; fill-opacity: .10; stroke: #2563eb; stroke-opacity: .9; stroke-width: 2.2; }
+    .ok     { fill: currentColor; fill-opacity: .04; stroke: #2563eb; stroke-opacity: .55; stroke-width: 2; }
+    .warn   { fill: #d97706; fill-opacity: .07; stroke: #d97706; stroke-opacity: .8; stroke-width: 2; }
+    .bar    { fill: currentColor; fill-opacity: .05; stroke: none; }
+    .arc    { fill: none; stroke: #2563eb; stroke-opacity: .8; stroke-width: 2.4; }
+    .arcw   { fill: none; stroke: #d97706; stroke-opacity: .8; stroke-width: 2.4; }
+    .title  { fill: currentColor; font: 600 15px system-ui, sans-serif; }
+    .titleb { fill: #2563eb; font: 700 15px system-ui, sans-serif; }
+    .big    { fill: currentColor; font: 700 15px system-ui, sans-serif; }
+    .warnw  { fill: #d97706; font: 700 15px system-ui, sans-serif; }
+    .sub    { fill: currentColor; fill-opacity: .6; font: 12px system-ui, sans-serif; }
+    .bart   { fill: currentColor; font: 600 13.5px system-ui, sans-serif; }
+  </style>
+  <defs>
+    <marker id="abr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2563eb" fill-opacity=".8"/>
+    </marker>
+    <marker id="abrw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#d97706" fill-opacity=".8"/>
+    </marker>
+  </defs>
+
+  <!-- the arc: three stages, left to right -->
+  <rect class="stage"  x="30"  y="40" width="200" height="64" rx="12"/>
+  <text class="title"  x="130" y="68" text-anchor="middle">What can move</text>
+  <text class="sub"    x="130" y="88" text-anchor="middle">size + topic</text>
+
+  <rect class="stage2" x="280" y="40" width="200" height="64" rx="12"/>
+  <text class="titleb" x="380" y="68" text-anchor="middle">What should move</text>
+  <text class="sub"    x="380" y="88" text-anchor="middle">blast radius</text>
+
+  <rect class="stage"  x="530" y="40" width="200" height="64" rx="12"/>
+  <text class="title"  x="630" y="68" text-anchor="middle">Tell if it's wrong</text>
+  <text class="sub"    x="630" y="88" text-anchor="middle">signals, not line counts</text>
+
+  <path class="arc" d="M232,72 L276,72" marker-end="url(#abr)"/>
+  <path class="arc" d="M482,72 L526,72" marker-end="url(#abr)"/>
+
+  <!-- the asymmetric cost under the middle stage -->
+  <path class="arc"  d="M380,104 L380,134"/>
+  <path class="arc"  d="M380,134 C300,134 250,150 215,166" marker-end="url(#abr)"/>
+  <path class="arcw" d="M380,134 C460,134 510,150 545,166" marker-end="url(#abrw)"/>
+
+  <rect class="ok"   x="70"  y="168" width="290" height="104" rx="12"/>
+  <text class="sub"  x="215" y="196" text-anchor="middle">Kept inline, never needed</text>
+  <text class="big"  x="215" y="223" text-anchor="middle">Wasted tokens</text>
+  <text class="sub"  x="215" y="247" text-anchor="middle">but the agent had the fact</text>
+
+  <rect class="warn" x="400" y="168" width="290" height="104" rx="12"/>
+  <text class="sub"   x="545" y="196" text-anchor="middle">Factored out, link skipped</text>
+  <text class="warnw" x="545" y="223" text-anchor="middle">Silently gone</text>
+  <text class="sub"   x="545" y="247" text-anchor="middle">no signal it's missing</text>
+
+  <!-- takeaway -->
+  <rect class="bar"  x="30"  y="296" width="700" height="50" rx="10"/>
+  <text class="bart" x="380" y="326" text-anchor="middle">Not symmetric: keep anything whose absence would silently corrupt an edit inline.</text>
+</svg>

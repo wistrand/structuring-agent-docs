@@ -47,9 +47,9 @@
 <p>A <a href="https://docs.claude.com/en/docs/claude-code/skills">Claude Code skill</a>
 that lays out a repo's docs so an agent pulls in exactly the
 context a task needs, without rereading the whole codebase or one sprawling
-instructions file. It's the model and the discipline, not a generator: advice an
-agent applies every time it touches the docs, from first setup through the daily
-upkeep that keeps them in sync as the code changes.</p>
+instructions file. It's a way of organizing docs and keeping them current, not a tool
+that generates them: advice an agent applies every time it touches the docs, from
+first setup through the upkeep that keeps them in sync as the code changes.</p>
 
 <div class="links">
   <a class="primary" href="./structuring-agent-docs.zip">Download the skill (.zip)</a>
@@ -68,6 +68,20 @@ warning goes silently missing. The fix is to split by what's safe to miss, and t
 write down only what code can't carry: the <em>why</em> behind a constraint, the
 trap that cost an hour, the approach already tried and rejected.</p>
 
+<h2>Split by blast radius</h2>
+<p>One idea drives the rest. When you move a detail out of the always-loaded
+<code>CLAUDE.md</code> into a linked file, you save context only if the agent actually
+opens that file. If it skips the link, the detail is silently gone and nothing flags
+it as missing. So the skill decides what to move by what an error would cost, not by
+file size: a fact kept inline but never needed just wastes a few tokens, while a
+critical rule moved out and missed can quietly break an edit. Anything whose absence
+would corrupt an edit stays inline; only safely-skippable reference moves out.
+<a href="https://github.com/wistrand/structuring-agent-docs/blob/main/references/claude-md.md#split-by-blast-radius-not-just-size">See the full reasoning</a>:
+what can move, what should move, and how to tell when you got it wrong.</p>
+
+<img class="diagram" src="blast-radius.svg"
+     alt="A three-stage arc: what can move (size and topic), what should move (blast radius), and telling if the split is wrong (signals, not line counts). The middle stage rests on an asymmetric cost: a fact kept inline but never needed only wastes tokens and the agent still had it, while a fact factored out that the agent skips is silently gone with no signal it is missing. Takeaway: keep anything whose absence would silently corrupt an edit inline.">
+
 <h2>The model</h2>
 <p>Three tiers, split by audience and by how much loads at once:</p>
 <dl>
@@ -81,12 +95,11 @@ trap that cost an hour, the approach already tried and rejected.</p>
   <dd>One topic per file, self-contained, loaded only when that subsystem is
     touched.</dd>
 </dl>
-<p>Progressive disclosure applied to a whole repo. The skill carries the rules that
-make it hold (one level deep, name by type, capture the why, point into the source
-and let code win on conflict, generate docs that can be generated), plus deep dives
-on each, an agent-facing writing style, and templates to start from. It
-scales the same way from a single repo up to a monorepo or a family of sibling
-projects. <a href="https://github.com/wistrand/structuring-agent-docs/blob/main/SKILL.md">Read the full model</a>.</p>
+<p>The same load-on-demand idea, applied to a whole repo. The skill spells out the
+few rules that make it work, a deep dive on each, a writing style for the docs
+themselves, and copy-paste templates to start from. It scales from a single repo up
+to a monorepo or a family of related projects.
+<a href="https://github.com/wistrand/structuring-agent-docs/blob/main/SKILL.md">Read the full model</a>.</p>
 
 <h2>Install</h2>
 <p>Download and unzip into a Claude Code skills directory:</p>

@@ -1,7 +1,7 @@
 # structuring-agent-docs
 
 An agent skill that teaches how to structure a software project's documentation
-so AI coding agents can navigate it efficiently.
+so AI coding agents can navigate and update it efficiently.
 
 It packages a repeatable model: a human-facing `README.md`, an agent-facing
 `CLAUDE.md` entry point, and a set of topic-focused `agent_docs/` deep dives loaded on

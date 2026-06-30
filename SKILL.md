@@ -1,6 +1,6 @@
 ---
 name: structuring-agent-docs
-description: Structures a software project's documentation so AI coding agents navigate it efficiently. Covers the README.md / CLAUDE.md / agent_docs/ split, a CLAUDE.md entry point that links one level deep to topic-focused agent_docs files (progressive disclosure), naming conventions, gotchas/findings docs, critical invariants, generated docs, and agent-facing writing style. Use when setting up or reorganizing CLAUDE.md, AGENTS.md, or agent_docs/ for a repository, when a CLAUDE.md has grown too large, or when the user asks how to document a codebase for coding agents.
+description: Structures a software project's documentation so AI coding agents navigate and update it efficiently. Covers the README.md / CLAUDE.md / agent_docs/ split, a CLAUDE.md entry point that links one level deep to topic-focused agent_docs files (progressive disclosure), naming conventions, gotchas/findings docs, critical invariants, generated docs, and agent-facing writing style. Use when setting up or reorganizing CLAUDE.md, AGENTS.md, or agent_docs/ for a repository, when a CLAUDE.md has grown too large, or when the user asks how to document a codebase for coding agents.
 ---
 
 # Structuring agent docs

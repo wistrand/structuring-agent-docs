@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 580" role="img"
+     aria-labelledby="diagTitle diagDesc">
+  <title id="diagTitle">The agent-docs cycle</title>
+  <desc id="diagDesc">A continuous cycle around an "agent docs: navigate and update"
+    hub: Structure the docs into README.md, CLAUDE.md, and agent_docs; Navigate them
+    with CLAUDE.md loaded every session and deep dives on demand; Update docs as the
+    code changes; Capture the why, gotchas, and decisions. The loop repeats so the
+    docs stay in sync.</desc>
+  <style>
+    svg { color: #1c1c1c; }
+    @media (prefers-color-scheme: dark) { svg { color: #e8e8e8; } }
+    .hub   { fill: #2563eb; fill-opacity: .1; stroke: #2563eb; stroke-opacity: .9; stroke-width: 2; }
+    .node  { fill: currentColor; fill-opacity: .04; stroke: #2563eb; stroke-opacity: .55; stroke-width: 2; }
+    .arc   { fill: none; stroke: #2563eb; stroke-opacity: .8; stroke-width: 2.4; }
+    .word  { fill: currentColor; font: 600 16px system-ui, sans-serif; }
+    .huba  { fill: #2563eb; font: 700 17px system-ui, sans-serif; }
+    .hubb  { fill: currentColor; fill-opacity: .7; font: 12.5px system-ui, sans-serif; }
+    .s     { fill: currentColor; fill-opacity: .65; font: 12.5px system-ui, sans-serif; }
+  </style>
+  <defs>
+    <marker id="ahb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2563eb" fill-opacity=".8"/>
+    </marker>
+  </defs>
+
+  <!-- clockwise cycle arrows (in the gaps between nodes) -->
+  <path class="arc" d="M470,144 A180 180 0 0 1 536,210" marker-end="url(#ahb)"/>
+  <path class="arc" d="M536,390 A180 180 0 0 1 470,456" marker-end="url(#ahb)"/>
+  <path class="arc" d="M290,456 A180 180 0 0 1 224,390" marker-end="url(#ahb)"/>
+  <path class="arc" d="M224,210 A180 180 0 0 1 290,144" marker-end="url(#ahb)"/>
+
+  <!-- hub -->
+  <circle class="hub" cx="380" cy="300" r="74"/>
+  <text class="huba" x="380" y="296" text-anchor="middle">agent docs</text>
+  <text class="hubb" x="380" y="318" text-anchor="middle">navigate + update</text>
+
+  <!-- Structure (top) -->
+  <circle class="node" cx="380" cy="120" r="54"/>
+  <text class="word" x="380" y="126" text-anchor="middle">Structure</text>
+  <text class="s" x="380" y="52" text-anchor="middle">README &#183; CLAUDE.md &#183; agent_docs</text>
+
+  <!-- Navigate (right) -->
+  <circle class="node" cx="560" cy="300" r="54"/>
+  <text class="word" x="560" y="306" text-anchor="middle">Navigate</text>
+  <text class="s" x="624" y="294" text-anchor="start">CLAUDE.md always;</text>
+  <text class="s" x="624" y="312" text-anchor="start">deep dives on demand</text>
+
+  <!-- Update (bottom) -->
+  <circle class="node" cx="380" cy="480" r="54"/>
+  <text class="word" x="380" y="486" text-anchor="middle">Update</text>
+  <text class="s" x="380" y="556" text-anchor="middle">docs change with the code</text>
+
+  <!-- Capture (left) -->
+  <circle class="node" cx="200" cy="300" r="54"/>
+  <text class="word" x="200" y="306" text-anchor="middle">Capture</text>
+  <text class="s" x="136" y="294" text-anchor="end">the why, gotchas,</text>
+  <text class="s" x="136" y="312" text-anchor="end">decisions</text>
+</svg>

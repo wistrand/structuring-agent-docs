@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>structuring-agent-docs</title>
-<meta name="description" content="Structure a repository's documentation so AI coding agents navigate it efficiently.">
+<meta name="description" content="Structure a repository's documentation so AI coding agents navigate and update it efficiently.">
 <style>
   :root { color-scheme: light dark; }
   body {
@@ -33,17 +33,20 @@
   .links a.primary { background: #2563eb; color: #fff; border-color: #2563eb; }
   footer { margin-top: 3rem; font-size: .85rem; opacity: .7; }
   a { color: #2563eb; }
+  .diagram { width: 100%; height: auto; margin: 1rem 0 .5rem; }
 </style>
 </head>
 <body>
 
 <h1>structuring-agent-docs</h1>
-<p class="tag">Structure a repository's documentation so AI coding agents navigate it efficiently.</p>
+<p class="tag">Structure a repository's documentation so AI coding agents navigate and update it efficiently.</p>
 
-<p>A Claude Code skill that lays out a repo's docs so an agent pulls in exactly the
-context a task needs &mdash; without rereading the whole codebase or one sprawling
+<p>A <a href="https://docs.claude.com/en/docs/claude-code/skills">Claude Code skill</a>
+that lays out a repo's docs so an agent pulls in exactly the
+context a task needs, without rereading the whole codebase or one sprawling
 instructions file. It's the model and the discipline, not a generator: advice an
-agent loads when it's setting up or untangling a project's docs.</p>
+agent applies every time it touches the docs, from first setup through the daily
+upkeep that keeps them in sync as the code changes.</p>
 
 <div class="links">
   <a class="primary" href="./structuring-agent-docs.zip">Download the skill (.zip)</a>
@@ -51,12 +54,15 @@ agent loads when it's setting up or untangling a project's docs.</p>
   <a href="https://github.com/wistrand/structuring-agent-docs">Browse the repo</a>
 </div>
 
+<img class="diagram" src="diagram.svg"
+     alt="A continuous cycle around an 'agent docs: navigate + update' hub: Structure (README, CLAUDE.md, agent_docs), Navigate (CLAUDE.md always, deep dives on demand), Update (docs change with the code), Capture (the why, gotchas, decisions).">
+
 <h2>The problem</h2>
 <p>Agent docs fail in two directions. One giant <code>CLAUDE.md</code> burns context
 on every turn and still buries the rule that mattered; scattering everything into
 linked files saves context only when the agent follows the link, so the critical
 warning goes silently missing. The fix is to split by what's safe to miss, and to
-write down only what code can't carry &mdash; the <em>why</em> behind a constraint, the
+write down only what code can't carry: the <em>why</em> behind a constraint, the
 trap that cost an hour, the approach already tried and rejected.</p>
 
 <h2>The model</h2>
@@ -70,9 +76,9 @@ trap that cost an hour, the approach already tried and rejected.</p>
     loaded only when that subsystem is touched.</li>
 </ul>
 <p>Progressive disclosure applied to a whole repo. The skill carries the rules that
-make it hold &mdash; one level deep, name by type, capture the why, point into the
-source and let code win on conflict, generate docs that can be generated &mdash; plus
-deep dives on each, an agent-facing writing style, and templates to start from. It
+make it hold (one level deep, name by type, capture the why, point into the source
+and let code win on conflict, generate docs that can be generated), plus deep dives
+on each, an agent-facing writing style, and templates to start from. It
 scales the same way from a single repo up to a monorepo or a family of sibling
 projects. <a href="https://github.com/wistrand/structuring-agent-docs/blob/main/SKILL.md">Read the full model</a>.</p>
 
@@ -89,7 +95,7 @@ ln -s "$PWD/structuring-agent-docs" ~/.claude/skills/structuring-agent-docs</pre
 
 <footer>
   MIT licensed. The download is the skill payload only
-  (<code>SKILL.md</code>, <code>references/</code>, <code>templates/</code>) &mdash;
+  (<code>SKILL.md</code>, <code>references/</code>, <code>templates/</code>):
   Markdown and templates, no scripts or executable code, safe to read end to end.
   Built from <a href="https://github.com/wistrand/structuring-agent-docs">the repo</a> by GitHub Actions.
 </footer>

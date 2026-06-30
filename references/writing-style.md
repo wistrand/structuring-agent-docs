@@ -8,6 +8,7 @@ edits docs or writes user-facing copy.
 - No AI-isms
 - Links and tables
 - Concise and assume competence
+- Don't copy specific values out of code
 - No time-sensitive content
 - Consistent terminology
 
@@ -57,6 +58,11 @@ constant and where it lives ("the per-call cap in `entropy.ts`"), or state the
 property qualitatively ("fill in chunks; a single oversized call throws"). Quote
 a literal value only when it's a fixed external contract (an RFC field width, a
 wire-format magic byte) that won't change, and say why it's fixed.
+
+The same goes for pasted code: a copied function or signature drifts as silently as
+a copied constant. Point at the source (`parseConfig()` in `config.ts`) instead of
+reproducing it; paste a fragment only when it's illustrative and small, and treat
+the source as authoritative.
 
 ## No time-sensitive content
 

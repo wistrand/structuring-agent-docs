@@ -63,14 +63,12 @@ the entry point or drops a mechanism, change a row here, not the model.
 | Eager whole-file import to avoid | Claude Code `@path` imports  |
 | How this skill itself ships      | `SKILL.md` + bundled files   |
 
-`agent_docs/` is already a plain directory name with no tool dependency. One
-binding is a behavior, not a filename: the "cheap entry point" economics assume the
-harness auto-loads the entry point every turn, so the references' "read every
-session" phrasing is that Claude Code behavior, not a universal law — on a tool that
-doesn't auto-load, the always-on guarantee weakens and you lean harder on linking.
-`CLAUDE.md`, that auto-load assumption, and the `@`-import warning are the first
-things to revisit if the ecosystem shifts (e.g. toward `AGENTS.md` as the primary
-entry point).
+`agent_docs/` is a plain directory name, tool-independent. One binding is a
+behavior, not a filename: the "cheap entry point" economics assume auto-load, so the
+"read every session" phrasing is Claude Code behavior, not a law — without it the
+always-on guarantee weakens and you lean harder on linking. `CLAUDE.md`, the
+auto-load assumption, and the `@`-import warning are the first to revisit if the
+ecosystem shifts (e.g. toward `AGENTS.md` as the primary entry point).
 
 ## Two shapes of CLAUDE.md
 
@@ -95,6 +93,8 @@ Copy this checklist when creating or reorganizing a project's agent docs:
 - [ ] 7. Add a Documentation Style block (see references/writing-style.md)
 - [ ] 8. Generate any doc derivable from source (settings, CLI --help) via a build
         target instead of hand-writing — the step most often skipped, first to rot
+- [ ] 9. Set the update ritual: docs change with the code they point at; "update
+        the docs" sweeps after big changes (see references/agent-docs.md "Keeping docs current")
 ```
 
 Start from the templates in `templates/` and delete what doesn't apply.
@@ -112,25 +112,30 @@ Start from the templates in `templates/` and delete what doesn't apply.
   `@path` imports, which enter context at session start and save nothing,
   defeating the entry point. See
   [references/claude-md.md](references/claude-md.md).
-- **Factor out only what's safe to miss.** Splitting trades a best case (the agent
-  follows the link, context stays lean) for a worst case (it skips the link and
-  works without a fact it needed, silently). So split by blast radius: anything
-  whose absence silently corrupts an edit (invariants, data-loss gotchas,
-  read-before-you-touch warnings) stays inline in `CLAUDE.md`, which is
-  loaded every session. Push only safely-skippable subsystem reference to
-  `agent_docs/`. When in doubt, keep it in the entry point. See
-  [references/claude-md.md](references/claude-md.md).
+- **Factor out only what's safe to miss.** A deep dive saves context only if the
+  agent follows the link; skip it and the fact is silently gone. So split by blast
+  radius: what would silently corrupt an edit (invariants, data-loss gotchas,
+  read-before-you-touch warnings) stays inline; only safely-skippable reference
+  moves to `agent_docs/`. When in doubt, keep it inline. See
+  [references/claude-md.md](references/claude-md.md) "Split by blast radius".
 - **One topic per file, self-contained.** An agent editing audio reads
   `architecture-audio.md` alone, without first reading five others.
 - **Name by type with a prefix.** `architecture-*`, `design-*`, `plan-*`,
   `research-*`, plus `gotchas`/`findings`. Kebab-case, descriptive, no numbers.
   Use the bare type name (`architecture.md`) while there is one doc of that type;
   switch to prefixes (`architecture-audio.md`, `architecture-net.md`) once a
-  second one appears.
+  second one appears. A prefix can name a subsystem (`architecture-audio`) or a
+  cross-cutting concern (`architecture-auth`); both are valid axes.
 - **Capture the why.** A gotchas/findings doc holds non-obvious traps and the
   reasoning behind constraints, the things source code can't tell an agent. This
   is the residue from "What belongs in a doc": if a trap could be a test, add the
   test; what stays in prose is what no test can hold.
+- **Point into the source, and let code win on conflict.** A doc says where each
+  piece lives — file path plus key symbol — so it indexes the source instead of
+  restating it from memory, and the agent jumps straight to the code. When a doc
+  and the code disagree, the code is authoritative for what the system does now,
+  the doc for why: trust the code, fix the doc. See
+  [references/agent-docs.md](references/agent-docs.md).
 - **Flag critical invariants** explicitly so an agent knows what must stay
   true before it changes anything. Put global, cross-cutting rules in CLAUDE.md's
   `Invariants` section; keep an agent_docs `Invariants` section to subsystem-local
@@ -138,16 +143,18 @@ Start from the templates in `templates/` and delete what doesn't apply.
   subsystem doc needs a global invariant for context, link to CLAUDE.md instead
   of restating it.
 - **Generate, don't drift.** Any doc derivable from code (settings, CLI `--help`,
-  an API schema) should be produced by a build target, not maintained by hand. If
-  the CLI prints its own help, add a task that captures it into a doc
-  (`deno task gen-docs > docs/cli.md`) rather than hand-listing options in the
-  README, where they silently fall out of sync. This step is the easiest to skip
-  and the first to rot — wire it up when the project is small. The same hazard
-  applies to lone constants (sizes, caps, timeouts, versions) pasted into prose:
-  name the constant and its home, don't copy the value (see
-  [references/writing-style.md](references/writing-style.md)).
-- **Alias for other tools.** Symlink `AGENTS.md → CLAUDE.md` so tools expecting
-  a different entry filename find one source of truth, not a stale copy.
+  an API schema) should be produced by a build target, not hand-maintained —
+  hand-listing options in the README silently falls out of sync. Easiest step to
+  skip, first to rot; wire it up while the project is small. The same hazard applies
+  to constants and code pasted into prose — see
+  [references/writing-style.md](references/writing-style.md).
+- **One entry-point file, aliased for other tools.** Keep a single source and
+  symlink the names different tools read, so there's no second copy to drift.
+  `ln -s CLAUDE.md AGENTS.md` covers Claude Code and the cross-tool `AGENTS.md`
+  standard at once. The trick works only for tools that read a plain-markdown root
+  file; ones with structured rule formats (Cursor, Copilot) read their own files
+  with their own activation rules — generate or maintain those separately, don't
+  symlink.
 
 ## Beyond the base model
 

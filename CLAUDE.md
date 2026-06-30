@@ -11,6 +11,12 @@ the product.
 
 ## Discipline when editing
 
+- **Keep the skill lean — it teaches lean docs, so it must practice them.** This is
+  the governing constraint: a bloated skill refutes its own thesis. Every addition
+  earns its place against the skill's own writing-style rules (concise, assume
+  competence, every paragraph justifies its cost). Prefer cutting to adding; when
+  you add a paragraph, find one to remove. State each rule once and point to it
+  (see single-owned rules below); resist the urge to re-explain.
 - **Cross-file links are the main rot risk.** When you rename or move a file under
   `references/` or `templates/`, confirm every prose link that pointed at it still
   resolves, fix the ones that broke, and confirm every deep dive is still linked

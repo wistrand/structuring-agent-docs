@@ -4,6 +4,8 @@
 - Naming by prefix
 - Doc types
 - Point into the source
+- When a doc and the code disagree
+- Keeping docs current
 - Gotchas and findings
 - Invariants
 - Generated docs
@@ -30,6 +32,12 @@ before reading. Kebab-case, descriptive, no version numbers or dates in the name
 For a single small subsystem one `architecture.md` is enough. Split into
 `architecture-audio.md`, `architecture-webgl.md`, etc. when the combined file
 gets unwieldy or the subsystems are independently editable.
+
+A concern that cuts *across* subsystems — auth, i18n, logging, theming, error
+handling — doesn't fit any one `architecture-<sub>` file. Give it its own
+`architecture-<concern>.md` (or `design-<concern>.md`) as the single owner, and
+have the subsystem docs link to it rather than each re-describing it. The prefix
+names a subsystem or a cross-cutting concern; both are valid axes.
 
 ## Doc types
 
@@ -87,14 +95,46 @@ when a file moves, which softens the one cost here — a renamed file leaving a 
 path.
 
 Index authoritative source only; skip what's derived, vendored, or `.gitignore`d.
-A gitignore hit is a useful first-pass filter — it catches build output,
-dependencies, caches, and secrets — but treat it as "probably derived or
-dependency, so reason about *why* it's ignored," not an automatic omit. Two
-catches: a *committed* generated file is still derived, so mark it generated and
-point at its producer, not at the output; and a gitignored config/secret file
-(`.env.local`) is a signal to document its *requirement* as a gotcha — "needs
-`API_KEY`, `DB_URL`; uncommitted" — never to quote its contents, which both drift
-and leak if the docs are ever published.
+Treat a gitignore hit as "probably derived or dependency — reason about *why* it's
+ignored," not an automatic omit. Two catches: a *committed* generated file is still
+derived (mark it generated, point at its producer, not the output); and a gitignored
+config/secret (`.env.local`) is a signal to document its *requirement* as a gotcha —
+"needs `API_KEY`, `DB_URL`; uncommitted" — never its contents, which drift and leak
+if the docs are published.
+
+## When a doc and the code disagree
+
+Docs drift; the code is what runs. Split authority: the code is authoritative for
+*what the system does now*, the doc for *why* it's that way and what's intended. On
+a conflict about current behavior, trust the code and fix the doc — never reshape
+working code to match a stale doc. This is the fine print on "replaces reading the
+source": it holds only while the doc is current, which is why the durable docs are
+the *why* (rarely changes) and the generated ones, not blow-by-blow narration of
+code that does.
+
+## Keeping docs current
+
+Structure is worthless if the docs drift, and the skill can't enforce upkeep — so
+make it a ritual, cheapest moment first:
+
+- **Update as you change code.** A doc that points at `src/x.ts` is the doc to
+  revisit when you touch `src/x.ts` — the index runs in reverse. Fixing it in the
+  same change is the cheapest correction and the least drift; the agent should do
+  this without being asked.
+- **Sweep on demand.** When inline updates lag — after a big or cross-cutting
+  change — "update the docs" (or "update all docs") triggers a deliberate pass.
+  Make it a reconciliation, not a rewrite:
+  - check each doc against the current code; the code wins on conflict (never
+    reshape working code to match a stale doc);
+  - regenerate generated docs instead of hand-editing them;
+  - fix the cheap structural things — links resolve, moved files noted, a landed
+    `plan-*` promoted to `architecture-*`, invariants still true;
+  - leave the *why* unless the reason itself changed — it's the most durable
+    content and the easiest to wreck with a careless rewrite.
+
+Prefer small corrections to confident rewrites. If the project wants this reliable,
+document the trigger in its entry point ("to refresh docs after a big change, ask
+the agent to update the docs") so every agent knows the convention.
 
 ## Gotchas and findings
 
@@ -137,9 +177,9 @@ a subsystem so it knows what a careless edit silently breaks. Examples:
 - "The import graph is acyclic; a cycle test enforces it"
 - "The watch payload must stay tiny; bars ship as a digit string, not arrays"
 
-Put cross-cutting invariants in `CLAUDE.md`; put subsystem-specific ones at the
-top of that subsystem's `architecture-*.md`. State them as flat assertions, not
-suggestions. A filled `Invariants` section at the top of `architecture-render.md`:
+Place them per SKILL.md "Core rules": cross-cutting in `CLAUDE.md`,
+subsystem-specific at the top of that subsystem's `architecture-*.md`, never both.
+State them as flat assertions, not suggestions. A filled `Invariants` section at the top of `architecture-render.md`:
 
 ```markdown
 ## Invariants
@@ -181,4 +221,4 @@ without first reading four others. Some shared context (a pointer to
 
 Cross-links between agent_docs are useful extras, but every file must also be
 reachable directly from `CLAUDE.md`; don't bury a file so it's only findable by
-following a chain. Agents preview chained files with `head` and miss content.
+following a chain — deeply nested files get skimmed or missed.

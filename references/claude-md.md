@@ -152,9 +152,8 @@ for deep dives, not Claude Code's `@path` import syntax. `@`-imports load
 **eagerly**: the imported file's full content is pulled into context at session
 start, so it costs the same as inlining and saves nothing. That defeats the whole
 point of a routing entry point. A markdown link is just a pointer the agent follows
-only when a task needs it — that on-demand read is what makes the entry point the
-cheap, always-loaded layer. Reserve `@`-imports for the rare file you genuinely want in
-context every session (and even then, prefer keeping it short and inline). The
+only when a task needs it. Reserve `@`-imports for the rare file you genuinely want
+in context every session (and even then, prefer keeping it short and inline). The
 trap: someone "tidies up" the link index into `@agent_docs/...` imports thinking
 it is equivalent, and silently turns the whole `agent_docs/` tree into always-on
 context.
@@ -191,9 +190,10 @@ follow the link, and that failure is **silent and asymmetric**:
   *without* the fact and has no signal that it is missing. The edit proceeds on
   incomplete context and looks fine until it isn't.
 
-The entry point is the one tier exempt from this risk, because the harness loads
-CLAUDE.md every session — it is in context whether or not the agent chooses to read
-a link. So the rule is: **anything whose absence silently corrupts an edit stays in
+The entry point is the one tier exempt from this risk, because Claude Code
+auto-loads it every session — it is in context whether or not the agent chooses to
+read a link. (That auto-load is a binding, not a law; on a tool without it the
+exemption weakens — see SKILL.md "Portable model, named bindings".) So the rule is: **anything whose absence silently corrupts an edit stays in
 the entry point.** Critical invariants, data-loss gotchas, and read-before-you-touch
 warnings are kept inline (and *also* linked from the relevant deep dive as
 context), never relocated wholesale into a file the agent has to remember to open.

@@ -1,5 +1,7 @@
 <!-- Starter entry point. Delete sections that don't apply; keep it the cheap,
-     always-loaded routing entry point. Move deep detail into agent_docs/ and link. -->
+     always-loaded routing entry point. Move deep detail into agent_docs/ and link.
+     Alias it for other tools: `ln -s CLAUDE.md AGENTS.md` (a symlink, not a copy, so
+     there is no second file to drift). -->
 
 Guidance for agents working in this repo. Read this first, then the relevant
 file in `agent_docs/`.

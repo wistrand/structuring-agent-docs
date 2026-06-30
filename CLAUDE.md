@@ -86,7 +86,7 @@ Considered and left out on purpose; don't "fix" these without a demonstrated nee
   Settled choice, not a "revisit if rot gets bad."
 - **No worked example project.** A fake repo with filled docs is the most
   drift-prone artifact possible. The templates plus inline filled excerpts (the
-  `findings.md` and `Invariants` examples in
+  `findings.md`, `Invariants`, and generated-doc examples in
   [references/agent-docs.md](references/agent-docs.md), the link-index block in
   [references/claude-md.md](references/claude-md.md)) carry the concreteness
   without the maintenance burden.

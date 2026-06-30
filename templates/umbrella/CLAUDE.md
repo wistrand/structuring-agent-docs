@@ -4,7 +4,7 @@
      never a relative path; relative paths don't resolve across repo boundaries. -->
 
 Guidance for agents working across these repos. Read this first. Each repo has its
-own CLAUDE.md; this file maps how they fit together and owns the shared contracts.
+own CLAUDE.md; this file maps how they fit together and owns any cross-repo contracts.
 
 ## What this is
 
@@ -19,7 +19,14 @@ own CLAUDE.md; this file maps how they fit together and owns the shared contract
 Link each entry point by its repo URL, never a relative `../<repo>/CLAUDE.md` path.
 This umbrella spans repo boundaries, so a relative path breaks once a repo is cloned
 on its own, moved, or viewed on the web. Address siblings only by logical name or URL.
-The link to each repo's CLAUDE.md is its summary; don't restate it here.
+(A monorepo is the opposite case: when packages are subdirectories of one repo, not
+separate repos, link each package's CLAUDE.md by relative path, since those resolve
+and version together.) The link to each repo's CLAUDE.md is its summary; don't restate
+it here.
+
+<!-- The next two sections exist only if the repos share something. For an independent
+     working set with no shared contract and no integration, delete both; the Repos map
+     above is the whole umbrella. -->
 
 ## Shared contracts
 

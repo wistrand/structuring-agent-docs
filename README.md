@@ -17,6 +17,7 @@ references/
   writing-style.md             # agent-facing prose rules
   advanced.md                  # beyond the base model: one project that grows + work across projects
 templates/
+  README.md                    # human-facing single-project README
   CLAUDE.md                    # starter entry point
   agent_docs/architecture.md   # subsystem deep-dive skeleton
   agent_docs/gotchas.md        # traps-and-findings skeleton

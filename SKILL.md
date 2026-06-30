@@ -172,6 +172,7 @@ exactly one owner the others reference). Both are in
 
 ## Templates
 
+- [templates/README.md](templates/README.md): human-facing single-project README, agent rules kept out.
 - [templates/CLAUDE.md](templates/CLAUDE.md): starter entry point.
 - [templates/agent_docs/architecture.md](templates/agent_docs/architecture.md): subsystem deep-dive skeleton.
 - [templates/agent_docs/gotchas.md](templates/agent_docs/gotchas.md): traps-and-findings skeleton.

@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Landing page published to GitHub Pages (https://wistrand.github.io/skill-agent-docs/).
+  Landing page published to GitHub Pages (https://wistrand.github.io/structuring-agent-docs/).
   Keep it lean: link to the canonical SKILL.md / README rather than duplicating
   their content, so this page can't drift from the skill. The skill payload zip
   is built by .github/workflows/pages.yml, not committed.
@@ -43,29 +43,29 @@
 <p>A repeatable model: a human-facing <code>README.md</code>, an agent-facing
 <code>CLAUDE.md</code> entry point, and topic-focused <code>agent_docs/</code> deep
 dives loaded on demand. Progressive disclosure applied to a whole repo &mdash;
-<a href="https://github.com/wistrand/skill-agent-docs/blob/main/SKILL.md">read the model</a>.</p>
+<a href="https://github.com/wistrand/structuring-agent-docs/blob/main/SKILL.md">read the model</a>.</p>
 
 <div class="links">
   <a class="primary" href="./structuring-agent-docs.zip">Download the skill (.zip)</a>
-  <a href="https://github.com/wistrand/skill-agent-docs/blob/main/SKILL.md">Read the skill</a>
-  <a href="https://github.com/wistrand/skill-agent-docs">Browse the repo</a>
+  <a href="https://github.com/wistrand/structuring-agent-docs/blob/main/SKILL.md">Read the skill</a>
+  <a href="https://github.com/wistrand/structuring-agent-docs">Browse the repo</a>
 </div>
 
 <h2>Install</h2>
 <p>Download and unzip into a Claude Code skills directory:</p>
 <pre>curl -L -o structuring-agent-docs.zip \
-  https://wistrand.github.io/skill-agent-docs/structuring-agent-docs.zip
+  https://wistrand.github.io/structuring-agent-docs/structuring-agent-docs.zip
 unzip structuring-agent-docs.zip -d ~/.claude/skills/</pre>
 <p>Or clone and symlink:</p>
-<pre>git clone https://github.com/wistrand/skill-agent-docs
-ln -s "$PWD/skill-agent-docs" ~/.claude/skills/structuring-agent-docs</pre>
+<pre>git clone https://github.com/wistrand/structuring-agent-docs
+ln -s "$PWD/structuring-agent-docs" ~/.claude/skills/structuring-agent-docs</pre>
 <p>The agent loads it when you ask how to set up or reorganize <code>CLAUDE.md</code>,
 <code>AGENTS.md</code>, or <code>agent_docs/</code> for a repository.</p>
 
 <footer>
   MIT licensed. The download contains the skill payload only
   (<code>SKILL.md</code>, <code>references/</code>, <code>templates/</code>),
-  built from <a href="https://github.com/wistrand/skill-agent-docs">the repo</a> by GitHub Actions.
+  built from <a href="https://github.com/wistrand/structuring-agent-docs">the repo</a> by GitHub Actions.
 </footer>
 
 </body>

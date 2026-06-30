@@ -38,7 +38,7 @@ ln -s "$PWD" ~/.claude/skills/structuring-agent-docs
 ```
 
 Or download a zip of the skill from the project page:
-<https://wistrand.github.io/skill-agent-docs/>.
+<https://wistrand.github.io/structuring-agent-docs/>.
 
 The agent loads it automatically when you ask how to set up or reorganize
 `CLAUDE.md`, `AGENTS.md`, or `agent_docs/` for a repository.

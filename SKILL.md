@@ -15,13 +15,16 @@ artifacts; read "source" as "the authoritative artifact," whatever that is for y
 
 ## What belongs in a doc
 
-Let code carry what code can: a rule that can be a type or test, or a doc that can
-be generated from source, belongs there. A prose doc restating what a type already
-guarantees only drifts. What's left is the point of these docs, not a leftover: the
-*why* behind a constraint, an approach tried and rejected, a platform trap that cost
-an hour to diagnose. These docs are the agent's memory for its future self; it has
-none between sessions, and "the why is in the commit" is true but unreachable to an
-agent editing one file.
+Let code carry what code can, and let tooling find what tooling can. A rule that can
+be a type or test belongs in code; a doc derivable from source should be generated
+from it; and code an agent can locate on demand (grep, an LSP, a subagent sweep, a
+code-search MCP) needs no hand-maintained, exhaustive file-by-file or
+function-by-function index. Each only drifts. What no tool recovers is the *why*: the
+reason behind a constraint, an approach tried and rejected, a platform trap that cost
+an hour to diagnose. Navigation is recoverable on demand; the why is not, so the why
+is what these docs hold. They are the agent's memory for its future self; it has none
+between sessions, and "the why is in the commit" is true but unreachable to an agent
+editing one file.
 
 ## The layered model
 

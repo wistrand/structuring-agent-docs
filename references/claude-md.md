@@ -4,6 +4,7 @@
 - The full layout
 - README, docs/, notes/: the other tiers
 - Purpose of CLAUDE.md
+- Subdirectory CLAUDE.md vs a central index
 - Thin vs thick entry point
 - Section-by-section
 - The link-index pattern
@@ -56,6 +57,17 @@ Open with one line that sets the contract, e.g.:
 
 > Guidance for agents working in this repo. Read this first, then the relevant
 > file in `agent_docs/`.
+
+## Subdirectory CLAUDE.md vs a central index
+
+Claude Code also auto-loads a `CLAUDE.md` from a subdirectory when it reads files
+there. Within one cohesive project, prefer the central entry point plus `agent_docs/`
+over scattering subdir `CLAUDE.md` files. The central index is one navigable graph and
+a single always-loaded routing surface; scattered files give no global view and load
+only once their directory is touched. Reserve a nested `CLAUDE.md` for a genuinely
+independent subtree, which is the package case: each package owns its entry point and
+an umbrella links to it (see [advanced.md](advanced.md)). The test is ownership, not
+depth: shard at a project boundary, not to file one project's notes away by folder.
 
 ## Thin vs thick entry point
 

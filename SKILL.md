@@ -172,11 +172,11 @@ exactly one owner the others reference). Both are in
 
 ## Templates
 
-- [templates/README.md](templates/README.md): human-facing single-project README, agent rules kept out.
+- [templates/project-README.md](templates/project-README.md): human-facing single-project README, agent rules kept out.
 - [templates/CLAUDE.md](templates/CLAUDE.md): starter entry point.
 - [templates/agent_docs/architecture.md](templates/agent_docs/architecture.md): subsystem deep-dive skeleton.
 - [templates/agent_docs/gotchas.md](templates/agent_docs/gotchas.md): traps-and-findings skeleton.
 - [templates/agent_docs/plan.md](templates/agent_docs/plan.md): saved-planning skeleton, promoted to architecture when built.
 - [templates/umbrella/CLAUDE.md](templates/umbrella/CLAUDE.md): standalone-umbrella entry point (repo table, shared contracts, integration view).
-- [templates/umbrella/README.md](templates/umbrella/README.md): umbrella's human-facing repo map, repos linked by URL.
+- [templates/umbrella/project-README.md](templates/umbrella/project-README.md): umbrella's human-facing repo map, repos linked by URL.
 - [templates/umbrella/agent_docs/integration-note.md](templates/umbrella/agent_docs/integration-note.md): optional per-repo integration note.

@@ -216,6 +216,24 @@ best case (perfect retrieval, minimal context) and pays for it with a worst case
 only where the worst case is "the agent re-reads code it could have been told
 about," not "the agent breaks an invariant it never saw."
 
+### Telling when a split is wrong
+
+The silent failure can't be observed directly: when the agent skips a link, nothing
+flags the missing fact. The usable proxy is repetition. If the agent keeps getting
+the same thing wrong and that thing is already in a deep dive, the link isn't being
+followed, so pull the fact inline. That is the [agent-docs.md](agent-docs.md)
+self-correction signal ("capture corrections as they happen") applied to structure,
+not just content. The inverse signal: an entry point whose sections are rarely all
+needed at once is a factor-out candidate. Tune the split from these signals, not the
+line counts alone.
+
+One mechanism removes the guesswork for path-local rules. A tool that auto-loads a
+rules file when its path glob is touched (Claude Code's `rules/*.md`) adds a third
+slot beyond inline-or-factored-out: a rule that loads exactly when its subsystem is
+edited, so it can't be silently skipped and doesn't bloat unrelated sessions. Where
+the toolchain offers it, path-gating is the structural fix for the blast-radius
+tradeoff on rules scoped to one path.
+
 ## Where does a fact go?
 
 - A user needs it to run or use the app → `README.md`

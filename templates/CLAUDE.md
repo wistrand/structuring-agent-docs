@@ -57,4 +57,5 @@ file instead. Don't state the same rule in both places, or the copies drift.
   X but Y"). No em dashes or emojis in project copy. State the point directly.
 - Concise; assume the agent is competent. Add only what it can't infer (project
   names, rules, constraints, and the why). Cut explanations of general concepts.
+- State each rule on its own line as always/never; a rule buried mid-paragraph gets skipped.
 - Keep this file the routing entry point; move subsystem detail into agent_docs/.

@@ -100,6 +100,3 @@ the list outgrows this entry point.
 - **Personal vs team-shared agent docs.** A one-line note on `CLAUDE.local.md`, the
   Claude Code binding for gitignored personal rules. Act if adopters ask where
   personal rules go.
-- **Path-gated rules.** Fold `rules/*.md` (auto-loaded by a path glob) into the
-  blast-radius discussion as the option that defeats silent retrieval failure for
-  path-local rules. Act if the omission causes confusion.

@@ -8,6 +8,7 @@ edits docs or writes user-facing copy.
 - No AI-isms
 - Links and tables
 - Concise and assume competence
+- Keep rules salient
 - Don't copy specific values out of code
 - No time-sensitive content
 - Consistent terminology
@@ -50,6 +51,15 @@ The agent is already capable. Add only what it can't infer: project-specific
 names, rules, constraints, and the reasoning behind them. Cut explanations of
 general concepts the agent already knows. Every paragraph should justify its
 cost. If it restates something obvious, delete it.
+
+## Keep rules salient
+
+A rule is followed in proportion to how it's placed, not only how it's worded. State
+each one on its own line as a flat imperative (always/never), not buried mid-paragraph
+behind qualifiers. Same content either way, but a foregrounded rule gets acted on and
+a subordinated one gets skipped, and the gap widens for the weaker models that read
+the generated CLAUDE.md on routine edits. This is placement, not length: dense is
+fine, buried is not.
 
 ## Don't copy specific values out of code
 

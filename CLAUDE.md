@@ -5,10 +5,12 @@ Read this first when editing the skill. The deliverable is `SKILL.md` plus
 them, auto-loaded each session. `AGENTS.md` symlinks here. `README.md` is the
 human-facing overview (what the skill is, how to install) and holds the file tree.
 `docs/` and `.github/workflows/` are publishing infrastructure — they build the
-GitHub Pages site and a payload-only skill zip — and sit outside the skill itself.
-The "no CI in the skill" rule bans validators *bundled with the skill*, not release
-tooling: the zip ships `SKILL.md` + `references/` + `templates/` and nothing
-executable.
+GitHub Pages site and a payload-only skill zip. The "no CI" rule is narrow: **the
+docs skill provides no code** — not to an agent using it, not as advice to a
+project. It says nothing about *this* repo's build/publish CI (allowed, like any
+project's) or about a project that uses the skill (free to run whatever CI it
+wants). The zip ships `SKILL.md` + `references/` + `templates/` and nothing
+executable; that's the whole rule.
 
 This repo is itself an instance of the model the skill teaches: `README.md` for
 humans, this `CLAUDE.md` for the agent working here, `SKILL.md` + `references/` as
@@ -39,6 +41,11 @@ the product.
   substance, so they don't need syncing. Don't reintroduce full restatements or a
   sync table — if a satellite starts re-explaining a rule, collapse it back to a
   pointer.
+- **Project rules go in these docs, not the agent's memory system.** This repo
+  dogfoods the skill, so the entry point is the single owner of project constraints.
+  Recording a rule in per-project memory both fails to dogfood and makes a second
+  copy that drifts from this file — exactly what the skill warns against. Write it
+  here.
 
 ## Trigger examples
 

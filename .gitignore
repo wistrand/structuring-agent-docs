@@ -10,3 +10,8 @@ Thumbs.db
 
 # Local Claude Code runtime
 .claude/permission-guard.log
+
+# Pages site / skill zip — built in CI, never committed
+/_site/
+/build/
+structuring-agent-docs.zip

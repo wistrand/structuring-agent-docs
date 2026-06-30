@@ -1,0 +1,58 @@
+name: Publish docs site
+
+# Publishing infrastructure only. The skill artifact stays pure docs: the zip
+# below contains the skill payload (SKILL.md, references/, templates/) with no
+# scripts bundled. This workflow lives outside that payload.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "SKILL.md"
+      - "references/**"
+      - "templates/**"
+      - "docs/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assemble site and skill zip
+        run: |
+          set -euo pipefail
+          mkdir -p _site
+          cp -r docs/. _site/
+
+          # Build the downloadable skill: payload only, under a named top-level dir
+          # so it unzips to ./structuring-agent-docs/.
+          mkdir -p build/structuring-agent-docs
+          cp SKILL.md build/structuring-agent-docs/
+          cp -r references templates build/structuring-agent-docs/
+          (cd build && zip -qr ../_site/structuring-agent-docs.zip structuring-agent-docs)
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

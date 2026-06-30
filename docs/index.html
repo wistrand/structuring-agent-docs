@@ -1,0 +1,80 @@
+<!doctype html>
+<!--
+  Landing page published to GitHub Pages (https://wistrand.github.io/skill-agent-docs/).
+  Keep it lean: link to the canonical SKILL.md / README rather than duplicating
+  their content, so this page can't drift from the skill. The skill payload zip
+  is built by .github/workflows/pages.yml, not committed.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>structuring-agent-docs</title>
+<meta name="description" content="Structure a repository's documentation so AI coding agents navigate it efficiently.">
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    max-width: 46rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem;
+  }
+  h1 { font-size: 1.9rem; margin: 0 0 .25rem; }
+  .tag { font-size: 1.1rem; opacity: .8; margin: 0 0 2rem; }
+  h2 { font-size: 1.15rem; margin: 2rem 0 .5rem; }
+  code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  pre {
+    background: rgba(127,127,127,.12); padding: .85rem 1rem; border-radius: 8px;
+    overflow-x: auto; font-size: .9rem;
+  }
+  table { border-collapse: collapse; width: 100%; margin: .5rem 0; font-size: .95rem; }
+  th, td { border: 1px solid rgba(127,127,127,.3); padding: .4rem .6rem; text-align: left; }
+  .links { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1.25rem 0 0; }
+  .links a {
+    display: inline-block; padding: .5rem .9rem; border-radius: 8px;
+    border: 1px solid rgba(127,127,127,.4); text-decoration: none;
+  }
+  .links a.primary { background: #2563eb; color: #fff; border-color: #2563eb; }
+  footer { margin-top: 3rem; font-size: .85rem; opacity: .7; }
+  a { color: #2563eb; }
+</style>
+</head>
+<body>
+
+<h1>structuring-agent-docs</h1>
+<p class="tag">Structure a repository's documentation so AI coding agents navigate it efficiently.</p>
+
+<p>A repeatable model: a human-facing <code>README.md</code>, an agent-facing
+<code>CLAUDE.md</code> entry point, and topic-focused <code>agent_docs/</code> deep
+dives loaded on demand. Progressive disclosure applied to a whole repo.</p>
+
+<table>
+  <tr><th>Tier</th><th>File(s)</th><th>Audience</th><th>Role</th></tr>
+  <tr><td>User guide</td><td><code>README.md</code></td><td>Humans</td><td>What, why, quick start.</td></tr>
+  <tr><td>Entry point</td><td><code>CLAUDE.md</code></td><td>Agents</td><td>Read first: layout, commands, conventions, link index.</td></tr>
+  <tr><td>Deep dives</td><td><code>agent_docs/*.md</code></td><td>Agents</td><td>One topic per file, loaded on demand.</td></tr>
+</table>
+
+<div class="links">
+  <a class="primary" href="./structuring-agent-docs.zip">Download the skill (.zip)</a>
+  <a href="https://github.com/wistrand/skill-agent-docs/blob/main/SKILL.md">Read the skill</a>
+  <a href="https://github.com/wistrand/skill-agent-docs">Browse the repo</a>
+</div>
+
+<h2>Install</h2>
+<p>Download and unzip into a Claude Code skills directory:</p>
+<pre>curl -L -o structuring-agent-docs.zip \
+  https://wistrand.github.io/skill-agent-docs/structuring-agent-docs.zip
+unzip structuring-agent-docs.zip -d ~/.claude/skills/</pre>
+<p>Or clone and symlink:</p>
+<pre>git clone https://github.com/wistrand/skill-agent-docs
+ln -s "$PWD/skill-agent-docs" ~/.claude/skills/structuring-agent-docs</pre>
+<p>The agent loads it when you ask how to set up or reorganize <code>CLAUDE.md</code>,
+<code>AGENTS.md</code>, or <code>agent_docs/</code> for a repository.</p>
+
+<footer>
+  MIT licensed. The download contains the skill payload only
+  (<code>SKILL.md</code>, <code>references/</code>, <code>templates/</code>),
+  built from <a href="https://github.com/wistrand/skill-agent-docs">the repo</a> by GitHub Actions.
+</footer>
+
+</body>
+</html>

@@ -4,6 +4,11 @@ Read this first when editing the skill. The deliverable is `SKILL.md` plus
 `references/` and `templates/`; this file is the entry point for an agent maintaining
 them, auto-loaded each session. `AGENTS.md` symlinks here. `README.md` is the
 human-facing overview (what the skill is, how to install) and holds the file tree.
+`docs/` and `.github/workflows/` are publishing infrastructure — they build the
+GitHub Pages site and a payload-only skill zip — and sit outside the skill itself.
+The "no CI in the skill" rule bans validators *bundled with the skill*, not release
+tooling: the zip ships `SKILL.md` + `references/` + `templates/` and nothing
+executable.
 
 This repo is itself an instance of the model the skill teaches: `README.md` for
 humans, this `CLAUDE.md` for the agent working here, `SKILL.md` + `references/` as

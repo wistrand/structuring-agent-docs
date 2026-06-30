@@ -66,7 +66,10 @@ behavior, not a filename: the cheap-entry-point economics assume auto-load, so "
 every session" is Claude Code behavior, not a law. Without it the always-on
 guarantee weakens and you lean harder on linking. `CLAUDE.md`, the auto-load
 assumption, and the `@`-import warning are the first to revisit if the ecosystem
-shifts (e.g. toward `AGENTS.md` as primary).
+shifts (e.g. toward `AGENTS.md` as primary). The table is the bindings the model
+depends on, not an inventory of every tool feature; optional mechanisms named in the
+references (path-gated `rules/*.md`, PR-comment capture) are phrased conditionally, so
+they don't need a row.
 
 ## Two shapes of CLAUDE.md
 
@@ -75,7 +78,8 @@ thick entry point (a few hundred lines, design notes and invariants inline) suit
 dense codebase where most edits touch shared rules. Both still link out for the
 deepest dives. When a CLAUDE.md crosses ~500 lines or starts carrying full
 subsystem detail, extract that detail into an `agent_docs/<topic>.md` and leave a
-link behind. See [references/claude-md.md](references/claude-md.md).
+link behind. The line counts are heuristics; tune by signal, not the numbers (see
+[references/claude-md.md](references/claude-md.md) "Telling when a split is wrong").
 
 ## Setup workflow
 

@@ -10,6 +10,7 @@ edits docs or writes user-facing copy.
 - Concise and assume competence
 - Keep rules salient
 - Don't copy specific values out of code
+- Mark inference and unknowns
 - No time-sensitive content
 - Consistent terminology
 
@@ -74,6 +75,17 @@ The same goes for pasted code: a copied function or signature drifts as silently
 a copied constant. Point at the source (`parseConfig()` in `config.ts`) instead of
 reproducing it; paste a fragment only when it's illustrative and small, and treat
 the source as authoritative.
+
+## Mark inference and unknowns
+
+State what you've verified as fact. Flag what you haven't: a claim you inferred
+rather than confirmed should say so ("inferred from X", "appears to"), and a gap you
+couldn't resolve should be named as an open question, not smoothed over. A
+confidently wrong doc is worse than an honest "unknown", the same reason behind
+"Don't copy specific values out of code", and naming a gap turns a silent hole into
+one the next agent can close. Keep it light: most prose is verified fact and needs no
+marker, and blanket hedging is its own AI-ism (see "No AI-isms"). Reserve the labels
+for the genuinely uncertain.
 
 ## No time-sensitive content
 

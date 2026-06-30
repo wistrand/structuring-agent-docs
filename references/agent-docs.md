@@ -112,7 +112,9 @@ a conflict about current behavior, trust the code and fix the doc. Never reshape
 working code to match a stale doc. This is the fine print on "replaces reading the
 source": it holds only while the doc is current, which is why the durable docs are
 the *why* (rarely changes) and the generated ones, not blow-by-blow narration of
-code that does.
+code that does. Where a doc records something you inferred rather than confirmed, or
+a gap you couldn't resolve, label it; see [writing-style.md](writing-style.md) "Mark
+inference and unknowns".
 
 ## Keeping docs current
 

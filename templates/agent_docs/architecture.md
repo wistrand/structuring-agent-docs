@@ -34,7 +34,8 @@ repo live in CLAUDE.md; link to them rather than restating them here.
 
 ## Data flow
 
-<Step the data through the subsystem. A short numbered list or ASCII diagram.>
+<Step the data through the subsystem. A short numbered list, or an ASCII or Mermaid
+diagram when the flow is hard to follow in prose.>
 
 1. <input> →
 2. <transform> →

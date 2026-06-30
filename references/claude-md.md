@@ -102,8 +102,10 @@ before linking.
 
 ## Section-by-section
 
-- **What this is**: one paragraph. An ASCII diagram of data flow earns its
-  space here; prose paragraphs of rationale belong in the README.
+- **What this is**: one paragraph. An ASCII or Mermaid diagram earns its space when
+  a flow or set of relationships is harder to follow in prose than as a picture;
+  diagram behavior, not structure the code already shows, which drifts like any
+  restatement. Prose paragraphs of rationale belong in the README.
 - **Layout**: a table mapping paths to roles. Lets the agent find code without
   a tour.
 - **Commands**: the exact shell commands for dev, test, build, run, deploy.
@@ -216,6 +218,13 @@ fat file never has, which is silent information loss. Spend that trade only wher
 worst case is "the agent re-reads code it could have been told about," not "the agent
 breaks an invariant it never saw."
 
+One mechanism removes the guesswork for path-local rules. A tool that auto-loads a
+rules file when its path glob is touched (Claude Code's `rules/*.md`) adds a third
+slot beyond inline-or-factored-out: a rule that loads exactly when its subsystem is
+edited, so it can't be silently skipped and doesn't bloat unrelated sessions. Where
+the toolchain offers it, path-gating is the structural fix for the blast-radius
+tradeoff on rules scoped to one path.
+
 ### Telling when a split is wrong
 
 The silent failure can't be observed directly: when the agent skips a link, nothing
@@ -226,13 +235,6 @@ self-correction signal ("capture corrections as they happen") applied to structu
 not just content. The inverse signal: an entry point whose sections are rarely all
 needed at once is a factor-out candidate. Tune the split from these signals, not the
 line counts alone.
-
-One mechanism removes the guesswork for path-local rules. A tool that auto-loads a
-rules file when its path glob is touched (Claude Code's `rules/*.md`) adds a third
-slot beyond inline-or-factored-out: a rule that loads exactly when its subsystem is
-edited, so it can't be silently skipped and doesn't bloat unrelated sessions. Where
-the toolchain offers it, path-gating is the structural fix for the blast-radius
-tradeoff on rules scoped to one path.
 
 ## Where does a fact go?
 

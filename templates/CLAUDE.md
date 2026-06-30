@@ -8,8 +8,9 @@ file in `agent_docs/`.
 
 ## What this is
 
-<One paragraph: what the project does and how the pieces fit. An ASCII data-flow
-diagram earns its space; save rationale prose for the README.>
+<One paragraph: what the project does and how the pieces fit. An ASCII or Mermaid
+diagram earns its space when a flow is hard to follow in prose; save rationale for
+the README.>
 
 ## Layout
 
@@ -58,4 +59,5 @@ file instead. Don't state the same rule in both places, or the copies drift.
 - Concise; assume the agent is competent. Add only what it can't infer (project
   names, rules, constraints, and the why). Cut explanations of general concepts.
 - State each rule on its own line as always/never; a rule buried mid-paragraph gets skipped.
+- Mark inferred claims and open questions; don't present a guess as a fact.
 - Keep this file the routing entry point; move subsystem detail into agent_docs/.

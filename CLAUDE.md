@@ -11,9 +11,11 @@ maintaining it, auto-loaded each session (`AGENTS.md` symlinks here).
 - `README.md` is the human-facing overview and install; not loaded as the skill.
 - `docs/` + `.github/workflows/` handle publishing: build the Pages site and a
   payload-only skill zip (build output, not part of the skill).
-- The benchmark that measures the blast-radius claims lives in a sibling repo,
-  `github.com/wistrand/structuring-agent-docs-benchmark`; this repo ships no executable
-  code. It runs against a skill checkout via its `--skill-dir` flag.
+- The benchmark that measures these claims is a sibling repo (this repo ships no
+  executable code); it reads this skill via its `--skill-dir` flag. Reference a sibling
+  by URL with its own CLAUDE.md as the summary, never a restated copy (see
+  [references/advanced.md](references/advanced.md)):
+  <https://github.com/wistrand/structuring-agent-docs-benchmark>.
 
 The repo dogfoods the model it teaches: `README.md` for humans, this `CLAUDE.md`
 for the agent working here, `SKILL.md` + `references/` as the product.

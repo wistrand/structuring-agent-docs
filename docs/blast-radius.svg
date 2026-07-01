@@ -9,7 +9,11 @@
     absence would silently corrupt an edit inline.</desc>
   <style>
     svg { color: #1c1c1c; }
-    @media (prefers-color-scheme: dark) { svg { color: #e8e8e8; } }
+    @media (prefers-color-scheme: dark) {
+      svg { color: #e8e8e8; }
+      .stage, .ok { stroke: #60a5fa; }
+      .warnw { fill: #f59e0b; }
+    }
     .stage  { fill: currentColor; fill-opacity: .04; stroke: #2563eb; stroke-opacity: .55; stroke-width: 2; }
     .stage2 { fill: #2563eb; fill-opacity: .10; stroke: #2563eb; stroke-opacity: .9; stroke-width: 2.2; }
     .ok     { fill: currentColor; fill-opacity: .04; stroke: #2563eb; stroke-opacity: .55; stroke-width: 2; }
@@ -20,7 +24,7 @@
     .title  { fill: currentColor; font: 600 15px system-ui, sans-serif; }
     .titleb { fill: #2563eb; font: 700 15px system-ui, sans-serif; }
     .big    { fill: currentColor; font: 700 15px system-ui, sans-serif; }
-    .warnw  { fill: #d97706; font: 700 15px system-ui, sans-serif; }
+    .warnw  { fill: #b45309; font: 700 15px system-ui, sans-serif; }
     .sub    { fill: currentColor; fill-opacity: .6; font: 12px system-ui, sans-serif; }
     .bart   { fill: currentColor; font: 600 13.5px system-ui, sans-serif; }
   </style>

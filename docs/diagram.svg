@@ -8,7 +8,10 @@
     docs stay in sync.</desc>
   <style>
     svg { color: #1c1c1c; }
-    @media (prefers-color-scheme: dark) { svg { color: #e8e8e8; } }
+    @media (prefers-color-scheme: dark) {
+      svg { color: #e8e8e8; }
+      .node { stroke: #60a5fa; }
+    }
     .hub   { fill: #2563eb; fill-opacity: .1; stroke: #2563eb; stroke-opacity: .9; stroke-width: 2; }
     .node  { fill: currentColor; fill-opacity: .04; stroke: #2563eb; stroke-opacity: .55; stroke-width: 2; }
     .arc   { fill: none; stroke: #2563eb; stroke-opacity: .8; stroke-width: 2.4; }

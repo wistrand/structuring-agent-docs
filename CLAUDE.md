@@ -11,6 +11,8 @@ maintaining it, auto-loaded each session (`AGENTS.md` symlinks here).
 - `README.md` is the human-facing overview and install; not loaded as the skill.
 - `docs/` + `.github/workflows/` handle publishing: build the Pages site and a
   payload-only skill zip (build output, not part of the skill).
+- `benchmark/` is a dependency-free Node harness that measures the blast-radius
+  claims via an LLM API (OpenRouter). Repo tooling, not shipped in the skill zip.
 
 The repo dogfoods the model it teaches: `README.md` for humans, this `CLAUDE.md`
 for the agent working here, `SKILL.md` + `references/` as the product.

@@ -9,8 +9,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>structuring-agent-docs</title>
+<title>structuring-agent-docs · repo docs for AI coding agents</title>
 <meta name="description" content="Structure a repository's documentation so AI coding agents navigate and update it efficiently.">
+<meta property="og:title" content="structuring-agent-docs">
+<meta property="og:description" content="Structure a repository's documentation so AI coding agents navigate and update it efficiently.">
+<meta property="og:url" content="https://wistrand.github.io/structuring-agent-docs/">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' rx='3' fill='%232563eb'/><path d='M4 5h8M4 8h8M4 11h5' stroke='%23fff' stroke-width='1.6' stroke-linecap='round'/></svg>">
 <style>
   :root { color-scheme: light dark; }
   body {
@@ -36,6 +41,9 @@
   dt { font-weight: 600; margin-top: .6rem; }
   dd { margin: .15rem 0 0 1.25rem; }
   a { color: #2563eb; }
+  @media (prefers-color-scheme: dark) {
+    a { color: #60a5fa; }
+  }
   .diagram { width: 100%; height: auto; margin: 1rem 0 .5rem; }
 </style>
 </head>
@@ -48,8 +56,8 @@
 that lays out a repo's docs so an agent pulls in exactly the
 context a task needs, without rereading the whole codebase or one sprawling
 instructions file. It's a way of organizing docs and keeping them current, not a tool
-that generates them: advice an agent applies every time it touches the docs, from
-first setup through the upkeep that keeps them in sync as the code changes.</p>
+that generates them: advice the agent applies at first setup and every time it
+touches the docs afterward.</p>
 
 <div class="links">
   <a class="primary" href="./structuring-agent-docs.zip">Download the skill (.zip)</a>
@@ -57,16 +65,16 @@ first setup through the upkeep that keeps them in sync as the code changes.</p>
   <a href="https://github.com/wistrand/structuring-agent-docs">Browse the repo</a>
 </div>
 
-<img class="diagram" src="diagram.svg"
+<img class="diagram" src="diagram.svg" width="760" height="580"
      alt="A continuous cycle around an 'agent docs: navigate + update' hub: Structure (README, CLAUDE.md, agent_docs), Navigate (CLAUDE.md always, deep dives on demand), Update (docs change with the code), Capture (the why, gotchas, decisions).">
 
 <h2>The problem</h2>
 <p>Agent docs fail in two directions. One giant <code>CLAUDE.md</code> burns context
 on every turn and still buries the rule that mattered; scattering everything into
 linked files saves context only when the agent follows the link, so the critical
-warning goes silently missing. The fix is to split by what's safe to miss, and to
-write down only what code can't carry: the <em>why</em> behind a constraint, the
-trap that cost an hour, the approach already tried and rejected.</p>
+warning goes silently missing. And most of what gets written shouldn't be: docs earn
+their keep by holding what code can't carry, the <em>why</em> behind a constraint,
+the trap that cost an hour, the approach already tried and rejected.</p>
 
 <h2>Split by blast radius</h2>
 <p>One idea drives the rest. When you move a detail out of the always-loaded
@@ -81,7 +89,7 @@ what can move, what should move, and how to tell when you got it wrong. It's mea
 not just argued: a dependency-free benchmark checks the effect across several models,
 with <a href="https://github.com/wistrand/structuring-agent-docs-benchmark/blob/main/findings.md">results and caveats here</a>.</p>
 
-<img class="diagram" src="blast-radius.svg"
+<img class="diagram" src="blast-radius.svg" width="760" height="372" loading="lazy"
      alt="A three-stage arc: what can move (size and topic), what should move (blast radius), and telling if the split is wrong (signals, not line counts). The middle stage rests on an asymmetric cost: a fact kept inline but never needed only wastes tokens and the agent still had it, while a fact factored out that the agent skips is silently gone with no signal it is missing. Takeaway: keep anything whose absence would silently corrupt an edit inline.">
 
 <h2>The model</h2>

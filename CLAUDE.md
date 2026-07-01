@@ -51,6 +51,10 @@ build/publish CI (allowed, like any project's) or a project that uses the skill
   substance, so they don't need syncing. Don't reintroduce full restatements or a
   sync table. If a satellite starts re-explaining a rule, collapse it back to a
   pointer.
+- **The bindings table lists only what the model depends on.** Optional mechanisms
+  named in the references (path-gated `rules/*.md`, PR-comment capture) deliberately
+  have no row in `SKILL.md` "Portable model, named bindings"; don't add rows to make
+  the table an inventory of tool features.
 - **Project rules go in these docs, not the agent's memory system.** This repo
   dogfoods the skill, so the entry point is the single owner of project constraints.
   Recording a rule in per-project memory both fails to dogfood and makes a second

@@ -15,16 +15,14 @@ artifacts; read "source" as "the authoritative artifact," whatever that is for y
 
 ## What belongs in a doc
 
-Let code carry what code can, and let tooling find what tooling can. A rule that can
-be a type or test belongs in code. A doc you can derive from source should be
-generated, not hand-written. And code an agent can locate on demand (grep, an LSP, a
-subagent sweep, a code-search MCP) needs no exhaustive file-by-file or
-function-by-function index. Each of those only drifts. What no tool recovers is the
-*why*: the reason behind a constraint, an approach tried and rejected, a platform trap
-that cost an hour to diagnose. Navigation is recoverable on demand; the why is not. So
-the why is what these docs hold: the agent's memory for its future self, which has
-none between sessions. "The why is in the commit" is true, but unreachable to an agent
-editing one file.
+Let code carry what code can, and tooling find what tooling can. A rule that can be
+a type or test belongs in code. A doc derivable from source should be generated, not
+hand-written. Code an agent can locate on demand (grep, an LSP, a subagent sweep)
+needs no file-by-file index. All of those drift. What no tool recovers is the *why*:
+the reason behind a constraint, an approach tried and rejected, a platform trap that
+cost an hour to diagnose. That is what these docs hold: the agent's memory for its
+future self, which has none between sessions. "The why is in the commit" is true,
+but unreachable to an agent editing one file.
 
 ## The layered model
 
@@ -61,15 +59,12 @@ renames the entry point or drops a mechanism, change a row here, not the model.
 | Eager whole-file import to avoid | Claude Code `@path` imports  |
 | How this skill itself ships      | `SKILL.md` + bundled files   |
 
-`agent_docs/` is a plain directory name, tool-independent. One binding is a
-behavior, not a filename: the cheap-entry-point economics assume auto-load, so "read
-every session" is Claude Code behavior, not a law. Without it the always-on
+`agent_docs/` is a plain directory name and needs no remapping. The fragile binding
+is a behavior, not a filename: the cheap-entry-point economics assume auto-load, so
+"read every session" is Claude Code behavior, not a law; without it the always-on
 guarantee weakens and you lean harder on linking. `CLAUDE.md`, the auto-load
-assumption, and the `@`-import warning are the first to revisit if the ecosystem
-shifts (e.g. toward `AGENTS.md` as primary). The table is the bindings the model
-depends on, not an inventory of every tool feature; optional mechanisms named in the
-references (path-gated `rules/*.md`, PR-comment capture) are phrased conditionally, so
-they don't need a row.
+assumption, and the `@`-import warning are the first rows to revisit if the
+ecosystem shifts (e.g. toward `AGENTS.md` as primary).
 
 ## Two shapes of CLAUDE.md
 
@@ -94,7 +89,7 @@ Copy this checklist when creating or reorganizing a project's agent docs:
 - [ ] 6. Add an Invariants section listing the rules that must stay true
 - [ ] 7. Add a Documentation Style block (see references/writing-style.md)
 - [ ] 8. Generate any doc derivable from source (settings, CLI --help) via a build
-        target instead of hand-writing. The most-skipped step, and the first to rot
+        target instead of hand-writing
 - [ ] 9. Set the update habit: docs change with the code they point at; "update
         the docs" sweeps after big changes (see references/agent-docs.md "Keeping docs current")
 ```
@@ -107,12 +102,11 @@ Start from the templates in `templates/` and delete what doesn't apply.
   Don't chain doc → doc → doc; deeply nested docs get skimmed or missed.
   (Cross-links *between* agent_docs are fine as extras.)
 - **Link deep dives; don't eager-import them or bury them in backticks.**
-  Write `[agent_docs/x.md](agent_docs/x.md)` for every doc an agent should follow,
-  so the set is a navigable graph read on demand. Backticks are for source paths
-  (`src/cli.ts`), not docs you want followed. Don't load a deep dive up front. In
-  Claude Code that's `@path` imports, which enter context at session start and save
-  nothing, defeating the entry point. See
-  [references/claude-md.md](references/claude-md.md).
+  Write `[agent_docs/x.md](agent_docs/x.md)` for every doc an agent should follow.
+  Backticks are for source paths (`src/cli.ts`), not docs you want followed.
+  Don't load a deep dive up front: in Claude Code that's `@path` imports, which
+  load at session start and save nothing; see
+  [references/claude-md.md](references/claude-md.md) "Link, don't `@`-import".
 - **Factor out only what's safe to miss.** A deep dive saves context only if the
   agent follows the link; skip it and the fact is silently gone. So split by blast
   radius: what would silently corrupt an edit (invariants, data-loss gotchas,
@@ -148,31 +142,27 @@ Start from the templates in `templates/` and delete what doesn't apply.
   skip, first to rot; wire it up while the project is small. The same hazard applies
   to constants and code pasted into prose. See
   [references/writing-style.md](references/writing-style.md).
-- **One entry-point file, aliased for other tools.** Keep a single source and
-  symlink the names different tools read, so there's no second copy to drift.
-  `ln -s CLAUDE.md AGENTS.md` covers Claude Code and the cross-tool `AGENTS.md`
-  standard at once. It works only for tools that read a plain-markdown root file;
+- **One entry-point file, aliased for other tools.** `ln -s CLAUDE.md AGENTS.md`
+  covers Claude Code and the cross-tool `AGENTS.md` standard with no second copy
+  to drift. It only works for tools that read a plain-markdown root file;
   structured-rule formats (Cursor, Copilot) read their own files with their own
-  activation. Maintain those separately, don't symlink. On Windows, symlinks need
-  Developer Mode or admin rights; where that blocks, make the alias a one-line stub
-  that imports the canonical file.
+  activation, so maintain those separately. On Windows, symlinks need Developer
+  Mode or admin rights; where that blocks, make the alias a one-line stub that
+  imports the canonical file.
 
 ## Beyond the base model
 
 The base model holds at any size. Two kinds of growth need more, adopted only when
-the pain appears: a single project that accumulates docs or gets published (an
-audience-categorized index, reading-order onboarding, a published site), and work
-that spans several projects (a monorepo, sibling repos, or
-one product split across surfaces, where the model nests and shared facts get
-exactly one owner the others reference). Both are in
-[references/advanced.md](references/advanced.md).
+the pain appears: a single project that accumulates docs or gets published, and
+work that spans several projects (a monorepo, sibling repos, one product across
+surfaces). Both are in [references/advanced.md](references/advanced.md).
 
 ## References
 
 - [references/claude-md.md](references/claude-md.md): the full repo layout and what belongs where, CLAUDE.md anatomy, thin vs thick entry point, the link-index pattern, and what to factor out.
 - [references/agent-docs.md](references/agent-docs.md): naming prefixes, doc types, gotchas/findings, invariants, generated docs, and dated data artifacts/fixtures.
 - [references/writing-style.md](references/writing-style.md): agent-facing prose: no AI-isms, markdown links, aligned tables, no time-sensitive content.
-- [references/advanced.md](references/advanced.md): beyond the base model, covering one project that grows large or published (audience index, onboarding, a published site) and work that spans projects (monorepos, siblings, surfaces: the nesting model, single-owner shared facts, umbrella mapping).
+- [references/advanced.md](references/advanced.md): beyond the base model: the audience index, onboarding, and published-site patterns for one grown project; the nesting model, single-owner shared facts, and umbrella mapping for work that spans projects.
 
 ## Templates
 

@@ -11,8 +11,9 @@ maintaining it, auto-loaded each session (`AGENTS.md` symlinks here).
 - `README.md` is the human-facing overview and install; not loaded as the skill.
 - `docs/` + `.github/workflows/` handle publishing: build the Pages site and a
   payload-only skill zip (build output, not part of the skill).
-- `benchmark/` is a dependency-free Node harness that measures the blast-radius
-  claims via an LLM API (OpenRouter). Repo tooling, not shipped in the skill zip.
+- The benchmark that measures the blast-radius claims lives in a sibling repo,
+  `github.com/wistrand/structuring-agent-docs-benchmark`; this repo ships no executable
+  code. It runs against a skill checkout via its `--skill-dir` flag.
 
 The repo dogfoods the model it teaches: `README.md` for humans, this `CLAUDE.md`
 for the agent working here, `SKILL.md` + `references/` as the product.
@@ -102,7 +103,3 @@ the list outgrows this entry point.
 - **Personal vs team-shared agent docs.** A one-line note on `CLAUDE.local.md`, the
   Claude Code binding for gitignored personal rules. Act if adopters ask where
   personal rules go.
-- **Move the benchmark to its own repo.** `benchmark/` is the only executable code here;
-  splitting it out would make this repo payload-pure, so even a repo-root symlink install
-  exposes no code. Act if the tooling-in-repo purity concern outweighs keeping the
-  benchmark beside the skill it tests.

@@ -24,9 +24,11 @@ templates/
   agent_docs/plan.md           # saved-planning skeleton (promoted to architecture when built)
   umbrella/                    # umbrella entry point, project-README, and integration-note templates
 CLAUDE.md                      # entry point for editing this skill (AGENTS.md symlinks here)
-benchmark/                     # dependency-free harness measuring the blast-radius claim (not shipped)
 LICENSE                        # MIT
 ```
+
+The benchmark that measures the skill's claims lives in a sibling repo:
+<https://github.com/wistrand/structuring-agent-docs-benchmark>.
 
 ## Install
 
@@ -36,8 +38,8 @@ Skill payload, all that should be installed:
 - `references/`
 - `templates/`
 
-Repo-only tooling, never part of an install: `benchmark/`, `docs/`, `.github/`,
-`README.md`, `CLAUDE.md`.
+Repo-only tooling, never part of an install: `docs/`, `.github/`, `README.md`,
+`CLAUDE.md`. (None of it is executable; the benchmark that is lives in a separate repo.)
 
 Download the payload-only zip and unzip it into a Claude Code skills directory:
 
@@ -57,9 +59,9 @@ cp -R references templates ~/.claude/skills/structuring-agent-docs/
 ```
 
 Development install: to hack on the skill, symlink the repo root with
-`ln -s "$PWD" ~/.claude/skills/structuring-agent-docs`. This exposes the repo's tooling
-(`benchmark/`, `docs/`, `.github/`) to the agent, so it is not payload-only; use it only
-for development.
+`ln -s "$PWD" ~/.claude/skills/structuring-agent-docs`. This exposes the repo's docs and
+CI config (`docs/`, `.github/`) to the agent, none of it executable, so it is not
+strictly payload-only but adds no code.
 
 The agent loads it automatically when you ask how to set up or reorganize `CLAUDE.md`,
 `AGENTS.md`, or `agent_docs/` for a repository.
@@ -78,10 +80,11 @@ trigger examples, and deliberate non-goals.
 ## Evidence
 
 The central claim (keep critical facts inline, because factored-out ones get silently
-missed) is measured, not just asserted. `benchmark/` holds a dependency-free harness
-that tests it across several models; see [benchmark/findings.md](benchmark/findings.md)
-for results and honest caveats, and [benchmark/README.md](benchmark/README.md) to
-reproduce. It is repo tooling and is not part of the shipped skill.
+missed) is measured, not just asserted. A dependency-free harness in a sibling repo tests
+it across several models; see the
+[findings](https://github.com/wistrand/structuring-agent-docs-benchmark/blob/main/findings.md)
+and the [benchmark repo](https://github.com/wistrand/structuring-agent-docs-benchmark) to
+reproduce. It is separate tooling, not part of the shipped skill.
 
 ## License
 

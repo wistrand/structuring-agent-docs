@@ -77,7 +77,9 @@ file size: a fact kept inline but never needed just wastes a few tokens, while a
 critical rule moved out and missed can quietly break an edit. Anything whose absence
 would corrupt an edit stays inline; only safely-skippable reference moves out.
 <a href="https://github.com/wistrand/structuring-agent-docs/blob/main/references/claude-md.md#split-by-blast-radius-not-just-size">See the full reasoning</a>:
-what can move, what should move, and how to tell when you got it wrong.</p>
+what can move, what should move, and how to tell when you got it wrong. It's measured,
+not just argued: a dependency-free benchmark checks the effect across several models,
+with <a href="https://github.com/wistrand/structuring-agent-docs/blob/main/benchmark/findings.md">results and caveats here</a>.</p>
 
 <img class="diagram" src="blast-radius.svg"
      alt="A three-stage arc: what can move (size and topic), what should move (blast radius), and telling if the split is wrong (signals, not line counts). The middle stage rests on an asymmetric cost: a fact kept inline but never needed only wastes tokens and the agent still had it, while a fact factored out that the agent skips is silently gone with no signal it is missing. Takeaway: keep anything whose absence would silently corrupt an edit inline.">

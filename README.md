@@ -24,6 +24,7 @@ templates/
   agent_docs/plan.md           # saved-planning skeleton (promoted to architecture when built)
   umbrella/                    # umbrella entry point, project-README, and integration-note templates
 CLAUDE.md                      # entry point for editing this skill (AGENTS.md symlinks here)
+benchmark/                     # dependency-free harness measuring the blast-radius claim (not shipped)
 LICENSE                        # MIT
 ```
 
@@ -54,6 +55,14 @@ The agent loads it automatically when you ask how to set up or reorganize
 
 See [CLAUDE.md](CLAUDE.md) for how to work in this repo: the editing discipline,
 trigger examples, and deliberate non-goals.
+
+## Evidence
+
+The central claim (keep critical facts inline, because factored-out ones get silently
+missed) is measured, not just asserted. `benchmark/` holds a dependency-free harness
+that tests it across several models; see [benchmark/findings.md](benchmark/findings.md)
+for results and honest caveats, and [benchmark/README.md](benchmark/README.md) to
+reproduce. It is repo tooling and is not part of the shipped skill.
 
 ## License
 

@@ -102,3 +102,7 @@ the list outgrows this entry point.
 - **Personal vs team-shared agent docs.** A one-line note on `CLAUDE.local.md`, the
   Claude Code binding for gitignored personal rules. Act if adopters ask where
   personal rules go.
+- **Move the benchmark to its own repo.** `benchmark/` is the only executable code here;
+  splitting it out would make this repo payload-pure, so even a repo-root symlink install
+  exposes no code. Act if the tooling-in-repo purity concern outweighs keeping the
+  benchmark beside the skill it tests.

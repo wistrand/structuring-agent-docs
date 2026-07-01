@@ -30,20 +30,39 @@ LICENSE                        # MIT
 
 ## Install
 
-Copy or symlink the skill into a Claude Code skills directory:
+Skill payload, all that should be installed:
+
+- `SKILL.md`
+- `references/`
+- `templates/`
+
+Repo-only tooling, never part of an install: `benchmark/`, `docs/`, `.github/`,
+`README.md`, `CLAUDE.md`.
+
+Download the payload-only zip and unzip it into a Claude Code skills directory:
 
 ```bash
-# project-scoped
-ln -s "$PWD" /path/to/project/.claude/skills/structuring-agent-docs
-# or user-scoped
-ln -s "$PWD" ~/.claude/skills/structuring-agent-docs
+curl -L -o structuring-agent-docs.zip \
+  https://wistrand.github.io/structuring-agent-docs/structuring-agent-docs.zip
+# the zip wraps everything in a structuring-agent-docs/ directory
+unzip structuring-agent-docs.zip -d ~/.claude/skills/
 ```
 
-Or download a zip of the skill from the project page:
-<https://wistrand.github.io/structuring-agent-docs/>.
+Or, from a clone, copy the payload in (also payload-only):
 
-The agent loads it automatically when you ask how to set up or reorganize
-`CLAUDE.md`, `AGENTS.md`, or `agent_docs/` for a repository.
+```bash
+mkdir -p ~/.claude/skills/structuring-agent-docs
+cp SKILL.md ~/.claude/skills/structuring-agent-docs/
+cp -R references templates ~/.claude/skills/structuring-agent-docs/
+```
+
+Development install: to hack on the skill, symlink the repo root with
+`ln -s "$PWD" ~/.claude/skills/structuring-agent-docs`. This exposes the repo's tooling
+(`benchmark/`, `docs/`, `.github/`) to the agent, so it is not payload-only; use it only
+for development.
+
+The agent loads it automatically when you ask how to set up or reorganize `CLAUDE.md`,
+`AGENTS.md`, or `agent_docs/` for a repository.
 
 ## The model in one table
 

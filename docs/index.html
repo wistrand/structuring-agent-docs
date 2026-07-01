@@ -110,7 +110,8 @@ to a monorepo or a family of related projects.
 # the zip wraps everything in a structuring-agent-docs/ directory,
 # so this creates ~/.claude/skills/structuring-agent-docs/SKILL.md
 unzip structuring-agent-docs.zip -d ~/.claude/skills/</pre>
-<p>Or clone and symlink:</p>
+<p>For development only. This symlinks the whole repo, exposing its tooling
+(<code>benchmark/</code>, <code>docs/</code>) to the agent, so it is not payload-only:</p>
 <pre>git clone https://github.com/wistrand/structuring-agent-docs
 ln -s "$PWD/structuring-agent-docs" ~/.claude/skills/structuring-agent-docs</pre>
 <p>The agent loads it when you ask how to set up or reorganize <code>CLAUDE.md</code>,

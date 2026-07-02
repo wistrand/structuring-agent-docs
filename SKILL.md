@@ -56,13 +56,17 @@ renames the entry point or drops a mechanism, change a row here, not the model.
 | Entry point always in context    | the harness auto-loads it    |
 | Cross-tool alias for it          | `AGENTS.md` (symlink to it)  |
 | On-demand deep dives             | `agent_docs/*.md`            |
+| Source locatable on demand       | Grep, LSP, subagent sweeps   |
 | Eager whole-file import to avoid | Claude Code `@path` imports  |
 | How this skill itself ships      | `SKILL.md` + bundled files   |
 
-`agent_docs/` is a plain directory name and needs no remapping. The fragile binding
-is a behavior, not a filename: the cheap-entry-point economics assume auto-load, so
-"read every session" is Claude Code behavior, not a law; without it the always-on
-guarantee weakens and you lean harder on linking. `CLAUDE.md`, the auto-load
+`agent_docs/` is a plain directory name and needs no remapping. The fragile
+bindings are behaviors, not filenames. The cheap-entry-point economics assume
+auto-load, so "read every session" is Claude Code behavior, not a law; without it
+the always-on guarantee weakens and you lean harder on linking. The no-index rule
+("What belongs in a doc") assumes on-demand search; without that, the index earns
+its place back: generated where the source can derive it, hand-written only where
+the artifact is stable enough that drift risk is low. `CLAUDE.md`, the auto-load
 assumption, and the `@`-import warning are the first rows to revisit if the
 ecosystem shifts (e.g. toward `AGENTS.md` as primary).
 

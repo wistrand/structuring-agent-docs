@@ -86,6 +86,13 @@ it across several models; see the
 and the [benchmark repo](https://github.com/wistrand/structuring-agent-docs-benchmark) to
 reproduce. It is separate tooling, not part of the shipped skill.
 
+## Related
+
+Karpathy's [LLM wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)
+is the complementary design: an LLM-maintained knowledge base compiled from immutable
+sources, where the wiki is the artifact. This skill covers the opposite case, docs
+orbiting a mutable artifact (code) that they must index, never restate.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).

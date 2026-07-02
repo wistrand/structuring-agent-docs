@@ -78,6 +78,8 @@ Should NOT fire (doc-adjacent but out of scope):
 - "Add JSDoc/docstrings to these functions." In-code API docs.
 - "Draft a blog post about our architecture." Narrative for people.
 - "Generate API reference docs from my OpenAPI spec." Doc-generation tooling.
+- "Set up an LLM-maintained wiki / knowledge base from my notes and sources."
+  Knowledge-base building, not repo context for coding agents.
 
 The split is the test: in scope when the ask is about *how an agent picks up repo
 context*; out of scope when it's human-facing prose or code-level docs.

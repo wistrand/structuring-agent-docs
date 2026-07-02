@@ -54,11 +54,13 @@ craft, or you paste in the "ultimate template" from some insanely long blog post
 and hope. My colleagues do both. Both miss what the file is. It's the agent's
 working memory, and the agent should be the one writing it.</p>
 
-<p>To be fair, the hand-writers have
-<a href="https://arxiv.org/abs/2602.11988">a study</a> showing that one-shot
-generated context files make agents worse. However, the generated files
-restated what the agent could already find in the repo. That argues against the
-one-shot <code>/init</code> dump, nothing more.</p>
+<p>The hand-writers do have
+<a href="https://arxiv.org/abs/2602.11988">a study</a> on their side: generated
+context files make agents worse. However, the files it measured were one-shot
+<code>/init</code> dumps that restated what the agent could already find in the
+repo, and the official fix, refining the dump by hand, only fails slower: the
+human refines once and stops, and the file drifts as soon as the code moves.
+What matters is who maintains the file, not who drafts it.</p>
 
 <p>I got here from a repo that had no chance of fitting in one CLAUDE.md, working
 in plan-implement-fix loops: the agent writes a plan doc, implements against it,

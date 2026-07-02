@@ -1,0 +1,153 @@
+<!doctype html>
+<!--
+  Essay published to GitHub Pages alongside index.html.
+  Human-facing persuasive prose; the canonical rules live in SKILL.md and
+  references/, and the numbers live in the benchmark repo's findings.md.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Don't write your CLAUDE.md yourself · structuring-agent-docs</title>
+<meta name="description" content="The docs are the agent's working memory, and the agent should write them. What you supply is the rules.">
+<meta property="og:title" content="Don't write your CLAUDE.md yourself">
+<meta property="og:description" content="The docs are the agent's working memory, and the agent should write them. What you supply is the rules.">
+<meta property="og:url" content="https://wistrand.github.io/structuring-agent-docs/dont-write-your-claude-md-yourself.html">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' rx='3' fill='%232563eb'/><path d='M4 5h8M4 8h8M4 11h5' stroke='%23fff' stroke-width='1.6' stroke-linecap='round'/></svg>">
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    font: 17px/1.65 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    max-width: 40rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem;
+  }
+  h1 { font-size: 1.9rem; line-height: 1.2; margin: 0 0 .25rem; }
+  .byline { font-size: .95rem; opacity: .7; margin: 0 0 2rem; }
+  p { margin: 1.1rem 0; }
+  code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  code { font-size: .88em; }
+  pre {
+    background: rgba(127,127,127,.12); padding: .85rem 1rem; border-radius: 8px;
+    overflow-x: auto; font-size: .85rem; line-height: 1.5;
+  }
+  table { border-collapse: collapse; margin: 1.1rem 0; font-size: .95em; }
+  th, td {
+    text-align: left; padding: .35rem 1rem .35rem 0;
+    border-bottom: 1px solid rgba(127,127,127,.35); vertical-align: top;
+  }
+  a { color: #2563eb; }
+  footer { margin-top: 3rem; font-size: .85rem; opacity: .7; }
+  @media (prefers-color-scheme: dark) {
+    a { color: #60a5fa; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Don't write your CLAUDE.md yourself</h1>
+<p class="byline">Erik Wistrand · July 2026 ·
+<a href="./index.html">structuring-agent-docs</a></p>
+
+<p>Don't write your CLAUDE.md yourself. I don't know why people think they
+should, but the idea is everywhere: either you hand-write the file like it's a
+craft, or you paste in the "ultimate template" from some insanely long blog post
+and hope. My colleagues do both. Both miss what the file is. It's the agent's
+working memory, and the agent should be the one writing it.</p>
+
+<p>To be fair, the hand-writers have
+<a href="https://arxiv.org/abs/2602.11988">a study</a> showing that one-shot
+generated context files make agents worse. However, the generated files
+restated what the agent could already find in the repo. That argues against the
+one-shot <code>/init</code> dump, nothing more.</p>
+
+<p>I got here from a repo that had no chance of fitting in one CLAUDE.md, working
+in plan-implement-fix loops: the agent writes a plan doc, implements against it,
+fixes what broke, and the plan gets promoted to an architecture doc once it's
+real. I never wrote those docs. The agent wrote them for its own future sessions,
+which start with no memory of anything. The surprise was how well that loop
+worked. The docs stayed current because the same process that changed the code
+changed them, and reviewing a doc diff takes less time than writing the doc.</p>
+
+<p>So the useful question is not what you should write. It's what rules the agent
+needs so the docs it keeps stay usable. That's what I put in the
+<a href="./index.html">skill</a>:</p>
+
+<pre>project/
+├── README.md      # humans: what, why, quick start
+├── CLAUDE.md      # agent entry point (AGENTS.md symlinks here)
+└── agent_docs/    # one topic per file, loaded on demand
+    ├── architecture.md
+    └── gotchas.md</pre>
+
+<p>Every <code>agent_docs/</code> file is linked from the entry point with a
+plain markdown link, one level deep. The agent loads the skill when it sets the
+docs up and every time it touches them afterwards.</p>
+
+<p>Most of the rules are obvious once stated. One isn't, and it decides where
+everything goes: when a fact moves out of the always-loaded entry point into a
+linked file, context is only saved if the agent opens that file. If it doesn't,
+the fact is gone and nothing tells you. A useless fact kept inline costs a few
+dozen tokens. A critical fact moved out and skipped produces an edit that runs on
+the wrong assumption and looks fine in review. So you don't split by size, you
+split by what a miss costs: anything whose absence silently corrupts an edit
+stays inline.</p>
+
+<p>I <a href="https://github.com/wistrand/structuring-agent-docs-benchmark">benchmarked</a>
+this, because it sounded true and sounding true is worth nothing. A synthetic
+repo, a planted fact ("scheduler delays are in centiseconds"), a task that
+quietly depends on it, and the fact placed five ways:</p>
+
+<table>
+<tr><th>placement</th><th>fact honored</th></tr>
+<tr><td>inline in the entry point</td><td>100%, every model, every prompt</td></tr>
+<tr><td>behind an <code>@</code>-import</td><td>100%, but costs the same context as inline</td></tr>
+<tr><td>one link away</td><td>0 to 100%, depending on the harness</td></tr>
+<tr><td>two links away</td><td>missed too, even when the harness urged reading</td></tr>
+<tr><td>absent</td><td>0%</td></tr>
+</table>
+
+<p>The link rows are the interesting part: a weak model never opened a link, and
+the strongest model in the set skipped a well-labeled one unless the system
+prompt pushed it to read files. The descriptive labels and per-link hints I had
+written into the skill turned out to be nearly irrelevant; what makes an agent
+open a doc is the harness telling it to read. Mainstream harnesses do, so a
+capable model usually follows links there, but subagents, headless runs, and
+cheap models get no such cover. You don't control the harness. You control what
+stays inline.</p>
+
+<p>The benchmark also caught the skill causing the exact failure it warns about:
+an agent given the skill and asked to write the docs filed the centiseconds fact
+in a tidy <code>agent_docs</code> file, keeping the entry point lean, and a
+consumer that didn't follow links missed it every time. I wasn't surprised.
+Agents make mistakes, the same way they skip links, and it's why blast radius is
+now the loudest rule in the skill. The harness itself broke twice along the way;
+twice I assumed a bug rather than bad luck, and twice that was correct. What
+survived the fixes is in the
+<a href="https://github.com/wistrand/structuring-agent-docs-benchmark/blob/main/findings.md">findings</a>:
+inline wins, and an author given the skill points at source instead of
+hand-copying values, so its docs don't rot when a constant changes.</p>
+
+<p>That last result points at the real question: do we need most of these docs
+at all? The code must be able to carry this, right? Mostly it can. A rule that
+can be a type or a test goes in code. Anything derivable from source gets
+generated by a build target, since a hand-copied value is stale the day after
+someone edits the constant. What's left is what nothing can recover later: why a
+constraint exists, and the trap that ate an afternoon before it was understood.
+The agent was there when that happened, which is one more reason it should be
+the one writing it down.</p>
+
+<p>So: stop hand-writing your CLAUDE.md, and stop pasting templates into it.
+Give the agent the rules, review its doc diffs like any other diffs, and let it
+keep its own memory.</p>
+
+<footer>
+  The numbers come from the
+  <a href="https://github.com/wistrand/structuring-agent-docs-benchmark/blob/main/findings.md">benchmark findings</a>
+  (point-in-time runs; caveats there). The skill itself:
+  <a href="https://github.com/wistrand/structuring-agent-docs/blob/main/SKILL.md">SKILL.md</a>
+  in <a href="https://github.com/wistrand/structuring-agent-docs">the repo</a>,
+  or the <a href="./index.html">overview page</a>. MIT licensed.
+</footer>
+
+</body>
+</html>

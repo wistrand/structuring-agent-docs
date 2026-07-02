@@ -86,6 +86,11 @@ it across several models; see the
 and the [benchmark repo](https://github.com/wistrand/structuring-agent-docs-benchmark) to
 reproduce. It is separate tooling, not part of the shipped skill.
 
+Independent external evidence points the same way: an ETH Zurich study
+([arXiv:2602.11988](https://arxiv.org/abs/2602.11988)) found LLM-generated context
+files that restate discoverable repo content make agents worse, which is the
+failure the "document only what code can't carry" rule exists to prevent.
+
 ## Related
 
 Karpathy's [LLM wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)

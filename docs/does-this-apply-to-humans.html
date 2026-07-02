@@ -1,0 +1,186 @@
+<!doctype html>
+<!--
+  Companion piece to dont-write-your-claude-md-yourself.html: the essay's and
+  benchmark's findings read against linguistics and cognitive science.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Does this apply to humans? · structuring-agent-docs</title>
+<meta name="description" content="Reading the agent-docs essay and benchmark against linguistics and cognitive science: which findings are the same mechanism in humans, and which do not transfer.">
+<meta property="og:title" content="Does this apply to humans?">
+<meta property="og:description" content="Reading the agent-docs essay and benchmark against linguistics and cognitive science: which findings are the same mechanism in humans, and which do not transfer.">
+<meta property="og:url" content="https://wistrand.github.io/structuring-agent-docs/does-this-apply-to-humans.html">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' rx='3' fill='%232563eb'/><path d='M4 5h8M4 8h8M4 11h5' stroke='%23fff' stroke-width='1.6' stroke-linecap='round'/></svg>">
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    font: 17px/1.65 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    max-width: 40rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem;
+  }
+  h1 { font-size: 1.9rem; line-height: 1.2; margin: 0 0 .25rem; }
+  h2 { font-size: 1.2rem; margin: 2.2rem 0 .5rem; }
+  .byline { font-size: .95rem; opacity: .7; margin: 0 0 2rem; }
+  p { margin: 1.1rem 0; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .88em; }
+  a { color: #2563eb; }
+  footer { margin-top: 3rem; font-size: .85rem; opacity: .7; }
+  @media (prefers-color-scheme: dark) {
+    a { color: #60a5fa; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Does this apply to humans?</h1>
+<p class="byline">A companion piece to
+<a href="./dont-write-your-claude-md-yourself.html">Don't write your CLAUDE.md yourself</a>,
+reading the essay and its benchmark against linguistics and cognitive
+science.</p>
+
+<p>The essay and its benchmark are about machine readers, but most of what they
+measure was documented in human readers first. This page maps the findings onto
+that older literature: where the parallel is the same mechanism, where it is
+loose, and where it fails.</p>
+
+<h2>The economics of placement</h2>
+
+<p>Relevance Theory (Sperber and Wilson) holds that comprehension is governed by
+a cost-benefit calculation: a reader processes an utterance only as far as the
+expected effect justifies the effort. Grice's maxim of quantity ("be as
+informative as required, no more") gestures at the same constraint. Human
+technical writing has rarely obeyed either, because verbosity was free for the
+writer and its cost fell on the reader. Agent docs are the first writing
+ecosystem where the writer pays for the reader's processing effort, in tokens,
+per session. The pricing the essay makes explicit (a useless inline fact costs
+tokens; a factored-out fact that goes unread costs a corrupted edit) is the same
+calculation, with the two sides of the ledger finally visible.</p>
+
+<p>The blast-radius rule also has a linguistic ancestor. Discourse structure
+licenses skipping: information placed in a subordinate position, an appendix, a
+footnote, a dependent clause, is marked as safe to pass over. That is what
+subordination means. Safety-critical fields rediscovered the consequence and
+engineered around it. The checklist read aloud on a flight deck is inline; the
+operations manual in the flight bag is a link; the accident record from before
+that distinction is the benchmark's absent row.</p>
+
+<h2>Why the strongest reader checks least</h2>
+
+<p>The benchmark's centiseconds case reproduces a classic result. Asked "how
+many animals of each kind did Moses take on the ark?", most people answer "two"
+without noticing it was Noah (the Moses illusion, Erickson and Mattson, 1981).
+Semantic processing is shallow wherever a strong schema supplies a default; the
+anomaly is never consulted. "Retry after 3 seconds" activates the milliseconds
+schema and processing stops there; "create an ID" activates no confident
+schema, so the reader checks. Comprehension monitoring is triggered by felt
+uncertainty, not actual uncertainty, and the most dangerous errors are the ones
+that generate none.</p>
+
+<p>The same account predicts the benchmark's least intuitive result: that
+link-following was not monotone in model capability. Information-seeking is
+driven by prediction error, and a stronger prior generates less of it. Drew,
+Võ, and Wolfe (2013) pasted a gorilla into a lung CT scan and 83% of expert
+radiologists missed it; their priors about what a scan contains were strong
+enough that the anomaly never reached awareness. A capable model answering from
+its prior without opening the linked doc is the same effect, demonstrated more
+cleanly than human studies can manage, since the benchmark can rerun the
+identical reader with the prior intact.</p>
+
+<h2>Norms open documents, not labels</h2>
+
+<p>The benchmark found that what makes an agent open a linked doc is the
+harness's instruction to read, and that the link's own label barely matters.
+The human literature agrees. Readers do not consult references because the
+reference is well phrased; they consult them because a surrounding institution
+enforces it. The medical resident checks the contraindications page because not
+checking is punished. Scholars skip footnotes; developers skip "see section
+4.2"; label quality has never fixed either.</p>
+
+<p>In cognitive terms the harness prompt is doing the work of executive
+control: overriding the default policy of answering from prior and forcing a
+check. In humans that control is effortful and degrades first under load and
+fatigue, which is why human factors engineering long ago stopped exhorting
+operators to be vigilant and started placing critical information in the path
+of action. The crucial warning in an anesthesia workflow is printed on the
+syringe, not in the manual. The syringe label is inline. The manual is a link.
+The incident reports are full of chain.</p>
+
+<h2>External memory and its failure modes</h2>
+
+<p>The essay calls the docs the agent's working memory for a future self that
+has none, and the description is close to literal. An agent between sessions is
+in the position of a severe amnesic: intact reasoning, no episodic continuity.
+The solution amnesic patients converge on is the same one: externalized memory
+with strict conventions about what goes where, because the future self cannot
+ask the past self what it meant. The skill's split maps onto the
+episodic/semantic distinction in memory research: code carries semantic
+knowledge (what is true), the gotchas file carries episodic residue (what
+happened and what it cost), and the second cannot be regenerated from the
+first.</p>
+
+<p>Pointer-based memory has a known human failure mode. Transactive memory
+research (Wegner's couples studies, and the "Google effect" of Sparrow et al.,
+2011, with the caveat that the latter has had replication trouble) shows people
+trade storage for source-memory: they remember where information lives rather
+than what it says, and the trade pays only if retrieval actually happens. The
+benchmark's worst cell, a link present but never followed, tokens saved and the
+answer confidently wrong, is the standard transactive failure: each party
+assumed someone else had read the chart. The <code>@</code>-import finding is
+the other side of the same coin: eagerly concatenating a document into context
+is maintenance, not reference, and costs full price while feeling like a
+pointer.</p>
+
+<p>Drift, finally, is what external copies do instead of forgetting. A
+hand-copied value and its source diverge the day the source changes, while the
+copy still reads as authoritative. The skill's generate-and-point rules are the
+documentary version of a rule eyewitness-testimony reform arrived at for
+biological memory: do not trust a retelling when you can return to the
+record.</p>
+
+<h2>What does not transfer</h2>
+
+<p>Three human mechanisms are missing here, but two of them are missing from
+the benchmark's setting rather than from the system the skill describes. The
+benchmark is deliberately one-shot: one reader, one task, no history. A repo
+maintained under the skill is a loop, and the loop restores partial
+counterparts.</p>
+
+<p>Repair. Most of human communication's robustness lives in interactive
+repair: the hearer frowns, asks, re-reads, and the speaker rephrases. The
+one-shot benchmark has none, which is why its design rules resemble law and
+aviation phraseology more than conversation. A live session under the skill
+does have a repair channel: the agent asks, the user corrects, and the
+correction can land in the docs. The rules are calibrated to the runs where
+nobody is watching, because that is where a silent miss goes uncaught.</p>
+
+<p>Consolidation. A rule a human follows fifty times migrates inward and stops
+needing to be written anywhere. In the benchmark a reading leaves no trace in
+the reader, and that stays true in live use: the agent itself does not learn.
+The skill instead relocates the plasticity to the store. A repeatedly-missed
+fact is pulled inline, a rarely-needed section is factored out, so the
+inline/linked boundary migrates the way human memory does, slowly and by
+maintenance rather than by exposure.</p>
+
+<p>Motivation. This one does not transfer in either direction, benchmark or
+live. Humans skip references out of laziness, time pressure, and status; agents
+skip them out of prior confidence alone. The behavior matches; the causes only
+partly do. Interventions aimed at human motivation (incentives, culture) have
+no agent equivalent, and the harness prompt has no human one.</p>
+
+<p>The summary that survives all three caveats: the benchmark amounts to a
+purified model of human information neglect. Its findings replicate documented
+human phenomena, and its design rules were discovered earlier, at much higher
+cost, by fields where a missed sentence kills someone.</p>
+
+<footer>
+  Companion to the essay
+  <a href="./dont-write-your-claude-md-yourself.html">Don't write your CLAUDE.md yourself</a>.
+  The benchmark it discusses:
+  <a href="https://github.com/wistrand/structuring-agent-docs-benchmark/blob/main/findings.md">findings</a>.
+  The skill: <a href="./index.html">overview page</a>.
+</footer>
+
+</body>
+</html>
